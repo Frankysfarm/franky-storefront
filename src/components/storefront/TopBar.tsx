@@ -32,15 +32,23 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         WebkitBackdropFilter: "saturate(180%) blur(12px)",
       }}
     >
-      {/* Row 1: Bonus Club Bar */}
+      {/* Row 1: Bonus Club Bar with Progress */}
       <button
         onClick={onBonusOpen}
-        className="w-full flex items-center justify-center gap-2 py-1.5 px-4 text-gold text-[11px] font-extrabold tracking-[1.5px] uppercase hover:opacity-90 transition-opacity"
+        className='w-full flex items-center justify-center gap-3 py-2 px-4 text-gold text-[11px] font-bold tracking-[1.2px] uppercase hover:opacity-95 transition-opacity'
         style={{ background: "var(--color-sage-dark)" }}
       >
-        <span>🎁</span>
-        <span>FRANKY&apos;S BONUS CLUB · Jede 2. Bestellung gratis</span>
-        <span className="opacity-60">›</span>
+        <span className='hidden sm:inline text-[10px] tracking-[2px] opacity-80'>FRANKY&apos;S BONUS-CLUB</span>
+        <span className='flex items-center gap-1.5'>
+          <span>🎁</span>
+          <span>Jede <em className="not-italic text-white font-extrabold">5. Bestellung</em> = 1 Pasta gratis</span>
+        </span>
+        <span className='hidden md:flex items-center gap-1'>
+          {[1,2,3,4,5].map(i => (
+            <span key={i} className={`w-1.5 h-1.5 rounded-full ${i <= 3 ? "bg-gold" : "bg-gold/30"}`}/>
+          ))}
+          <span className='ml-1 font-mono text-[10px]'><b>3</b>/5</span>
+        </span>
       </button>
 
       {/* Row 2: Main Nav Bar */}
