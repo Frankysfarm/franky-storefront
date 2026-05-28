@@ -95,8 +95,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         onAdd={handleAddDirect}
       />
 
-      <DietFilter active={dietFilter} onChange={setDietFilter} />
-
       {/* Product Sections */}
       <main className="max-w-[1240px] mx-auto px-6">
         {categories.map((cat, catIndex) => {
