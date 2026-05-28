@@ -1,0 +1,21 @@
+{
+  "name": "Franky's Pasta",
+  "short_name": "Franky's",
+  "description": "Frische Pasta, direkt vor deine Tür. Halal-zertifiziert, aus Aachen.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e8e4d3",
+  "theme_color": "#4a5e4a",
+  "icons": [
+    {
+      "src": "/bilder/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/bilder/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

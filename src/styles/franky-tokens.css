@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FRANKY'S PASTA — Design Tokens
+   Extracted from frankys-pasta-shop.html mockup
+   ============================================================ */
+
+@theme {
+  /* Sage-Olive Greens */
+  --color-sage-dark: #2a3a2c;
+  --color-sage: #4a5e4a;
+  --color-sage-hover: #3a4a3a;
+  --color-sage-bright: #6b8e23;
+
+  /* Cream / Bone / Sand */
+  --color-cream: #e8e4d3;
+  --color-cream-soft: #f0eddd;
+  --color-cream-deep: #d9d3bd;
+  --color-bone: #f4f0e1;
+
+  /* Mint (sage-tinted backgrounds) */
+  --color-mint: #dde3d4;
+  --color-mint-deep: #c4cdb8;
+
+  /* Burgundy */
+  --color-burgundy: #7a2e2a;
+  --color-burgundy-dark: #5e221f;
+  --color-terracotta: #c46a4a;
+
+  /* Gold / Mustard */
+  --color-gold: #e4c068;
+  --color-gold-deep: #c9a227;
+  --color-gold-soft: #f3e7bd;
+  --color-amber: #c9a227;
+
+  /* Functional */
+  --color-text: #2a2622;
+  --color-muted: #6e7b6f;
+  --color-line: rgba(42, 38, 34, 0.10);
+  --color-line-strong: rgba(42, 38, 34, 0.18);
+  --color-disabled: #cfd0c8;
+
+  /* Fonts */
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(42, 58, 44, 0.06), 0 1px 1px rgba(42, 58, 44, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(42, 58, 44, 0.10), 0 2px 4px -1px rgba(42, 58, 44, 0.06);
+  --shadow-lg: 0 12px 32px -8px rgba(42, 58, 44, 0.15), 0 4px 12px -2px rgba(42, 58, 44, 0.08);
+  --shadow-xl: 0 24px 48px -12px rgba(42, 58, 44, 0.22), 0 8px 16px -4px rgba(42, 58, 44, 0.10);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
+}
+
+:root {
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 180ms;
+  --dur-base: 260ms;
+  --dur-slow: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === BASE STYLES === */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 160px;
+}
+
+@media (max-width: 820px) {
+  html { scroll-padding-top: 130px; }
+}
+
+@media (max-width: 540px) {
+  html { scroll-padding-top: 120px; }
+}
+
+body {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse 800px 500px at 10% 0%, rgba(228, 192, 104, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 400px at 95% 30%, rgba(74, 94, 74, 0.07) 0%, transparent 55%);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular nums for all price displays */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* === ANIMATIONS === */
+@keyframes dp-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(46, 122, 85, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(46, 122, 85, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 122, 85, 0); }
+}
+
+@keyframes logo-welcome {
+  0%   { transform: scale(1) rotate(0); }
+  25%  { transform: scale(1.08) rotate(-2deg); }
+  55%  { transform: scale(1.04) rotate(1.5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes bump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shine-sweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 16px 2px rgba(228, 192, 104, 0.25); }
+  50%      { box-shadow: 0 0 28px 6px rgba(228, 192, 104, 0.45); }
+}
+
+@keyframes icon-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes confetti-pop {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0.4) rotate(180deg); }
+}
+
+@keyframes fly-dot {
+  from { transform: scale(1); opacity: 0.8; }
+  to   { transform: scale(0.4); opacity: 0; }
+}
+
+/* === REVEAL STAGGER (IntersectionObserver) === */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.reveal-stagger.in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger > *:nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger > *:nth-child(8) { transition-delay: 420ms; }
+.reveal-stagger > *:nth-child(9) { transition-delay: 480ms; }
+.reveal-stagger > *:nth-child(10) { transition-delay: 540ms; }
+.reveal-stagger > *:nth-child(n+11) { transition-delay: 600ms; }
+
+/* === NO-SCROLLBAR UTILITY === */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* === SAFE AREA INSETS === */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* === MOBILE TOUCH TARGETS === */
+@media (max-width: 540px) {
+  button, [role="button"], a { min-height: 44px; min-width: 44px; }
+  input, select, textarea { font-size: 16px; }
+}
