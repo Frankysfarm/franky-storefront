@@ -8,6 +8,7 @@ import { buildProductMap } from "@/lib/mock-data";
 import { formatPriceRaw } from "@/lib/format";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
+import { LoyaltyCard } from "./LoyaltyCard";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
 import { ProductSheet } from "./ProductSheet";
@@ -85,6 +86,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       />
 
       <CategoryNav categories={categories} />
+
+      <LoyaltyCard filled={3} total={5} />
 
       <WelcomeBanner
         tenant={tenant}

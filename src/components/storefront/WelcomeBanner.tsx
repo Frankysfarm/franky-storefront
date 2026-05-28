@@ -12,36 +12,8 @@ interface Props {
 export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
-      {/* Animated Bonus Banner over Bestseller column */}
       <div
-        className="relative overflow-hidden rounded-t-xl border-x-[1.5px] border-t-[1.5px] border-line-strong px-5 py-2 text-[12px] font-bold text-gold tracking-[1px] flex items-center justify-center gap-3"
-        style={{
-          background: 'linear-gradient(135deg, var(--color-sage-dark) 0%, var(--color-sage-hover) 100%)',
-        }}
-      >
-        <span className="text-base animate-[icon-bob_3s_ease-in-out_infinite]">🎁</span>
-        <span className="uppercase">FRANKY&apos;S BONUS-CLUB</span>
-        <span className="opacity-50">·</span>
-        <span className="normal-case">Jede <span className="italic text-white font-extrabold">5. Bestellung</span> = 1 Pasta gratis</span>
-        <span className="hidden md:flex items-center gap-1 ml-2">
-          {[1,2,3,4,5].map(i => (
-            <span key={i} className={`w-1.5 h-1.5 rounded-full ${i <= 3 ? "bg-gold animate-[loyalty-glow-pulse_2.5s_ease-in-out_infinite]" : "bg-gold/25"}`} style={{ animationDelay: `${i*0.2}s` }}/>
-          ))}
-          <span className="ml-1 font-mono text-[10px] opacity-80"><b>3</b>/5</span>
-        </span>
-        {/* Shine sweep overlay */}
-        <span
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(228,192,104,0.18) 50%, transparent 100%)',
-            animation: 'loyalty-shine-sweep 4s ease-in-out infinite',
-            mixBlendMode: 'overlay',
-          }}
-        />
-      </div>
-
-      <div
-        className="relative overflow-hidden rounded-b-xl border-[1.5px] border-line-strong border-t-0 p-5 sm:p-8"
+        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-5 sm:p-8"
         style={{
           background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
