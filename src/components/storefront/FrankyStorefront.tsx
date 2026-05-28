@@ -9,6 +9,7 @@ import { formatPriceRaw } from "@/lib/format";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
+import { DeliveryInfoBand } from "./DeliveryInfoBand";
 import { StickyCart } from "./StickyCart";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
@@ -85,6 +86,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         onSearchOpen={() => setSearchOpen(true)}
         onBonusOpen={() => setBonusOpen(true)}
       />
+
+      <DeliveryInfoBand tenant={tenant} />
 
       <LoyaltyCard filled={3} total={5} />
 
