@@ -85,8 +85,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         onBonusOpen={() => setBonusOpen(true)}
       />
 
-      <CategoryNav categories={categories} />
-
       <LoyaltyCard filled={3} total={5} />
 
       <WelcomeBanner
@@ -94,6 +92,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         topProducts={topProducts}
         onAdd={handleAddDirect}
       />
+
+      <CategoryNav categories={categories} />
 
       {/* Product Sections */}
       <main className="max-w-[1240px] mx-auto px-6">

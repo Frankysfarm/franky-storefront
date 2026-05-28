@@ -68,7 +68,7 @@ export function CategoryNav({ categories }: Props) {
   const scrollTo = (id: string) => {
     const el = document.getElementById(`section-${id}`);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 150;
+      const top = el.getBoundingClientRect().top + window.scrollY - 130;
       window.scrollTo({ top, behavior: "smooth" });
     }
   };
