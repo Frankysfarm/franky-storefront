@@ -17,7 +17,6 @@ import { TrackingScreen } from "./TrackingScreen";
 import { SearchOverlay } from "./SearchOverlay";
 import { ScrollToTop } from "./ScrollToTop";
 import { RevealSection } from "./RevealSection";
-import { BonusCard } from "./BonusCard";
 import { ImpressumModal, DatenschutzModal, LiefergebietModal, AllergeneModal } from "./LegalModals";
 import { DietFilter } from "./DietFilter";
 import type { DietTag } from "@/lib/types";
@@ -80,8 +79,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
 
       <WelcomeBanner tenant={tenant} />
 
-      <BonusCard />
-
       <BestsellerRail
         products={products}
         bestsellers={bestsellers}
@@ -92,17 +89,25 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
 
       {/* Product Sections */}
       <main className="max-w-[1240px] mx-auto px-6">
-        {categories.map((cat) => {
+        {categories.map((cat, catIdx) => {
           const catProducts = productsByCategory.get(cat.id) ?? [];
           if (catProducts.length === 0) return null;
+          const catNum = String(catIdx + 1).padStart(2, "0");
           return (
-            <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-center gap-2 mb-4">
-                {cat.icon && <span className="text-xl">{cat.icon}</span>}
-                <h2 className="font-display font-black text-xl text-sage-dark">
-                  {cat.name}
-                </h2>
-                <span className="text-sm text-muted">({catProducts.length})</span>
+            <section key={cat.id} id={`section-${cat.id}`} className="mt-12">
+              <div className="mb-5">
+                <div className="flex items-end gap-3 mb-3 flex-wrap">
+                  <span className="font-display font-black italic text-[18px] text-gold-deep opacity-85 leading-none pb-1">
+                    No. {catNum}
+                  </span>
+                  <h2
+                    className="font-display font-black text-sage-dark leading-none"
+                    style={{ fontSize: "clamp(28px, 4vw, 40px)", letterSpacing: "-0.025em" }}
+                  >
+                    {cat.name}
+                  </h2>
+                </div>
+                <div className="h-px bg-line-strong" />
               </div>
 
               <RevealSection>

@@ -24,10 +24,8 @@ export function WelcomeBanner({ tenant }: Props) {
             className="font-display font-black leading-[1.02] tracking-tight"
             style={{ fontSize: "clamp(26px, 3.6vw, 38px)", letterSpacing: "-0.02em" }}
           >
-            Pasta wie bei{" "}
-            <span className="italic text-sage">Mamma</span>
-            <br />
-            — direkt vor deine Tür.
+            Mamma Mia —{" "}
+            <span className="italic text-sage">die Top 5</span>
           </h1>
           <p className="text-sm text-muted mt-3 max-w-md">
             Frische Pasta, knusprige Focaccina-Pizza und hausgemachte Desserts.

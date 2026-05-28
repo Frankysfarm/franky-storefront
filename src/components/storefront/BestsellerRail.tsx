@@ -20,10 +20,10 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="rounded-[18px] overflow-hidden border border-[#2a3a2c]"
+        className="rounded-[18px] overflow-hidden border border-line-strong"
         style={{
           background:
-            "radial-gradient(ellipse at top right, rgba(228,192,104,0.45) 0%, transparent 55%), radial-gradient(ellipse at bottom left, rgba(74,94,74,0.15) 0%, transparent 60%), linear-gradient(135deg, #3a4a3a 0%, #4a5e4a 50%, #5d735d 100%)",
+            "radial-gradient(ellipse at top right, rgba(228,192,104,0.20) 0%, transparent 55%), linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)",
           padding: "20px 28px",
         }}
       >
@@ -31,19 +31,19 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
           {/* Left Column */}
           <div className="flex-shrink-0 sm:w-[260px]">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[11px] font-extrabold tracking-[2px] text-gold uppercase">
-                ✦ HEUTE BELIEBT
+              <span className="text-[11px] font-extrabold tracking-[2px] text-sage uppercase">
+                ✦ DIESE WOCHE TRENDING
               </span>
-              <span className="w-2 h-2 rounded-full bg-[#6fcf97] animate-[dp-pulse_2.4s_ease-out_infinite]" />
+              <span className="w-2 h-2 rounded-full bg-sage-bright animate-[dp-pulse_2.4s_ease-out_infinite]" />
             </div>
             <h3
-              className="font-display font-black text-white leading-tight"
+              className="font-display font-black text-sage-dark leading-tight"
               style={{ fontSize: "clamp(20px, 2.8vw, 26px)" }}
             >
-              Andiamo! 🍝
+              Mamma Mia — die Top 5
             </h3>
-            <p className="text-[13px] text-[rgba(255,255,255,0.65)] mt-1 leading-snug">
-              Die Lieblinge unserer Gäste
+            <p className="text-[13px] text-muted mt-1 leading-snug">
+              Was Aachen aktuell am liebsten bestellt.
             </p>
           </div>
 
@@ -58,10 +58,10 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                     onClick={() => onAdd(product)}
                     role="button"
                     tabIndex={0}
-                    className="relative flex-shrink-0 w-[140px] bg-white rounded-xl p-2.5 text-center cursor-pointer hover:shadow-lg hover:-translate-y-px transition-all"
+                    className="relative flex-shrink-0 w-[160px] bg-white rounded-xl p-2.5 text-center cursor-pointer hover:shadow-lg hover:-translate-y-px transition-all border border-line"
                   >
                     {/* Rank badge */}
-                    <div className="absolute top-1.5 left-1.5 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold" style={{ background: "#2a3a2c", color: "#e4c068" }}>
+                    <div className="absolute top-1.5 left-1.5 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold bg-sage text-gold">
                       {i + 1}
                     </div>
 
@@ -75,7 +75,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                     )}
 
                     {/* Image */}
-                    <div className="w-14 h-14 rounded-lg overflow-hidden mx-auto mb-2 bg-mint">
+                    <div className="w-full h-[100px] rounded-lg overflow-hidden mb-2 bg-mint">
                       {product.bild_url ? (
                         <img
                           src={product.bild_url}
