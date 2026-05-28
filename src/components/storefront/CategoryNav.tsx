@@ -43,7 +43,7 @@ export function CategoryNav({ categories }: Props) {
   return (
     <nav
       ref={navRef}
-      className="sticky top-[60px] z-40 bg-[rgba(250,247,237,0.95)] border-b border-line"
+      className="sticky top-[90px] z-40 bg-[rgba(250,247,237,0.95)] border-b border-line"
       style={{
         backdropFilter: "saturate(180%) blur(8px)",
         WebkitBackdropFilter: "saturate(180%) blur(8px)",
