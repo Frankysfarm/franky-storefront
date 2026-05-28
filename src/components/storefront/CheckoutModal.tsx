@@ -116,8 +116,25 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
             <button onClick={back} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-cream transition-colors">
               <ArrowLeft size={18} />
             </button>
-            <div className="text-sm font-bold text-sage-dark">
-              Schritt {stepIndex + 1} von {STEPS.length}
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="text-xs font-bold text-sage-dark">
+                Schritt {stepIndex + 1} von {STEPS.length}
+              </div>
+              {/* Step dots */}
+              <div className="flex items-center gap-1.5">
+                {STEPS.map((s, i) => (
+                  <div
+                    key={s}
+                    className={`rounded-full transition-all ${
+                      i < stepIndex
+                        ? "w-2 h-2 bg-sage"
+                        : i === stepIndex
+                          ? "w-5 h-2 bg-sage"
+                          : "w-2 h-2 bg-cream-deep"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
             <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-cream transition-colors">
               <X size={18} />
@@ -141,9 +158,25 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
                     placeholder="PLZ eingeben (z.B. 52062)"
                     value={form.plz}
                     onChange={(e) => { update("plz", e.target.value.replace(/\D/g, "")); setPlzError(""); }}
-                    className="w-full pl-10 pr-4 py-3 bg-white border border-line rounded-xl text-base focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none transition-all"
+                    className={`w-full pl-10 pr-10 py-3 bg-white border rounded-xl text-base focus:ring-2 outline-none transition-all ${
+                      form.plz.length === 5 && VALID_PLZ.includes(form.plz)
+                        ? "border-sage-bright focus:border-sage-bright focus:ring-sage-bright/20"
+                        : "border-line focus:border-sage focus:ring-sage/20"
+                    }`}
                   />
+                  {form.plz.length === 5 && VALID_PLZ.includes(form.plz) && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 bg-sage-bright rounded-full flex items-center justify-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
+                {form.plz.length === 5 && VALID_PLZ.includes(form.plz) && (
+                  <div className="mt-2 text-sm text-sage-bright bg-sage/5 p-3 rounded-lg font-medium">
+                    ✓ Super! Wir liefern nach {form.plz}.
+                  </div>
+                )}
                 {plzError && (
                   <div className="mt-2 text-sm text-burgundy bg-burgundy/5 p-3 rounded-lg">
                     {plzError}
@@ -234,7 +267,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
                   {MOCK_PAYMENT_METHODS.map((pm) => (
                     <label
                       key={pm.method}
-                      className={`flex flex-col items-center gap-1 p-3 rounded-xl cursor-pointer border transition-all ${
+                      className={`flex items-center gap-2 p-3 rounded-xl cursor-pointer border transition-all ${
                         form.zahlungsart === pm.method
                           ? "bg-sage/5 border-sage"
                           : "bg-white border-transparent hover:border-line-strong"
@@ -248,7 +281,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
                         onChange={() => update("zahlungsart", pm.method)}
                         className="sr-only"
                       />
-                      <span className="text-lg">
+                      <span className="text-lg leading-none">
                         {pm.method === "bar" ? "💵" : pm.method === "karte" ? "💳" : pm.method === "paypal" ? "🅿️" : pm.method === "klarna" ? "🟣" : pm.method === "apple_pay" ? "🍎" : pm.method === "google_pay" ? "🔵" : pm.method === "sepa" ? "🏦" : "💱"}
                       </span>
                       <span className="text-xs font-semibold text-sage-dark">{pm.label}</span>

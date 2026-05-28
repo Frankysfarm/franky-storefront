@@ -55,13 +55,19 @@ export function CategoryNav({ categories }: Props) {
             <button
               key={cat.id}
               onClick={() => scrollTo(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
+              className={`flex items-center gap-2 py-2 px-3.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all border ${
                 active === cat.id
-                  ? "bg-sage text-white shadow-sm"
-                  : "text-sage-dark hover:bg-mint"
+                  ? "bg-sage text-white border-sage shadow-[0_4px_12px_-2px_rgba(74,94,74,0.4),0_0_0_1px_rgba(255,255,255,0.18)_inset]"
+                  : "bg-mint text-[#2a3a2c] border-transparent hover:bg-mint-deep hover:-translate-y-px"
               }`}
             >
-              {cat.icon && <span>{cat.icon}</span>}
+              {cat.icon && (
+                <span
+                  className={`text-[18px] leading-none ${active === cat.id ? "text-gold" : ""}`}
+                >
+                  {cat.icon}
+                </span>
+              )}
               {cat.name}
             </button>
           ))}

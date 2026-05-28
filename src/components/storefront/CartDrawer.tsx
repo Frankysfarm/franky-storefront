@@ -4,7 +4,7 @@ import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
 import type { Product, Tenant } from "@/lib/types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CrossSell } from "./CrossSell";
 
 interface Props {
@@ -14,6 +14,32 @@ interface Props {
   productMap: Map<string, Product>;
   tenant: Tenant;
   allProducts: Product[];
+}
+
+const CONFETTI_COLORS = ["#e4c068", "#c9a227", "#4a5e4a", "#f8dcd8", "#dde3d4", "#c46a4a", "#7a2e2a", "#f3e7bd"];
+
+function ConfettiPiece({ index }: { index: number }) {
+  const color = CONFETTI_COLORS[index % CONFETTI_COLORS.length];
+  const left = 10 + (index * 7.5) % 85;
+  const size = 6 + (index % 3) * 2;
+  const delay = (index * 80) % 400;
+  const isCircle = index % 3 === 0;
+
+  return (
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        left: `${left}%`,
+        top: "0%",
+        width: size,
+        height: size,
+        borderRadius: isCircle ? "50%" : "2px",
+        background: color,
+        animation: `confetti-pop 1s ease-out ${delay}ms forwards`,
+        zIndex: 10,
+      }}
+    />
+  );
 }
 
 export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allProducts }: Props) {
@@ -28,6 +54,8 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
     s.grandTotal(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold),
   );
   const drawerRef = useRef<HTMLDivElement>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevFreeDelivery = useRef(false);
 
   const freeDeliveryProgress = Math.min(
     (subtotal / tenant.free_delivery_threshold) * 100,
@@ -36,6 +64,19 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
   const freeDeliveryReached = subtotal >= tenant.free_delivery_threshold;
   const meetsMinOrder = subtotal >= tenant.mindestbestellwert;
   const remaining = tenant.free_delivery_threshold - subtotal;
+
+  // Confetti on free delivery threshold reached
+  useEffect(() => {
+    if (freeDeliveryReached && !prevFreeDelivery.current) {
+      setShowConfetti(true);
+      const timer = setTimeout(() => setShowConfetti(false), 1600);
+      prevFreeDelivery.current = true;
+      return () => clearTimeout(timer);
+    }
+    if (!freeDeliveryReached) {
+      prevFreeDelivery.current = false;
+    }
+  }, [freeDeliveryReached]);
 
   useEffect(() => {
     if (open) {
@@ -78,8 +119,16 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
         </div>
 
         {/* Free Delivery Bar */}
-        <div className="px-5 py-3 bg-cream-soft">
-          <div className="text-xs text-sage-dark mb-1.5">
+        <div className="relative px-5 py-3 bg-cream-soft overflow-hidden">
+          {/* Confetti */}
+          {showConfetti && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <ConfettiPiece key={i} index={i} />
+              ))}
+            </div>
+          )}
+          <div className="text-xs text-sage-dark mb-1.5 relative z-[1]">
             {freeDeliveryReached ? (
               <span className="font-bold text-sage-bright">
                 🎉 Gratis-Lieferung aktiviert!
@@ -92,10 +141,15 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
               </span>
             )}
           </div>
-          <div className="h-1.5 bg-cream-deep rounded-full overflow-hidden">
+          <div className="h-1.5 bg-cream-deep rounded-full overflow-hidden relative z-[1]">
             <div
-              className="h-full bg-sage rounded-full transition-all duration-500"
-              style={{ width: `${freeDeliveryProgress}%` }}
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${freeDeliveryProgress}%`,
+                background: freeDeliveryReached
+                  ? "linear-gradient(to right, #4a5e4a, #c9a227)"
+                  : "linear-gradient(to right, #4a5e4a, #c9a227)",
+              }}
             />
           </div>
         </div>
@@ -115,7 +169,7 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
               {items.map((item) => (
                 <div
                   key={item.cartKey}
-                  className="flex gap-3 p-3 bg-white rounded-xl"
+                  className="flex gap-3 p-3 bg-cream-soft rounded-xl"
                 >
                   {/* Image */}
                   {item.product.bild_url && (

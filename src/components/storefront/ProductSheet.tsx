@@ -99,13 +99,13 @@ export function ProductSheet({ product, onClose }: Props) {
 
       {/* Sheet */}
       <aside
-        className="fixed bottom-0 left-0 right-0 z-[101] bg-bone rounded-t-2xl max-h-[90vh] flex flex-col shadow-xl animate-[reveal-up_0.3s_ease-out]"
+        className="fixed bottom-0 left-0 right-0 z-[101] bg-bone rounded-t-3xl max-h-[90vh] flex flex-col shadow-xl animate-[reveal-up_0.3s_ease-out]"
         role="dialog"
         aria-modal
       >
         {/* Handle */}
-        <div className="flex justify-center pt-2 pb-1">
-          <div className="w-10 h-1 bg-disabled rounded-full" />
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-12 h-1.5 bg-[#cfd0c8] rounded-full" />
         </div>
 
         {/* Close */}
@@ -169,7 +169,7 @@ export function ProductSheet({ product, onClose }: Props) {
                       key={opt.id}
                       className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all border ${
                         isSelected
-                          ? "bg-sage/5 border-sage"
+                          ? "bg-sage/8 border-sage"
                           : "bg-white border-transparent hover:border-line-strong"
                       }`}
                     >
@@ -222,20 +222,20 @@ export function ProductSheet({ product, onClose }: Props) {
         {/* Footer */}
         <div className="border-t border-line px-5 py-4 flex items-center gap-4">
           {/* Qty */}
-          <div className="flex items-center gap-0 bg-cream rounded-lg">
+          <div className="flex items-center gap-0 bg-cream rounded-xl">
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
-              className="w-10 h-10 flex items-center justify-center text-sage-dark hover:bg-cream-deep rounded-l-lg transition-colors"
+              className="w-11 h-11 flex items-center justify-center text-sage-dark hover:bg-cream-deep rounded-l-xl transition-colors"
               aria-label="Weniger"
             >
               <Minus size={16} strokeWidth={2.5} />
             </button>
-            <span className="w-8 text-center font-bold text-sage-dark tabular-nums">
+            <span className="w-9 text-center font-bold text-sage-dark tabular-nums">
               {qty}
             </span>
             <button
               onClick={() => setQty(qty + 1)}
-              className="w-10 h-10 flex items-center justify-center text-sage-dark hover:bg-cream-deep rounded-r-lg transition-colors"
+              className="w-11 h-11 flex items-center justify-center text-sage-dark hover:bg-cream-deep rounded-r-xl transition-colors"
               aria-label="Mehr"
             >
               <Plus size={16} strokeWidth={2.5} />
