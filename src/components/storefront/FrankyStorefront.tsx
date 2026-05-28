@@ -9,6 +9,7 @@ import { formatPriceRaw } from "@/lib/format";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
+import { StickyCart } from "./StickyCart";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
 import { ProductSheet } from "./ProductSheet";
@@ -77,7 +78,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-32 sm:pb-28">
       <TopBar
         tenant={tenant}
         onCartOpen={() => setCartOpen(true)}
@@ -168,7 +169,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       <ScrollToTop />
 
       {/* Mobile Cart FAB */}
-      <MobileCartFab onOpen={() => setCartOpen(true)} productMap={productMap} tenant={tenant} />
+      <StickyCart onOpen={() => setCartOpen(true)} productMap={productMap} tenant={tenant} />
 
       {/* Overlays */}
       <ProductSheet product={sheetProduct} onClose={() => setSheetProduct(null)} />
