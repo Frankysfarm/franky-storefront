@@ -4,7 +4,7 @@ import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
 import type { Product, Tenant } from "@/lib/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { CrossSell } from "./CrossSell";
 
 interface Props {
@@ -43,7 +43,8 @@ function ConfettiPiece({ index }: { index: number }) {
 }
 
 export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allProducts }: Props) {
-  const items = useCartStore((s) => s.getComputedItems(productMap));
+  const rawItems = useCartStore((s) => s.items);
+  const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
   const updateQty = useCartStore((s) => s.updateQty);
   const removeItem = useCartStore((s) => s.removeItem);
   const subtotal = useCartStore((s) => s.subtotal(productMap));

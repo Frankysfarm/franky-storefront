@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { X, ArrowLeft, ArrowRight, MapPin, Phone, Mail, CreditCard, Banknote } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
@@ -38,7 +38,8 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
   const [promoMsg, setPromoMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [freeDeliveryPromo, setFreeDeliveryPromo] = useState(false);
 
-  const items = useCartStore((s) => s.getComputedItems(productMap));
+  const rawItems = useCartStore((s) => s.items);
+  const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
   const subtotal = useCartStore((s) => s.subtotal(productMap));
   const deliveryFee = useCartStore((s) =>
     s.deliveryFee(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold),
