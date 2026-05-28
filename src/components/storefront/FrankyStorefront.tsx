@@ -17,6 +17,7 @@ import { TrackingScreen } from "./TrackingScreen";
 import { SearchOverlay } from "./SearchOverlay";
 import { ScrollToTop } from "./ScrollToTop";
 import { RevealSection } from "./RevealSection";
+import { BonusCard } from "./BonusCard";
 import { ImpressumModal, DatenschutzModal, LiefergebietModal, AllergeneModal } from "./LegalModals";
 import { DietFilter } from "./DietFilter";
 import type { DietTag } from "@/lib/types";
@@ -78,6 +79,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       <CategoryNav categories={categories} />
 
       <WelcomeBanner tenant={tenant} />
+
+      <BonusCard />
 
       <BestsellerRail
         products={products}
