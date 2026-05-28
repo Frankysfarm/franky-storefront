@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { X, ArrowLeft, ArrowRight, MapPin, Phone, Mail, CreditCard, Banknote } from "lucide-react";
+import { X, ArrowLeft, ArrowRight, MapPin, Phone, Mail, Loader2 } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
+import { getClientSupabase } from "@/lib/supabase";
 import type { Product, Tenant, CheckoutForm, PaymentMethod } from "@/lib/types";
 import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 
@@ -37,6 +38,8 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [promoMsg, setPromoMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [freeDeliveryPromo, setFreeDeliveryPromo] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const rawItems = useCartStore((s) => s.items);
   const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
@@ -94,10 +97,87 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
     else onClose();
   };
 
-  const submit = () => {
-    const orderId = `FR-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
-    clearCart();
-    onComplete(orderId);
+  const submit = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const supabase = getClientSupabase();
+      const kundeAdresse = `${form.strasse} ${form.hausnummer}${form.etage ? `, ${form.etage}` : ""}`;
+
+      // 1. Create order
+      const { data: order, error: orderErr } = await supabase
+        .from("customer_orders")
+        .insert({
+          location_id: tenant.location_id,
+          typ: "lieferung",
+          kunde_name: form.name,
+          kunde_telefon: form.telefon,
+          kunde_email: form.email || null,
+          kunde_adresse: kundeAdresse,
+          kunde_plz: form.plz,
+          anmerkung: form.anmerkung || null,
+          zwischensumme: subtotal,
+          liefergebuehr: effectiveDeliveryFee,
+          trinkgeld: tipAmount,
+          rabatt: promoDiscount,
+          gesamtbetrag: grandTotal,
+          zahlungsart: form.zahlungsart,
+          status: "neu",
+        })
+        .select("id,bestellnummer")
+        .single();
+
+      if (orderErr || !order) {
+        throw new Error(orderErr?.message ?? "Bestellung konnte nicht erstellt werden.");
+      }
+
+      // 2. Insert order items
+      const orderItems = items.map((item) => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        name: item.product.name,
+        menge: item.qty,
+        einzelpreis: item.unitPrice,
+        gesamtpreis: item.lineTotal,
+        optionen: item.selections ?? null,
+      }));
+
+      const { error: itemsErr } = await supabase.from("order_items").insert(orderItems);
+      if (itemsErr) {
+        console.error("order_items insert failed:", itemsErr.message);
+      }
+
+      // 3. Trigger email outbox (fire-and-forget)
+      fetch("https://mise-gastro.de/api/email/process-outbox", { method: "POST" }).catch(() => {});
+
+      // 4. Route by payment method
+      if (form.zahlungsart !== "bar") {
+        const sessionRes = await fetch("https://mise-gastro.de/api/checkout/create-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_id: order.id }),
+        });
+
+        if (sessionRes.ok) {
+          const { url } = await sessionRes.json();
+          if (url) {
+            clearCart();
+            window.location.href = url;
+            return;
+          }
+        }
+        // If Stripe session fails, fall through to show tracking with the created order
+      }
+
+      clearCart();
+      onComplete(order.bestellnummer ?? order.id);
+    } catch (err: any) {
+      setSubmitError(err?.message ?? "Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!open) return null;
@@ -144,6 +224,11 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-5 py-4">
+            {submitError && (
+              <div className="mb-3 px-4 py-3 bg-burgundy/10 text-burgundy text-sm rounded-xl">
+                {submitError}
+              </div>
+            )}
             {step === "plz" && (
               <div>
                 <h2 className="font-display font-black text-xl text-sage-dark mb-1">
@@ -434,10 +519,20 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
             {step === "review" ? (
               <button
                 onClick={submit}
-                className="flex-1 h-12 bg-sage text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sage-hover transition-colors"
+                disabled={submitting}
+                className="flex-1 h-12 bg-sage text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sage-hover disabled:opacity-60 transition-colors"
               >
-                Jetzt bestellen
-                <ArrowRight size={18} />
+                {submitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Wird gesendet…
+                  </>
+                ) : (
+                  <>
+                    Jetzt bestellen
+                    <ArrowRight size={18} />
+                  </>
+                )}
               </button>
             ) : (
               <button

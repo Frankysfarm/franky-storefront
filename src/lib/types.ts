@@ -68,6 +68,8 @@ export interface CheckoutForm {
 }
 
 export interface Tenant {
+  id: string;
+  location_id: string;
   name: string;
   slug: string;
   logo_url: string | null;

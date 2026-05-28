@@ -83,6 +83,8 @@ const PIZZA_OPTIONS: OptionGroup[] = [
 ];
 
 export const MOCK_TENANT: Tenant = {
+  id: "fp-tenant-001",
+  location_id: "fp-loc-001",
   name: "Franky's Pasta",
   slug: "frankys-pasta",
   logo_url: "/bilder/logo.jpg",

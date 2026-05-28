@@ -83,6 +83,8 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
     ]);
 
     const tenant: Tenant = {
+      id: tenantRow.id,
+      location_id: location.id,
       name: tenantRow.name,
       slug: tenantRow.slug,
       logo_url: tenantRow.logo_url,
