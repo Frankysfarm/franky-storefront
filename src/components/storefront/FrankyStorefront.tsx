@@ -9,7 +9,6 @@ import { formatPriceRaw } from "@/lib/format";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { CategoryNav } from "./CategoryNav";
-import { BestsellerRail } from "./BestsellerRail";
 import { ProductCard } from "./ProductCard";
 import { ProductSheet } from "./ProductSheet";
 import { CartDrawer } from "./CartDrawer";
@@ -90,12 +89,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       <WelcomeBanner
         tenant={tenant}
         topProducts={topProducts}
-        onAdd={handleAddDirect}
-      />
-
-      <BestsellerRail
-        products={products}
-        bestsellers={bestsellers}
         onAdd={handleAddDirect}
       />
 
