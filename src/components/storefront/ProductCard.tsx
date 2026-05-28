@@ -37,7 +37,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
       tabIndex={0}
     >
       {/* Image container */}
-      <div className="h-[300px] rounded-[14px] overflow-hidden mb-3 relative bg-mint">
+      <div className="h-[240px] rounded-[14px] overflow-hidden mb-3 relative bg-mint">
         {/* Badges over image */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
           {isTop3 && (

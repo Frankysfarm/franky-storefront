@@ -1,72 +1,86 @@
 "use client";
 
-import type { Tenant } from "@/lib/types";
+import type { Tenant, Product } from "@/lib/types";
+import { formatPriceRaw } from "@/lib/format";
 
 interface Props {
   tenant: Tenant;
+  topProducts: Product[];
+  onAdd: (product: Product) => void;
 }
 
-export function WelcomeBanner({ tenant }: Props) {
+export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-6 sm:p-8 grid sm:grid-cols-[1.4fr_1fr] gap-6 items-center"
+        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-5 sm:p-8"
         style={{
-          background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.25) 0%, transparent 55%),
+          background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
         }}
       >
-        <div className="relative z-[1]">
-          <span className="inline-block text-[11px] font-extrabold tracking-[1.8px] text-burgundy-dark mb-2">
-            HALAL · FRISCH · AACHEN
-          </span>
-          <h1
-            className="font-display font-black leading-[1.02] tracking-tight"
-            style={{ fontSize: "clamp(26px, 3.6vw, 38px)", letterSpacing: "-0.02em" }}
-          >
-            Mamma Mia —{" "}
-            <span className="italic text-sage">die Top 5</span>
-          </h1>
-          <p className="text-sm text-muted mt-3 max-w-md">
-            Frische Pasta, knusprige Focaccina-Pizza und hausgemachte Desserts.
-            Halal-zertifiziert, aus Aachen, in {tenant.durchschnittliche_lieferzeit_min - 5}–{tenant.durchschnittliche_lieferzeit_min + 5} Min bei dir.
-          </p>
-        </div>
-
-        {/* Bonus Card */}
-        <div
-          className="relative rounded-xl p-5 border border-[rgba(228,192,104,0.4)] animate-[glow-pulse_3s_ease-in-out_infinite]"
-          style={{
-            background: "linear-gradient(135deg, #f3e7bd 0%, #efe2c2 50%, #f6ecc8 100%)",
-          }}
-        >
-          <div className="overflow-hidden absolute inset-0 rounded-xl pointer-events-none">
-            <div className="absolute inset-0 w-[30%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shine-sweep_3s_ease-in-out_infinite]" />
+        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+          {/* Left: Title + Subtext */}
+          <div className="flex-shrink-0 sm:w-[260px]">
+            <span className="inline-block text-[11px] font-extrabold tracking-[1.8px] text-burgundy-dark mb-2">
+              ✦ DIESE WOCHE TRENDING
+            </span>
+            <h2
+              className="font-display font-black leading-[1.02] text-sage-dark"
+              style={{ fontSize: "clamp(22px, 3vw, 30px)", letterSpacing: "-0.02em" }}
+            >
+              Mamma Mia —{" "}
+              <span className="italic text-sage">die Top&nbsp;5</span>
+            </h2>
+            <p className="text-sm text-muted mt-2 leading-snug">
+              Was Aachen aktuell am liebsten bestellt.
+              Zwei Klicks, und es ist im Warenkorb.
+            </p>
           </div>
-          <div className="relative z-[1]">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xl animate-[icon-bob_2s_ease-in-out_infinite]">🎁</span>
-              <span className="text-[11px] font-extrabold tracking-[1.5px] text-amber">
-                BONUS-CLUB
-              </span>
-            </div>
-            <div className="font-display font-black text-sage-dark text-lg leading-tight">
-              Jede 5. Bestellung
-              <br />
-              = 1 Pasta gratis
-            </div>
-            <div className="mt-3 flex gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold border ${
-                    i <= 0
-                      ? "bg-sage text-white border-sage"
-                      : "bg-white/60 text-muted border-[rgba(42,38,34,0.12)]"
-                  }`}
+
+          {/* Right: Scrollable Top-5 Cards */}
+          <div className="flex-1 overflow-x-auto no-scrollbar -mr-5 sm:-mr-8">
+            <div className="flex gap-3 pb-1 pr-5 sm:pr-8">
+              {topProducts.map((product, i) => (
+                <button
+                  key={product.id}
+                  onClick={() => onAdd(product)}
+                  className="relative flex-shrink-0 w-[112px] bg-white rounded-xl p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
                 >
-                  {i === 5 ? "🍝" : i}
-                </div>
+                  {/* Rank badge */}
+                  <div
+                    className="absolute top-1.5 left-1.5 z-10 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-extrabold border border-[rgba(228,192,104,0.5)]"
+                    style={{ background: "var(--color-sage-dark)", color: "var(--color-gold)" }}
+                  >
+                    {i + 1}
+                  </div>
+
+                  {/* Image */}
+                  <div className="w-full aspect-square rounded-lg overflow-hidden mb-2 bg-mint">
+                    {product.bild_url ? (
+                      <img
+                        src={product.bild_url}
+                        alt={product.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted text-2xl">
+                        🍝
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Name */}
+                  <div className="text-[11px] font-bold text-sage-dark leading-tight line-clamp-2 mb-1">
+                    {product.name}
+                  </div>
+
+                  {/* Price */}
+                  <div className="font-display font-black text-[13px] text-gold-deep tabular-nums">
+                    {formatPriceRaw(product.preis)}
+                  </div>
+                </button>
               ))}
             </div>
           </div>

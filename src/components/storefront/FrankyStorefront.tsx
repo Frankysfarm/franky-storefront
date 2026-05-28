@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { X } from "lucide-react";
 import type { Product, Category, Tenant } from "@/lib/types";
 import { useCartStore } from "@/lib/store";
 import { buildProductMap } from "@/lib/mock-data";
@@ -33,6 +34,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [bonusOpen, setBonusOpen] = useState(false);
   const [tracking, setTracking] = useState<{ orderId: string } | null>(null);
   const [impressumOpen, setImpressumOpen] = useState(false);
   const [datenschutzOpen, setDatenschutzOpen] = useState(false);
@@ -58,6 +60,13 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
     return map;
   }, [filteredProducts, categories]);
 
+  const topProducts = useMemo(() => {
+    return bestsellers
+      .map((id) => products.find((p) => p.id === id))
+      .filter(Boolean)
+      .slice(0, 5) as Product[];
+  }, [products, bestsellers]);
+
   const handleAddDirect = (product: Product) => {
     if (product.option_groups && product.option_groups.length > 0) {
       setSheetProduct(product);
@@ -73,11 +82,16 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         tenant={tenant}
         onCartOpen={() => setCartOpen(true)}
         onSearchOpen={() => setSearchOpen(true)}
+        onBonusOpen={() => setBonusOpen(true)}
       />
 
       <CategoryNav categories={categories} />
 
-      <WelcomeBanner tenant={tenant} />
+      <WelcomeBanner
+        tenant={tenant}
+        topProducts={topProducts}
+        onAdd={handleAddDirect}
+      />
 
       <BestsellerRail
         products={products}
@@ -89,25 +103,27 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
 
       {/* Product Sections */}
       <main className="max-w-[1240px] mx-auto px-6">
-        {categories.map((cat, catIdx) => {
+        {categories.map((cat, catIndex) => {
           const catProducts = productsByCategory.get(cat.id) ?? [];
           if (catProducts.length === 0) return null;
-          const catNum = String(catIdx + 1).padStart(2, "0");
+          const num = String(catIndex + 1).padStart(2, "0");
           return (
-            <section key={cat.id} id={`section-${cat.id}`} className="mt-12">
-              <div className="mb-5">
-                <div className="flex items-end gap-3 mb-3 flex-wrap">
-                  <span className="font-display font-black italic text-[18px] text-gold-deep opacity-85 leading-none pb-1">
-                    No. {catNum}
-                  </span>
-                  <h2
-                    className="font-display font-black text-sage-dark leading-none"
-                    style={{ fontSize: "clamp(28px, 4vw, 40px)", letterSpacing: "-0.025em" }}
-                  >
-                    {cat.name}
-                  </h2>
-                </div>
-                <div className="h-px bg-line-strong" />
+            <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
+              <div className="flex items-baseline gap-4 mb-5 flex-wrap">
+                <span
+                  className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
+                  style={{ opacity: 0.85 }}
+                >
+                  No. {num}
+                </span>
+                <h2
+                  className="font-display font-black text-sage-dark"
+                  style={{ fontSize: "clamp(26px, 3.5vw, 38px)", letterSpacing: "-0.025em", lineHeight: 1 }}
+                >
+                  {cat.icon && <span>{cat.icon} </span>}
+                  {cat.name}
+                </h2>
+                <div className="flex-1 hidden sm:block" style={{ borderBottom: "1.5px solid var(--color-cream-deep)", marginBottom: "4px" }} />
               </div>
 
               <RevealSection>
@@ -198,11 +214,91 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         />
       )}
 
+      {/* Bonus Club Modal */}
+      <BonusModal open={bonusOpen} onClose={() => setBonusOpen(false)} />
+
       {/* Legal Modals */}
       <ImpressumModal open={impressumOpen} onClose={() => setImpressumOpen(false)} />
       <DatenschutzModal open={datenschutzOpen} onClose={() => setDatenschutzOpen(false)} />
       <LiefergebietModal open={liefergebietOpen} onClose={() => setLiefergebietOpen(false)} />
       <AllergeneModal open={allergeneOpen} onClose={() => setAllergeneOpen(false)} />
+    </div>
+  );
+}
+
+function BonusModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(20,14,8,0.65)", backdropFilter: "blur(6px)" }}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-[480px] rounded-2xl overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(ellipse at top right, rgba(228,192,104,0.18) 0%, transparent 55%), var(--color-cream-soft)",
+          border: "1.5px solid var(--color-sage-dark)",
+          boxShadow: "0 28px 60px -20px rgba(0,0,0,0.35)",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center text-sage-dark hover:bg-sage-dark hover:text-cream transition-colors"
+          style={{ background: "rgba(42,38,34,0.06)" }}
+          aria-label="Schließen"
+        >
+          <X size={16} />
+        </button>
+
+        <div className="p-7">
+          <span
+            className="inline-block text-[10.5px] font-extrabold tracking-[1.4px] px-3 py-1 rounded-full mb-4"
+            style={{ background: "var(--color-sage-dark)", color: "var(--color-gold)", border: "1px solid rgba(255,213,119,0.4)" }}
+          >
+            FRANKY&apos;S BONUS-CLUB
+          </span>
+          <h2
+            className="font-display font-black text-sage-dark mb-4"
+            style={{ fontSize: "clamp(24px, 3vw, 30px)", letterSpacing: "-0.02em", lineHeight: 1.05 }}
+          >
+            Jede 2. Bestellung{" "}
+            <em className="italic text-gold-deep">gratis</em>
+          </h2>
+
+          <div className="flex flex-col gap-4">
+            {[
+              { num: "1", title: "Bestellen wie immer", text: "Jede Bestellung über 15 € zählt automatisch. Keine Karte, kein Code." },
+              { num: "2", title: "Wir merken's uns", text: "Du siehst deinen Stand oben auf der Seite und in der Bestellbestätigung." },
+              { num: "🎁", title: "2. Bestellung = aufs Haus", text: "Beim 2. Mal wählst du dein günstigstes Gericht gratis. Wir verrechnen's automatisch." },
+            ].map((step) => (
+              <div key={step.num} className="flex gap-4 items-start">
+                <div
+                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-display font-black text-base border"
+                  style={{
+                    background: step.num === "🎁" ? "var(--color-gold)" : "var(--color-mint)",
+                    borderColor: step.num === "🎁" ? "var(--color-gold-deep)" : "var(--color-mint-deep)",
+                    color: "var(--color-sage-dark)",
+                  }}
+                >
+                  {step.num}
+                </div>
+                <div>
+                  <h4 className="font-display font-black text-sage-dark text-[15px] mb-0.5">{step.title}</h4>
+                  <p className="text-sm text-muted leading-snug">{step.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-5 text-[11px] text-muted leading-relaxed border-t border-line pt-4">
+            *Aktion gültig im Aachener Liefergebiet · Mindestbestellwert pro Bestellung 15 € ·
+            Wir behalten uns Änderungen vor.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

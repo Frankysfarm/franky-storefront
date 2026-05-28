@@ -9,9 +9,10 @@ interface Props {
   tenant: Tenant;
   onCartOpen: () => void;
   onSearchOpen: () => void;
+  onBonusOpen?: () => void;
 }
 
-export function TopBar({ tenant, onCartOpen, onSearchOpen }: Props) {
+export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const totalItems = useCartStore((s) => s.totalItems());
 
@@ -22,26 +23,43 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen }: Props) {
   }, []);
 
   return (
-    <div className="sticky top-0 z-50">
-      {/* Thin Bonus-Club Bar */}
-      <div className="bg-sage text-white text-[11px] font-bold tracking-[1.2px] text-center py-1.5 px-4">
-        🎁 FRANKY'S BONUS-CLUB · Jede 5. Bestellung = 1 Pasta gratis
-      </div>
-
-      {/* Main Nav */}
-      <header
-        className={`transition-all duration-250 ${
-          scrolled
-            ? "shadow-[0_6px_24px_-8px_rgba(42,58,44,0.12)] bg-[rgba(250,247,237,0.96)]"
-            : "bg-[rgba(250,247,237,0.92)]"
-        }`}
-        style={{
-          backdropFilter: "saturate(180%) blur(12px)",
-          WebkitBackdropFilter: "saturate(180%) blur(12px)",
-          borderBottom: "1px solid var(--color-line)",
-        }}
+    <header
+      className={`sticky top-0 z-50 transition-shadow duration-250 ${
+        scrolled ? "shadow-[0_6px_24px_-8px_rgba(42,58,44,0.12)]" : ""
+      }`}
+      style={{
+        backdropFilter: "saturate(180%) blur(12px)",
+        WebkitBackdropFilter: "saturate(180%) blur(12px)",
+      }}
+    >
+      {/* Row 1: Bonus Club Bar */}
+      <button
+        onClick={onBonusOpen}
+        className="w-full flex items-center justify-center gap-2 py-1.5 px-4 text-gold text-[11px] font-extrabold tracking-[1.5px] uppercase hover:opacity-90 transition-opacity"
+        style={{ background: "var(--color-sage-dark)" }}
       >
-        <div className="max-w-[1240px] mx-auto px-6 flex items-center justify-end relative min-h-[60px]">
+        <span>🎁</span>
+        <span>FRANKY&apos;S BONUS CLUB · Jede 2. Bestellung gratis</span>
+        <span className="opacity-60">›</span>
+      </button>
+
+      {/* Row 2: Main Nav Bar */}
+      <div
+        className={`transition-colors duration-250 ${
+          scrolled ? "bg-[rgba(250,247,237,0.96)]" : "bg-[rgba(250,247,237,0.92)]"
+        }`}
+        style={{ borderBottom: "1px solid var(--color-line)" }}
+      >
+        <div className="max-w-[1240px] mx-auto px-6 flex items-center justify-between relative min-h-[60px]">
+          {/* Search icon left */}
+          <button
+            onClick={onSearchOpen}
+            className="w-10 h-10 flex items-center justify-center rounded-full text-sage-dark hover:bg-mint transition-colors"
+            aria-label="Suche"
+          >
+            <Search size={20} strokeWidth={2} />
+          </button>
+
           {/* Logo Center */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {tenant.logo_url ? (
@@ -51,37 +69,27 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen }: Props) {
                 className="h-[44px] max-h-[44px] w-auto hover:-translate-y-px hover:scale-[1.02] transition-transform"
               />
             ) : (
-              <span className="font-display font-black italic text-xl text-sage-dark">
+              <span className="font-display italic font-black text-xl text-sage-dark tracking-tight">
                 {tenant.name}
               </span>
             )}
           </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={onSearchOpen}
-              className="w-10 h-10 flex items-center justify-center rounded-full text-sage-dark hover:bg-mint transition-colors"
-              aria-label="Suche"
-            >
-              <Search size={20} strokeWidth={2} />
-            </button>
-
-            <button
-              onClick={onCartOpen}
-              className="relative w-10 h-10 flex items-center justify-center rounded-full bg-sage text-white hover:bg-sage-hover transition-colors"
-              aria-label="Warenkorb"
-            >
-              <ShoppingBag size={18} strokeWidth={2} />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-burgundy-dark text-white text-[11px] font-bold rounded-full flex items-center justify-center animate-[bump_0.3s_ease-out]">
-                  {totalItems}
-                </span>
-              )}
-            </button>
-          </div>
+          {/* Cart Icon Right */}
+          <button
+            onClick={onCartOpen}
+            className="relative w-10 h-10 flex items-center justify-center rounded-full bg-sage text-white hover:bg-sage-hover transition-colors"
+            aria-label="Warenkorb"
+          >
+            <ShoppingBag size={18} strokeWidth={2} />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-burgundy-dark text-white text-[11px] font-bold rounded-full flex items-center justify-center animate-[bump_0.3s_ease-out]">
+                {totalItems}
+              </span>
+            )}
+          </button>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }
