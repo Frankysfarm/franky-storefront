@@ -58,6 +58,10 @@
 - **success/page.tsx refactored**: Server-Component lädt `deliveryMin` serverseitig und übergibt es an Client-Child `SuccessClient.tsx` (kein `loadFrankyBundle` mehr im Browser)
 - **defaultPayment dynamisch**: Checkout-Formular wählt erste aktivierte Zahlungsart statt hardcoded "paypal"
 
+## Phase 8: Bugfix DietFilter + Cleanup ✅ (2026-05-29)
+- **DietFilter gerendert**: `<DietFilter>` war in `FrankyStorefront.tsx` importiert und im State verdrahtet, aber nie gerendert — Diet-Filterung war komplett kaputt. Jetzt zwischen WelcomeBanner und CategoryNav eingefügt.
+- **Dead Code entfernt**: `MobileCartFab`-Funktion (war durch `StickyCart` ersetzt, nie aufgerufen) und deren verwaister `formatPriceRaw`-Import entfernt.
+
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
 - [ ] Echte Produktbilder in der Supabase DB eintragen (`bild_url`)
