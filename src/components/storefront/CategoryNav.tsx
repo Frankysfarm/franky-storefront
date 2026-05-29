@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import type { Category } from "@/lib/types";
 
 interface Props {
@@ -9,78 +9,84 @@ interface Props {
 
 export function CategoryNav({ categories }: Props) {
   const [active, setActive] = useState(categories[0]?.id ?? "");
-  const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   const isManualScroll = useRef(false);
+  const manualScrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Scroll detection for nav background change
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", handler, { passive: true });
-    handler();
-    return () => window.removeEventListener("scroll", handler);
+  // Center active tab horizontally in the nav (without affecting page scroll)
+  const centerActiveTabInNav = useCallback((id: string) => {
+    const track = trackRef.current;
+    const btn = itemRefs.current.get(id);
+    if (!track || !btn) return;
+    const trackRect = track.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const target = btn.offsetLeft - track.clientWidth / 2 + btn.clientWidth / 2;
+    track.scrollTo({ left: target, behavior: "smooth" });
   }, []);
 
-  // Section intersection observer
+  // Scroll page to section
+  const scrollPageToSection = useCallback((id: string) => {
+    const el = document.getElementById(`section-${id}`);
+    if (!el) return;
+    // TopBar (~60px) + Sticky Nav (~52px) + small gap
+    const offset = 130;
+    const target = window.scrollY + el.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: target, behavior: "smooth" });
+  }, []);
+
+  const handleClick = useCallback(
+    (id: string) => {
+      // Lock observer during programmatic scroll
+      if (manualScrollTimer.current) clearTimeout(manualScrollTimer.current);
+      isManualScroll.current = true;
+
+      setActive(id);
+      scrollPageToSection(id);
+      centerActiveTabInNav(id);
+
+      manualScrollTimer.current = setTimeout(() => {
+        isManualScroll.current = false;
+      }, 1200);
+    },
+    [scrollPageToSection, centerActiveTabInNav],
+  );
+
+  // Observe sections to update active during natural scroll
   useEffect(() => {
     const sections = categories
-      .map((c) => ({
-        id: c.id,
-        el: document.getElementById(`section-${c.id}`),
-      }))
+      .map((c) => ({ id: c.id, el: document.getElementById(`section-${c.id}`) }))
       .filter((s) => s.el);
+
+    let latestActive = active;
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (isManualScroll.current) return;
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const id = entry.target.id.replace("section-", "");
+        // Find the entry closest to the top of the viewport (after sticky offset)
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) {
+          const id = (visible[0].target as HTMLElement).id.replace("section-", "");
+          if (id !== latestActive) {
+            latestActive = id;
             setActive(id);
+            centerActiveTabInNav(id);
           }
         }
       },
-      { rootMargin: "-180px 0px -60% 0px", threshold: 0 },
+      { rootMargin: "-140px 0px -55% 0px", threshold: [0, 0.2, 0.5] },
     );
 
     for (const s of sections) observer.observe(s.el!);
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
-
-  // Auto-center active tab in nav
-  useEffect(() => {
-    const el = itemRefs.current.get(active);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    }
-  }, [active]);
-
-  const handleClick = (id: string) => {
-    setActive(id);
-    isManualScroll.current = true;
-
-    const el = document.getElementById(`section-${id}`);
-    if (el) {
-      // Header (60px TopBar) + Sticky Nav (~52px) + padding
-      const offset = 140;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-
-      // Re-enable intersection after scroll settles
-      setTimeout(() => {
-        isManualScroll.current = false;
-      }, 1000);
-    }
-  };
 
   return (
     <nav
-      ref={navRef}
-      className={`sticky top-[60px] z-40 transition-all duration-300 ${
-        scrolled ? "shadow-[0_2px_18px_-6px_rgba(42,58,44,0.18)]" : ""
-      }`}
+      className="sticky top-[60px] z-40"
       style={{
         background: "rgba(250,247,237,0.95)",
         backdropFilter: "saturate(180%) blur(14px)",
@@ -92,7 +98,6 @@ export function CategoryNav({ categories }: Props) {
         <div
           ref={trackRef}
           className="flex gap-1 py-2.5 px-4 overflow-x-auto no-scrollbar"
-          style={{ scrollSnapType: "x proximity" }}
         >
           {categories.map((cat) => {
             const isActive = active === cat.id;
@@ -104,7 +109,6 @@ export function CategoryNav({ categories }: Props) {
                   else itemRefs.current.delete(cat.id);
                 }}
                 onClick={() => handleClick(cat.id)}
-                style={{ scrollSnapAlign: "center" }}
                 className={`relative shrink-0 flex items-center gap-1.5 py-2 px-3.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-300 active:scale-95 ${
                   isActive
                     ? "bg-sage text-white shadow-[0_4px_14px_-3px_rgba(74,94,74,0.5),0_0_0_1px_rgba(228,192,104,0.25)_inset]"
@@ -127,16 +131,17 @@ export function CategoryNav({ categories }: Props) {
               </button>
             );
           })}
-          {/* Fade edges */}
-          <div
-            className="pointer-events-none absolute left-0 top-0 bottom-0 w-6"
-            style={{ background: "linear-gradient(to right, rgba(250,247,237,1), transparent)" }}
-          />
-          <div
-            className="pointer-events-none absolute right-0 top-0 bottom-0 w-6"
-            style={{ background: "linear-gradient(to left, rgba(250,247,237,1), transparent)" }}
-          />
         </div>
+
+        {/* Fade edges */}
+        <div
+          className="pointer-events-none absolute left-0 top-0 bottom-0 w-6"
+          style={{ background: "linear-gradient(to right, rgba(250,247,237,1), transparent)" }}
+        />
+        <div
+          className="pointer-events-none absolute right-0 top-0 bottom-0 w-6"
+          style={{ background: "linear-gradient(to left, rgba(250,247,237,1), transparent)" }}
+        />
       </div>
     </nav>
   );

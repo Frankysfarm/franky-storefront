@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { UpsellStep } from "./UpsellStep";
 import { X, ArrowLeft, MapPin, CreditCard, Banknote, Apple, CheckCircle2, ChevronRight } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
@@ -13,18 +14,20 @@ interface Props {
   onComplete: (orderId: string, customerName: string) => void;
   productMap: Map<string, Product>;
   tenant: Tenant;
+  allProducts: Product[];
   paymentMethods?: PaymentMethod[];
 }
 
-type Step = "lieferung" | "zahlung" | "review";
-const STEPS: Step[] = ["lieferung", "zahlung", "review"];
+type Step = "lieferung" | "zahlung" | "upsell" | "review";
+const STEPS: Step[] = ["lieferung", "zahlung", "upsell", "review"];
 const STEP_LABELS: Record<Step, string> = {
   lieferung: "Lieferung",
   zahlung: "Zahlung",
+  upsell: "Extras",
   review: "Übersicht",
 };
 
-export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }: Props) {
+export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts }: Props) {
   const [step, setStep] = useState<Step>("lieferung");
   const rawItems = useCartStore((s) => s.items);
   const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
@@ -302,6 +305,14 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
               </div>
             )}
 
+            {step === "upsell" && (
+              <UpsellStep
+                allProducts={allProducts}
+                productMap={productMap}
+                onSkip={next}
+              />
+            )}
+
             {step === "review" && (
               <div className="space-y-4">
                 {/* Address summary */}
@@ -390,10 +401,28 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
                 className="w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)] active:scale-[0.98] transition-all duration-300"
                 style={{ background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }}
               >
+                Weiter
+                <ChevronRight size={18} />
+              </button>
+            )}
+            {step === "upsell" && (
+              <button
+                onClick={next}
+                className="w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)] active:scale-[0.98] transition-all duration-300"
+                style={{ background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }}
+              >
                 Weiter zur Übersicht
                 <ChevronRight size={18} />
               </button>
             )}
+            {step === "upsell" && (
+              <UpsellStep
+                allProducts={allProducts}
+                productMap={productMap}
+                onSkip={next}
+              />
+            )}
+
             {step === "review" && (
               <button
                 onClick={placeOrder}
