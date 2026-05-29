@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: Phase 2–5 abgeschlossen ✅
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live)
 
 ---
 
@@ -45,9 +45,13 @@
 
 ---
 
+## Phase 6: Finish-Fixes ✅ (2026-05-29)
+- **Stripe Success-URL** → Neue Seite `/[slug]/success?order_id=xxx` zeigt TrackingScreen
+- **URL-Param-Detection** → FrankyStorefront erkennt `?order_id=` bei Stripe-Redirect und zeigt Tracking
+- **CustomerName im Tracking** → `onComplete(orderId, customerName)` übergibt Namen aus Checkout-Formular
+- **Mindestbestellwert-Guard** → `submit()` in CheckoutModal prüft subtotal < mindestbestellwert und zeigt Fehler
+
 ## Noch offen / Nice-to-have
-- [ ] PLZ-Validierung im CheckoutModal (aktuell: VALID_PLZ aus mock-data)
-- [ ] Stripe Success-URL → Tracking-Screen zeigen (aktuell: User landet nach Stripe auf Stripe-Success-Page)
-- [ ] Bestellnummer aus Supabase im TrackingScreen anzeigen
-- [ ] Echte Produktbilder in der DB eintragen (aktuell: lokale `/bilder/` Pfade)
-- [ ] Mindestbestellwert-Prüfung im CheckoutModal sichtbar machen
+- [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
+- [ ] Echte Produktbilder in der Supabase DB eintragen (`bild_url`)
+- [ ] Stripe-API: success_url auf `/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
