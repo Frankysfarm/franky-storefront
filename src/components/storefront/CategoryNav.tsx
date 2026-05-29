@@ -13,9 +13,9 @@ export function CategoryNav({ categories }: Props) {
   const navRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 });
+  const isManualScroll = useRef(false);
 
-  // Scroll detection for sticky nav background change
+  // Scroll detection for nav background change
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handler, { passive: true });
@@ -34,6 +34,7 @@ export function CategoryNav({ categories }: Props) {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isManualScroll.current) return;
         for (const entry of entries) {
           if (entry.isIntersecting) {
             const id = entry.target.id.replace("section-", "");
@@ -48,28 +49,29 @@ export function CategoryNav({ categories }: Props) {
     return () => observer.disconnect();
   }, [categories]);
 
-  // Animated indicator that follows active tab
+  // Auto-center active tab in nav
   useEffect(() => {
     const el = itemRefs.current.get(active);
-    const track = trackRef.current;
-    if (el && track) {
-      const trackRect = track.getBoundingClientRect();
-      const elRect = el.getBoundingClientRect();
-      setIndicator({
-        left: elRect.left - trackRect.left + track.scrollLeft,
-        width: elRect.width,
-        opacity: 1,
-      });
-      // Auto-scroll active tab into view
+    if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
   }, [active]);
 
-  const scrollTo = (id: string) => {
+  const handleClick = (id: string) => {
+    setActive(id);
+    isManualScroll.current = true;
+
     const el = document.getElementById(`section-${id}`);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 130;
+      // Header (60px TopBar) + Sticky Nav (~52px) + padding
+      const offset = 140;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
+
+      // Re-enable intersection after scroll settles
+      setTimeout(() => {
+        isManualScroll.current = false;
+      }, 1000);
     }
   };
 
@@ -77,39 +79,21 @@ export function CategoryNav({ categories }: Props) {
     <nav
       ref={navRef}
       className={`sticky top-[60px] z-40 transition-all duration-300 ${
-        scrolled
-          ? "shadow-[0_2px_18px_-6px_rgba(42,58,44,0.18)]"
-          : ""
+        scrolled ? "shadow-[0_2px_18px_-6px_rgba(42,58,44,0.18)]" : ""
       }`}
       style={{
-        background: scrolled
-          ? "rgba(250,247,237,0.92)"
-          : "rgba(250,247,237,0.55)",
+        background: "rgba(250,247,237,0.95)",
         backdropFilter: "saturate(180%) blur(14px)",
         WebkitBackdropFilter: "saturate(180%) blur(14px)",
-        borderBottom: scrolled ? "1px solid var(--color-line)" : "1px solid rgba(0,0,0,0.03)",
+        borderBottom: "1px solid rgba(42,38,34,0.06)",
       }}
     >
-      <div className="max-w-[1240px] mx-auto px-6">
+      <div className="relative">
         <div
           ref={trackRef}
-          className="relative flex gap-1 py-2.5 overflow-x-auto no-scrollbar"
+          className="flex gap-1 py-2.5 px-4 overflow-x-auto no-scrollbar"
+          style={{ scrollSnapType: "x proximity" }}
         >
-          {/* Animated indicator background */}
-          <div
-            className="absolute top-2.5 bottom-2.5 rounded-full transition-all duration-[400ms] pointer-events-none"
-            style={{
-              left: indicator.left,
-              width: indicator.width,
-              opacity: indicator.opacity,
-              background:
-                "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)",
-              boxShadow:
-                "0 4px 14px -3px rgba(74,94,74,0.45), 0 0 0 1px rgba(228,192,104,0.18) inset",
-              transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-            }}
-          />
-
           {categories.map((cat) => {
             const isActive = active === cat.id;
             return (
@@ -119,23 +103,18 @@ export function CategoryNav({ categories }: Props) {
                   if (el) itemRefs.current.set(cat.id, el);
                   else itemRefs.current.delete(cat.id);
                 }}
-                onClick={() => {
-                  setActive(cat.id);
-                  scrollTo(cat.id);
-                }}
-                className={`relative z-[1] flex items-center gap-2 py-2 px-4 rounded-full text-sm font-bold whitespace-nowrap transition-all duration-200 ${
+                onClick={() => handleClick(cat.id)}
+                style={{ scrollSnapAlign: "center" }}
+                className={`relative shrink-0 flex items-center gap-1.5 py-2 px-3.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-300 active:scale-95 ${
                   isActive
-                    ? "text-white scale-100"
-                    : "text-[#2a3a2c] hover:text-sage hover:scale-[1.04] active:scale-95"
+                    ? "bg-sage text-white shadow-[0_4px_14px_-3px_rgba(74,94,74,0.5),0_0_0_1px_rgba(228,192,104,0.25)_inset]"
+                    : "bg-mint text-[#2a3a2c] hover:bg-mint-deep"
                 }`}
-                style={{
-                  letterSpacing: isActive ? "0" : "-0.005em",
-                }}
               >
                 {cat.icon && (
                   <span
-                    className={`text-[18px] leading-none transition-all duration-300 ${
-                      isActive ? "text-gold scale-110" : ""
+                    className={`text-[16px] leading-none transition-all duration-300 ${
+                      isActive ? "scale-110" : ""
                     }`}
                     style={{
                       filter: isActive ? "drop-shadow(0 0 4px rgba(228,192,104,0.5))" : "none",
@@ -148,6 +127,15 @@ export function CategoryNav({ categories }: Props) {
               </button>
             );
           })}
+          {/* Fade edges */}
+          <div
+            className="pointer-events-none absolute left-0 top-0 bottom-0 w-6"
+            style={{ background: "linear-gradient(to right, rgba(250,247,237,1), transparent)" }}
+          />
+          <div
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-6"
+            style={{ background: "linear-gradient(to left, rgba(250,247,237,1), transparent)" }}
+          />
         </div>
       </div>
     </nav>
