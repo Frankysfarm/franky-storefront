@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { X } from "lucide-react";
 import type { Product, Category, Tenant } from "@/lib/types";
 import { useCartStore } from "@/lib/store";
@@ -37,13 +37,25 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
   const [searchOpen, setSearchOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [bonusOpen, setBonusOpen] = useState(false);
-  const [tracking, setTracking] = useState<{ orderId: string } | null>(null);
+  const [tracking, setTracking] = useState<{ orderId: string; customerName: string } | null>(null);
   const [impressumOpen, setImpressumOpen] = useState(false);
   const [datenschutzOpen, setDatenschutzOpen] = useState(false);
   const [liefergebietOpen, setLiefergebietOpen] = useState(false);
   const [allergeneOpen, setAllergeneOpen] = useState(false);
   const [dietFilter, setDietFilter] = useState<DietTag | "all">("all");
   const addItem = useCartStore((s) => s.addItem);
+
+  // Detect Stripe success redirect: ?order_id=xxx
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("order_id");
+    if (orderId && !tracking) {
+      setTracking({ orderId, customerName: "" });
+      // Clean URL without reloading
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const productMap = useMemo(() => buildProductMap(products), [products]);
   const filteredProducts = useMemo(() => {
@@ -190,9 +202,9 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       <CheckoutModal
         open={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
-        onComplete={(orderId) => {
+        onComplete={(orderId, customerName) => {
           setCheckoutOpen(false);
-          setTracking({ orderId });
+          setTracking({ orderId, customerName });
         }}
         productMap={productMap}
         tenant={tenant}
@@ -206,7 +218,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
       {tracking && (
         <TrackingScreen
           orderId={tracking.orderId}
-          customerName=""
+          customerName={tracking.customerName}
           deliveryTimeMin={tenant.durchschnittliche_lieferzeit_min}
           onClose={() => setTracking(null)}
         />

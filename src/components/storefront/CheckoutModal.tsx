@@ -11,7 +11,7 @@ import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 interface Props {
   open: boolean;
   onClose: () => void;
-  onComplete: (orderId: string) => void;
+  onComplete: (orderId: string, customerName: string) => void;
   productMap: Map<string, Product>;
   tenant: Tenant;
 }
@@ -99,6 +99,10 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
 
   const submit = async () => {
     if (submitting) return;
+    if (subtotal < tenant.mindestbestellwert) {
+      setSubmitError(`Mindestbestellwert von ${formatPriceRaw(tenant.mindestbestellwert)} nicht erreicht.`);
+      return;
+    }
     setSubmitting(true);
     setSubmitError(null);
 
@@ -172,7 +176,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
       }
 
       clearCart();
-      onComplete(order.bestellnummer ?? order.id);
+      onComplete(order.bestellnummer ?? order.id, form.name);
     } catch (err: any) {
       setSubmitError(err?.message ?? "Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
     } finally {
