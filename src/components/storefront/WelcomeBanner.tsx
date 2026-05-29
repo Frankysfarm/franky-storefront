@@ -13,26 +13,26 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-5 sm:p-8"
+        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-4 sm:p-8"
         style={{
           background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
         }}
       >
-        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
           {/* Left: Title + Subtext */}
           <div className="flex-shrink-0 sm:w-[260px]">
-            <span className="inline-block text-[11px] font-extrabold tracking-[1.8px] text-burgundy-dark mb-2">
+            <span className="inline-block text-[10px] sm:text-[11px] font-extrabold tracking-[1.4px] sm:tracking-[1.8px] text-burgundy-dark mb-1.5 sm:mb-2">
               ✦ DIESE WOCHE TRENDING
             </span>
             <h2
               className="font-display font-black leading-[1.02] text-sage-dark"
-              style={{ fontSize: "clamp(26px, 4vw, 42px)", letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(20px, 4vw, 42px)", letterSpacing: "-0.02em" }}
             >
               Mamma Mia —{" "}
               <span className="italic text-sage">die Top&nbsp;5</span>
             </h2>
-            <p className="text-sm text-muted mt-2 leading-snug">
+            <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug hidden sm:block">
               Was Aachen aktuell am liebsten bestellt.
               Zwei Klicks, und es ist im Warenkorb.
             </p>
@@ -45,7 +45,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
                 <button
                   key={product.id}
                   onClick={() => onAdd(product)}
-                  className="relative flex-shrink-0 w-[112px] bg-white rounded-xl p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
+                  className="relative flex-shrink-0 w-[100px] sm:w-[112px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
                 >
                   {/* Rank badge */}
                   <div

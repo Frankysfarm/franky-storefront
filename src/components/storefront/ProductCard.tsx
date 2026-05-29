@@ -31,13 +31,13 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
 
   return (
     <div
-      className="relative bg-white rounded-[18px] p-[14px] cursor-pointer group border border-line transition-all duration-[250ms] hover:-translate-y-[6px] hover:shadow-[0_18px_36px_-10px_rgba(156,68,34,0.18),0_8px_16px_-4px_rgba(74,94,74,0.10)] hover:border-[rgba(156,68,34,0.25)]"
+      className="relative bg-white rounded-[14px] sm:rounded-[18px] p-2.5 sm:p-[14px] cursor-pointer group border border-line transition-all duration-[250ms] hover:-translate-y-[6px] hover:shadow-[0_18px_36px_-10px_rgba(156,68,34,0.18),0_8px_16px_-4px_rgba(74,94,74,0.10)] hover:border-[rgba(156,68,34,0.25)]"
       onClick={() => (hasOptions ? onOpen(product) : onAdd(product))}
       role="button"
       tabIndex={0}
     >
       {/* Image container */}
-      <div className="h-[300px] rounded-[14px] overflow-hidden mb-3 relative bg-mint">
+      <div className="h-[160px] sm:h-[240px] lg:h-[280px] rounded-[12px] sm:rounded-[14px] overflow-hidden mb-2 sm:mb-3 relative bg-mint">
         {/* Badges over image */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
           {isTop3 && (
@@ -110,7 +110,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
       )}
 
       {/* Name */}
-      <h3 className="font-display font-black text-[18px] leading-[1.2] text-[#2a3a2c] mb-1.5">
+      <h3 className="font-display font-black text-[14px] sm:text-[18px] leading-[1.2] text-[#2a3a2c] mb-1 sm:mb-1.5 line-clamp-2">
         {product.name}
       </h3>
 
@@ -136,7 +136,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
           {hasOptions && (
             <span className="text-xs font-normal text-muted mr-0.5">ab </span>
           )}
-          <span className="font-display font-black text-[24px] text-[#2a3a2c] leading-none">
+          <span className="font-display font-black text-[16px] sm:text-[24px] text-[#2a3a2c] leading-none">
             {formatPriceRaw(product.preis)}
           </span>
         </div>
