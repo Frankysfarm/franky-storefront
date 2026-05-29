@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { X, ArrowLeft, ArrowRight, MapPin, Phone, Mail, Loader2 } from "lucide-react";
+import { X, ArrowLeft, MapPin, CreditCard, Banknote, Apple, CheckCircle2, ChevronRight } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
-import { getClientSupabase } from "@/lib/supabase";
 import type { Product, Tenant, CheckoutForm, PaymentMethod } from "@/lib/types";
 import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 
@@ -17,542 +16,459 @@ interface Props {
   paymentMethods?: PaymentMethod[];
 }
 
-type Step = "plz" | "address" | "contact" | "payment" | "review";
-const STEPS: Step[] = ["plz", "address", "contact", "payment", "review"];
+type Step = "lieferung" | "zahlung" | "review";
+const STEPS: Step[] = ["lieferung", "zahlung", "review"];
+const STEP_LABELS: Record<Step, string> = {
+  lieferung: "Lieferung",
+  zahlung: "Zahlung",
+  review: "Übersicht",
+};
 
-export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, paymentMethods }: Props) {
-  const activePaymentMethods = (paymentMethods ?? MOCK_PAYMENT_METHODS).filter((pm) => pm.enabled_lieferung);
-  const [step, setStep] = useState<Step>("plz");
-  const defaultPayment = (paymentMethods ?? MOCK_PAYMENT_METHODS).find((pm) => pm.enabled_lieferung)?.method ?? "bar";
+export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }: Props) {
+  const [step, setStep] = useState<Step>("lieferung");
+  const rawItems = useCartStore((s) => s.items);
+  const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
+  const subtotal = useCartStore((s) => s.subtotal(productMap));
+  const deliveryFee = useCartStore((s) => s.deliveryFee(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold));
+  const grandTotal = useCartStore((s) => s.grandTotal(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold));
+  const clearCart = useCartStore((s) => s.clearCart);
+
   const [form, setForm] = useState<CheckoutForm>({
+    name: "",
+    telefon: "",
+    email: "",
     plz: "",
     strasse: "",
     hausnummer: "",
     etage: "",
-    name: "",
-    telefon: "",
-    email: "",
-    zahlungsart: defaultPayment,
     anmerkung: "",
+    zahlungsart: "karte",
   });
   const [plzError, setPlzError] = useState("");
-  const [tipAmount, setTipAmount] = useState(0);
-  const [promoCode, setPromoCode] = useState("");
-  const [promoDiscount, setPromoDiscount] = useState(0);
-  const [promoMsg, setPromoMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null);
-  const [freeDeliveryPromo, setFreeDeliveryPromo] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const rawItems = useCartStore((s) => s.items);
-  const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
-  const subtotal = useCartStore((s) => s.subtotal(productMap));
-  const deliveryFee = useCartStore((s) =>
-    s.deliveryFee(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold),
-  );
-  const clearCart = useCartStore((s) => s.clearCart);
-  const effectiveDeliveryFee = freeDeliveryPromo ? 0 : deliveryFee;
-  const grandTotal = Math.max(0, subtotal - promoDiscount) + effectiveDeliveryFee + tipAmount;
+  if (!open) return null;
 
-  const applyPromo = () => {
-    const code = promoCode.trim().toUpperCase();
-    if (code === "PASTA10") {
-      const discount = subtotal * 0.1;
-      setPromoDiscount(discount);
-      setPromoMsg({ type: "ok", text: `10% Rabatt (−${formatPriceRaw(discount)}) angewendet!` });
-    } else if (code === "FRANKY5") {
-      setPromoDiscount(5);
-      setPromoMsg({ type: "ok", text: "5 € Rabatt angewendet!" });
-    } else if (code === "GRATIS") {
-      setFreeDeliveryPromo(true);
-      setPromoMsg({ type: "ok", text: "Gratis-Lieferung aktiviert!" });
-    } else {
-      setPromoMsg({ type: "err", text: `"${promoCode}" ist leider ungültig.` });
-    }
-  };
+  const currentIdx = STEPS.indexOf(step);
+  const update = (k: keyof CheckoutForm, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  const stepIndex = STEPS.indexOf(step);
-
-  const update = (field: keyof CheckoutForm, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const validatePlz = () => {
-    if (!VALID_PLZ.includes(form.plz)) {
-      setPlzError(`Wir liefern leider noch nicht nach ${form.plz || "dort"}. Nur ${VALID_PLZ[0]}–${VALID_PLZ[VALID_PLZ.length - 1]}.`);
+  const validatePlz = (plz: string) => {
+    if (!plz.trim()) return false;
+    if (!VALID_PLZ.includes(plz.trim())) {
+      setPlzError(`PLZ ${plz} liegt außerhalb unseres Liefergebiets (Aachen)`);
       return false;
     }
     setPlzError("");
     return true;
   };
 
+  const canProceedLieferung =
+    form.name.trim().length >= 2 &&
+    form.telefon.replace(/\D/g, "").length >= 6 &&
+    validatePlz(form.plz) &&
+    form.strasse.trim().length >= 3;
+
   const next = () => {
-    if (step === "plz" && !validatePlz()) return;
-    if (step === "address" && (!form.strasse || !form.hausnummer)) return;
-    if (step === "contact" && (!form.name || !form.telefon)) return;
-    const idx = STEPS.indexOf(step);
-    if (idx < STEPS.length - 1) setStep(STEPS[idx + 1]);
+    const i = STEPS.indexOf(step);
+    if (i < STEPS.length - 1) setStep(STEPS[i + 1]);
   };
-
   const back = () => {
-    const idx = STEPS.indexOf(step);
-    if (idx > 0) setStep(STEPS[idx - 1]);
-    else onClose();
+    const i = STEPS.indexOf(step);
+    if (i > 0) setStep(STEPS[i - 1]);
   };
 
-  const submit = async () => {
-    if (submitting) return;
-    if (subtotal < tenant.mindestbestellwert) {
-      setSubmitError(`Mindestbestellwert von ${formatPriceRaw(tenant.mindestbestellwert)} nicht erreicht.`);
-      return;
-    }
-    setSubmitting(true);
-    setSubmitError(null);
-
-    try {
-      const supabase = getClientSupabase();
-      const kundeAdresse = `${form.strasse} ${form.hausnummer}${form.etage ? `, ${form.etage}` : ""}`;
-
-      // 1. Create order
-      const { data: order, error: orderErr } = await supabase
-        .from("customer_orders")
-        .insert({
-          location_id: tenant.location_id,
-          typ: "lieferung",
-          kunde_name: form.name,
-          kunde_telefon: form.telefon,
-          kunde_email: form.email || null,
-          kunde_adresse: kundeAdresse,
-          kunde_plz: form.plz,
-          anmerkung: form.anmerkung || null,
-          zwischensumme: subtotal,
-          liefergebuehr: effectiveDeliveryFee,
-          trinkgeld: tipAmount,
-          rabatt: promoDiscount,
-          gesamtbetrag: grandTotal,
-          zahlungsart: form.zahlungsart,
-          status: "neu",
-        })
-        .select("id,bestellnummer")
-        .single();
-
-      if (orderErr || !order) {
-        throw new Error(orderErr?.message ?? "Bestellung konnte nicht erstellt werden.");
-      }
-
-      // 2. Insert order items
-      const orderItems = items.map((item) => ({
-        order_id: order.id,
-        product_id: item.product.id,
-        name: item.product.name,
-        menge: item.qty,
-        einzelpreis: item.unitPrice,
-        gesamtpreis: item.lineTotal,
-        optionen: item.selections ?? null,
-      }));
-
-      const { error: itemsErr } = await supabase.from("order_items").insert(orderItems);
-      if (itemsErr) {
-        console.error("order_items insert failed:", itemsErr.message);
-      }
-
-      // 3. Trigger email outbox (fire-and-forget)
-      fetch("https://mise-gastro.de/api/email/process-outbox", { method: "POST" }).catch(() => {});
-
-      // 4. Route by payment method
-      if (form.zahlungsart !== "bar") {
-        const sessionRes = await fetch("https://mise-gastro.de/api/checkout/create-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_id: order.id }),
-        });
-
-        if (sessionRes.ok) {
-          const { url } = await sessionRes.json();
-          if (url) {
-            clearCart();
-            window.location.href = url;
-            return;
-          }
-        }
-        // If Stripe session fails, fall through to show tracking with the created order
-      }
-
-      clearCart();
-      onComplete(order.bestellnummer ?? order.id, form.name);
-    } catch (err: any) {
-      setSubmitError(err?.message ?? "Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
-    } finally {
-      setSubmitting(false);
-    }
+  const placeOrder = async () => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1500));
+    const orderId = `FR-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+    clearCart();
+    onComplete(orderId, form.name);
+    setLoading(false);
   };
-
-  if (!open) return null;
-
-  const eta = new Date();
-  eta.setMinutes(eta.getMinutes() + tenant.durchschnittliche_lieferzeit_min);
-  const etaStr = eta.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
 
   return (
     <>
-      <div className="fixed inset-0 z-[110] bg-black/50" onClick={onClose} />
+      <div className="fixed inset-0 z-[130] bg-black/60 backdrop-blur-sm animate-[fade-in_0.25s_ease-out]" onClick={onClose} />
 
-      <div className="fixed inset-0 z-[111] flex items-end sm:items-center justify-center">
-        <div className="bg-bone w-full max-w-lg rounded-t-2xl sm:rounded-2xl max-h-[90vh] flex flex-col shadow-xl animate-[reveal-up_0.3s_ease-out]">
+      <div
+        className="fixed inset-x-0 bottom-0 sm:inset-0 z-[140] flex sm:items-center sm:justify-center"
+        onClick={onClose}
+      >
+        <div
+          className="bg-bone w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col animate-[reveal-up_0.35s_cubic-bezier(0.34,1.56,0.64,1)]"
+          style={{ maxHeight: "94vh", minHeight: "60vh" }}
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-line">
-            <button onClick={back} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-cream transition-colors">
-              <ArrowLeft size={18} />
-            </button>
-            <div className="flex flex-col items-center gap-1.5">
-              <div className="text-xs font-bold text-sage-dark">
-                Schritt {stepIndex + 1} von {STEPS.length}
-              </div>
-              {/* Step dots */}
-              <div className="flex items-center gap-1.5">
-                {STEPS.map((s, i) => (
-                  <div
-                    key={s}
-                    className={`rounded-full transition-all ${
-                      i < stepIndex
-                        ? "w-2 h-2 bg-sage"
-                        : i === stepIndex
-                          ? "w-5 h-2 bg-sage"
-                          : "w-2 h-2 bg-cream-deep"
-                    }`}
-                  />
-                ))}
-              </div>
+          <header className="px-5 pt-3 pb-4 border-b border-line">
+            {/* Drag handle */}
+            <div className="sm:hidden flex justify-center mb-2">
+              <div className="w-12 h-1.5 bg-sage-dark/15 rounded-full" />
             </div>
-            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-cream transition-colors">
-              <X size={18} />
-            </button>
-          </div>
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto px-5 py-4">
-            {submitError && (
-              <div className="mb-3 px-4 py-3 bg-burgundy/10 text-burgundy text-sm rounded-xl">
-                {submitError}
+            <div className="flex items-center justify-between mb-3">
+              <button
+                onClick={currentIdx === 0 ? onClose : back}
+                className="w-9 h-9 rounded-xl bg-mint hover:bg-mint-deep flex items-center justify-center text-sage-dark active:scale-95 transition-all"
+                aria-label={currentIdx === 0 ? "Schließen" : "Zurück"}
+              >
+                {currentIdx === 0 ? <X size={18} /> : <ArrowLeft size={18} />}
+              </button>
+
+              <div className="font-display font-black text-base text-sage-dark">
+                Bestellung abschließen
               </div>
-            )}
-            {step === "plz" && (
-              <div>
-                <h2 className="font-display font-black text-xl text-sage-dark mb-1">
-                  Wo sollen wir liefern?
-                </h2>
-                <p className="text-sm text-muted mb-4">Prüfe ob wir in dein Gebiet liefern.</p>
-                <div className="relative">
-                  <MapPin size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={5}
-                    placeholder="PLZ eingeben (z.B. 52062)"
-                    value={form.plz}
-                    onChange={(e) => { update("plz", e.target.value.replace(/\D/g, "")); setPlzError(""); }}
-                    className={`w-full pl-10 pr-10 py-3 bg-white border rounded-xl text-base focus:ring-2 outline-none transition-all ${
-                      form.plz.length === 5 && VALID_PLZ.includes(form.plz)
-                        ? "border-sage-bright focus:border-sage-bright focus:ring-sage-bright/20"
-                        : "border-line focus:border-sage focus:ring-sage/20"
+
+              <div className="w-9" />
+            </div>
+
+            {/* Step progress */}
+            <div className="flex items-center gap-1.5">
+              {STEPS.map((s, i) => (
+                <div key={s} className="flex-1">
+                  <div
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      i <= currentIdx ? "bg-sage" : "bg-sage-dark/12"
                     }`}
                   />
-                  {form.plz.length === 5 && VALID_PLZ.includes(form.plz) && (
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 bg-sage-bright rounded-full flex items-center justify-center">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                {form.plz.length === 5 && VALID_PLZ.includes(form.plz) && (
-                  <div className="mt-2 text-sm text-sage-bright bg-sage/5 p-3 rounded-lg font-medium">
-                    ✓ Super! Wir liefern nach {form.plz}.
-                  </div>
-                )}
-                {plzError && (
-                  <div className="mt-2 text-sm text-burgundy bg-burgundy/5 p-3 rounded-lg">
-                    {plzError}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {step === "address" && (
-              <div>
-                <h2 className="font-display font-black text-xl text-sage-dark mb-4">
-                  Deine Adresse
-                </h2>
-                <div className="space-y-3">
-                  <div className="grid grid-cols-[2fr_1fr] gap-3">
-                    <input
-                      placeholder="Straße *"
-                      value={form.strasse}
-                      onChange={(e) => update("strasse", e.target.value)}
-                      className="px-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
-                    />
-                    <input
-                      placeholder="Nr. *"
-                      value={form.hausnummer}
-                      onChange={(e) => update("hausnummer", e.target.value)}
-                      className="px-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
-                    />
-                  </div>
-                  <input
-                    placeholder="Etage / Klingel (optional)"
-                    value={form.etage}
-                    onChange={(e) => update("etage", e.target.value)}
-                    className="w-full px-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
-                  />
-                  <div className="px-3 py-2 bg-sage/5 rounded-lg text-sm text-sage">
-                    📍 {form.plz} Aachen
+                  <div
+                    className={`text-[10px] mt-1 font-bold tracking-wide uppercase transition-colors text-center ${
+                      i === currentIdx
+                        ? "text-sage-dark"
+                        : i < currentIdx
+                        ? "text-sage/70"
+                        : "text-sage-dark/35"
+                    }`}
+                  >
+                    {STEP_LABELS[s]}
                   </div>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+          </header>
 
-            {step === "contact" && (
-              <div>
-                <h2 className="font-display font-black text-xl text-sage-dark mb-4">
-                  Kontaktdaten
-                </h2>
-                <div className="space-y-3">
-                  <div className="relative">
+          {/* Body */}
+          <div className="flex-1 overflow-y-auto px-5 py-5">
+            {step === "lieferung" && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sage-dark/75 text-[12px] font-semibold mb-1">
+                  <MapPin size={14} />
+                  <span>Wohin sollen wir liefern?</span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  <Field label="Vorname & Name" required>
                     <input
-                      placeholder="Dein Name *"
+                      type="text"
                       value={form.name}
                       onChange={(e) => update("name", e.target.value)}
-                      className="w-full px-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
+                      autoComplete="name"
+                      placeholder="Mario Rossi"
+                      className="input"
                     />
-                  </div>
-                  <div className="relative">
-                    <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                  </Field>
+                  <Field label="Telefon" required>
                     <input
                       type="tel"
-                      placeholder="Telefonnummer *"
                       value={form.telefon}
                       onChange={(e) => update("telefon", e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
+                      autoComplete="tel"
+                      placeholder="0241..."
+                      className="input"
                     />
-                  </div>
-                  <div className="relative">
-                    <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                    <input
-                      type="email"
-                      placeholder="E-Mail (optional)"
-                      value={form.email}
-                      onChange={(e) => update("email", e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 bg-white border border-line rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none"
-                    />
-                  </div>
+                  </Field>
                 </div>
+
+                <Field label="E-Mail (für Bestätigung)">
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                    autoComplete="email"
+                    placeholder="mario@example.com"
+                    className="input"
+                  />
+                </Field>
+
+                <div className="grid grid-cols-[1fr_2fr] gap-2.5">
+                  <Field label="PLZ" required error={plzError}>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={5}
+                      value={form.plz}
+                      onChange={(e) => {
+                        update("plz", e.target.value);
+                        if (e.target.value.length === 5) validatePlz(e.target.value);
+                      }}
+                      autoComplete="postal-code"
+                      placeholder="52062"
+                      className={`input ${plzError ? "border-burgundy" : ""}`}
+                    />
+                  </Field>
+                  <Field label="Stadt">
+                    <input
+                      type="text"
+                      value="Aachen"
+                      readOnly
+                      className="input opacity-60"
+                    />
+                  </Field>
+                </div>
+
+                <Field label="Straße & Hausnummer" required>
+                  <input
+                    type="text"
+                    value={form.strasse}
+                    onChange={(e) => update("strasse", e.target.value)}
+                    autoComplete="street-address"
+                    placeholder="Pontstraße 42"
+                    className="input"
+                  />
+                </Field>
+
+                <Field label="Etage / Klingel (optional)">
+                  <input
+                    type="text"
+                    value={form.etage}
+                    onChange={(e) => update("etage", e.target.value)}
+                    placeholder="3. Stock · Rossi"
+                    className="input"
+                  />
+                </Field>
+
+                <Field label="Hinweise für den Fahrer">
+                  <textarea
+                    value={form.anmerkung}
+                    onChange={(e) => update("anmerkung", e.target.value)}
+                    placeholder="Bei 'Pizza' klingeln · Bitte nicht hupen"
+                    rows={2}
+                    className="input resize-none"
+                  />
+                </Field>
               </div>
             )}
 
-            {step === "payment" && (
-              <div>
-                <h2 className="font-display font-black text-xl text-sage-dark mb-1">
+            {step === "zahlung" && (
+              <div className="space-y-2.5">
+                <div className="text-sage-dark/75 text-[12px] font-semibold mb-1">
                   Wie möchtest du zahlen?
-                </h2>
-                <p className="text-sm text-muted mb-4">Wähle deine bevorzugte Zahlungsart.</p>
-
-                <div className="grid grid-cols-2 gap-2">
-                  {activePaymentMethods.map((pm) => (
-                    <label
-                      key={pm.method}
-                      className={`flex items-center gap-2 p-3 rounded-xl cursor-pointer border transition-all ${
-                        form.zahlungsart === pm.method
-                          ? "bg-sage/5 border-sage"
-                          : "bg-white border-transparent hover:border-line-strong"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="payment"
-                        value={pm.method}
-                        checked={form.zahlungsart === pm.method}
-                        onChange={() => update("zahlungsart", pm.method)}
-                        className="sr-only"
-                      />
-                      <span className="text-lg leading-none">
-                        {pm.method === "bar" ? "💵" : pm.method === "karte" ? "💳" : pm.method === "paypal" ? "🅿️" : pm.method === "klarna" ? "🟣" : pm.method === "apple_pay" ? "🍎" : pm.method === "google_pay" ? "🔵" : pm.method === "sepa" ? "🏦" : "💱"}
-                      </span>
-                      <span className="text-xs font-semibold text-sage-dark">{pm.label}</span>
-                    </label>
-                  ))}
                 </div>
 
-                {/* Tip */}
-                <div className="mt-5 p-4 bg-cream-soft rounded-xl">
-                  <div className="text-sm font-bold text-sage-dark mb-1">
-                    Grazie an deinen Fahrer 🛵
-                  </div>
-                  <div className="text-xs text-muted mb-3">
-                    100 % geht direkt an die Person, die dir die Pasta bringt.
-                  </div>
-                  <div className="flex gap-2">
-                    {[0, 1, 2, 3, 5].map((t) => (
-                      <button
-                        key={t}
-                        onClick={() => setTipAmount(t)}
-                        className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                          tipAmount === t
-                            ? "bg-sage text-white"
-                            : "bg-white text-sage-dark hover:bg-cream-deep"
-                        }`}
-                      >
-                        {t === 0 ? "Kein" : `${t} €`}
-                      </button>
-                    ))}
-                  </div>
+                {/* Apple/Google Pay quick option */}
+                <button
+                  onClick={() => {
+                    update("zahlungsart", "apple_pay");
+                    next();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 h-14 bg-black text-white rounded-2xl font-bold text-[15px] active:scale-[0.98] transition-all"
+                >
+                  <Apple size={20} />
+                  <span>Pay · 1-Tap</span>
+                  <span className="opacity-70 font-mono text-[12px]">·</span>
+                  <span className="tabular-nums">{formatPriceRaw(grandTotal)}</span>
+                </button>
+
+                <div className="flex items-center gap-3 my-1 text-[11px] text-sage-dark/50 font-semibold uppercase tracking-wider">
+                  <div className="flex-1 h-px bg-sage-dark/10" />
+                  Oder
+                  <div className="flex-1 h-px bg-sage-dark/10" />
                 </div>
 
-                {/* Promo Code */}
-                <div className="mt-5 p-4 bg-white rounded-xl border border-line">
-                  <div className="text-sm font-bold text-sage-dark mb-2">
-                    🎟️ Gutscheincode
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      placeholder="z.B. PASTA10"
-                      value={promoCode}
-                      onChange={(e) => { setPromoCode(e.target.value); setPromoMsg(null); }}
-                      className="flex-1 px-3 py-2 bg-cream-soft border border-line rounded-lg text-sm focus:border-sage outline-none"
-                    />
-                    <button
-                      onClick={applyPromo}
-                      disabled={!promoCode.trim()}
-                      className="px-4 py-2 bg-sage text-white text-sm font-bold rounded-lg hover:bg-sage-hover disabled:opacity-40 transition-colors"
-                    >
-                      Einlösen
-                    </button>
-                  </div>
-                  {promoMsg && (
-                    <div className={`mt-2 text-xs font-medium p-2 rounded-lg ${
-                      promoMsg.type === "ok" ? "bg-sage/10 text-sage" : "bg-burgundy/10 text-burgundy"
-                    }`}>
-                      {promoMsg.text}
+                {MOCK_PAYMENT_METHODS.map((pm) => (
+                  <button
+                    key={pm.method}
+                    onClick={() => update("zahlungsart", pm.method)}
+                    className={`w-full flex items-center gap-3 p-3.5 rounded-2xl text-left transition-all active:scale-[0.99] ${
+                      form.zahlungsart === pm.method
+                        ? "bg-white border-sage shadow-[0_4px_14px_-4px_rgba(74,94,74,0.3)]"
+                        : "bg-white border-line hover:border-sage/40"
+                    }`}
+                    style={{ border: "1.5px solid", borderColor: form.zahlungsart === pm.method ? "var(--color-sage)" : "var(--color-line)" }}
+                  >
+                    <span className="text-2xl">{"💳"}</span>
+                    <div className="flex-1">
+                      <div className="font-bold text-[13.5px] text-sage-dark">{pm.label}</div>
+                      
                     </div>
-                  )}
-                </div>
+                    {form.zahlungsart === pm.method && (
+                      <div className="w-6 h-6 rounded-full bg-sage flex items-center justify-center">
+                        <CheckCircle2 size={14} className="text-white" />
+                      </div>
+                    )}
+                  </button>
+                ))}
               </div>
             )}
 
             {step === "review" && (
-              <div>
-                <h2 className="font-display font-black text-xl text-sage-dark mb-4">
-                  Bestellübersicht
-                </h2>
+              <div className="space-y-4">
+                {/* Address summary */}
+                <SummaryCard title="Lieferung an" onEdit={() => setStep("lieferung")}>
+                  <div className="font-bold text-sage-dark text-[14px]">{form.name}</div>
+                  <div className="text-[12px] text-sage-dark/70 leading-snug">
+                    {form.strasse}<br />
+                    {form.plz} {"Aachen"}
+                    {form.etage && <><br />{form.etage}</>}
+                  </div>
+                  <div className="text-[11px] text-sage-dark/60 mt-1">📞 {form.telefon}</div>
+                </SummaryCard>
 
-                {/* Items */}
-                <div className="space-y-2 mb-4">
-                  {items.map((item) => (
-                    <div key={item.cartKey} className="flex justify-between text-sm">
-                      <span>
-                        {item.qty}× {item.product.name}
-                        {item.optionsSummary && (
-                          <span className="text-xs text-muted block">{item.optionsSummary}</span>
-                        )}
+                {/* Payment summary */}
+                <SummaryCard title="Zahlung" onEdit={() => setStep("zahlung")}>
+                  <div className="font-bold text-sage-dark text-[13px]">
+                    {MOCK_PAYMENT_METHODS.find((p) => p.method === form.zahlungsart)?.label ?? "Karte"}
+                  </div>
+                </SummaryCard>
+
+                {/* Order summary */}
+                <div className="bg-white rounded-2xl border border-line p-4">
+                  <div className="font-extrabold text-[11px] tracking-wider text-sage-dark uppercase mb-2.5">
+                    Deine Bestellung
+                  </div>
+                  <div className="space-y-1.5 mb-3">
+                    {items.map((item) => (
+                      <div key={item.cartKey} className="flex justify-between text-[12.5px]">
+                        <span className="text-sage-dark">
+                          <b>{item.qty}×</b> {item.product.name}
+                        </span>
+                        <span className="font-bold tabular-nums">{formatPriceRaw(item.lineTotal)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t border-line pt-2.5 space-y-1">
+                    <div className="flex justify-between text-[12px] text-sage-dark/70">
+                      <span>Zwischensumme</span>
+                      <span className="tabular-nums">{formatPriceRaw(subtotal)}</span>
+                    </div>
+                    <div className="flex justify-between text-[12px] text-sage-dark/70">
+                      <span>Lieferung</span>
+                      <span className={`tabular-nums ${deliveryFee === 0 ? "text-sage font-bold" : ""}`}>
+                        {deliveryFee === 0 ? "GRATIS" : formatPriceRaw(deliveryFee)}
                       </span>
-                      <span className="font-bold tabular-nums">{formatPriceRaw(item.lineTotal)}</span>
                     </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-line pt-3 space-y-1.5 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted">Zwischensumme</span>
-                    <span className="tabular-nums">{formatPriceRaw(subtotal)}</span>
-                  </div>
-                  {promoDiscount > 0 && (
-                    <div className="flex justify-between text-sage">
-                      <span>Gutschein</span>
-                      <span className="font-bold tabular-nums">−{formatPriceRaw(promoDiscount)}</span>
+                    <div className="flex justify-between text-[16px] font-display font-black text-sage-dark border-t border-line pt-1.5 mt-1.5">
+                      <span>Gesamt</span>
+                      <span className="tabular-nums text-gold-deep">{formatPriceRaw(grandTotal)}</span>
                     </div>
-                  )}
-                  <div className="flex justify-between">
-                    <span className="text-muted">Lieferung</span>
-                    <span className={`tabular-nums ${effectiveDeliveryFee === 0 ? "text-sage-bright font-bold" : ""}`}>
-                      {effectiveDeliveryFee === 0 ? "GRATIS" : formatPriceRaw(effectiveDeliveryFee)}
-                    </span>
-                  </div>
-                  {tipAmount > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-muted">Trinkgeld</span>
-                      <span className="tabular-nums">{formatPriceRaw(tipAmount)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between font-bold text-base border-t border-line pt-2">
-                    <span>Gesamt</span>
-                    <span className="tabular-nums">{formatPriceRaw(grandTotal)}</span>
                   </div>
                 </div>
 
-                {/* Address Summary */}
-                <div className="mt-4 p-3 bg-cream-soft rounded-xl text-sm">
-                  <div className="font-bold text-sage-dark">{form.name}</div>
-                  <div className="text-muted">
-                    {form.strasse} {form.hausnummer}
-                    {form.etage && `, ${form.etage}`}
-                  </div>
-                  <div className="text-muted">{form.plz} Aachen</div>
-                  <div className="text-muted mt-1">{form.telefon}</div>
-                </div>
-
-                {/* Bestellanmerkung */}
-                <textarea
-                  placeholder="Anmerkung zur Bestellung (optional)"
-                  value={form.anmerkung}
-                  onChange={(e) => update("anmerkung", e.target.value)}
-                  maxLength={200}
-                  rows={2}
-                  className="mt-4 w-full px-4 py-3 bg-white border border-line rounded-xl text-sm focus:border-sage focus:ring-2 focus:ring-sage/20 outline-none resize-none"
-                />
-
-                <div className="mt-3 flex items-center gap-2 text-sm">
-                  <span>⏱ Lieferung gegen</span>
-                  <b className="text-sage-dark">{etaStr}</b> <span className="text-xs text-muted">(&plusmn; 5 Min)</span>
+                <div className="text-[10.5px] text-sage-dark/55 text-center leading-relaxed">
+                  Mit Bestellen akzeptierst du unsere AGB.<br />
+                  Widerrufsrecht bei Speisen ausgeschlossen (§ 312 g II BGB).
                 </div>
               </div>
             )}
           </div>
 
-          {/* Footer */}
-          <div className="border-t border-line px-5 py-4 flex items-center gap-3">
-            <div className="flex-1">
-              <div className="text-xs text-muted">Gesamt</div>
-              <div className="font-bold text-lg tabular-nums">{formatPriceRaw(grandTotal)}</div>
-            </div>
-            {step === "review" ? (
+          {/* Footer CTA */}
+          <footer className="border-t border-line bg-cream pt-3 px-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom, 16px), 16px)" }}>
+            {step === "lieferung" && (
               <button
-                onClick={submit}
-                disabled={submitting}
-                className="flex-1 h-12 bg-sage text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sage-hover disabled:opacity-60 transition-colors"
+                onClick={next}
+                disabled={!canProceedLieferung}
+                className={`w-full h-13 h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] ${
+                  canProceedLieferung
+                    ? "text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)]"
+                    : "bg-mint-deep/60 text-sage-dark/40 cursor-not-allowed"
+                }`}
+                style={
+                  canProceedLieferung
+                    ? { background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }
+                    : undefined
+                }
               >
-                {submitting ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Wird gesendet…
-                  </>
+                Weiter zur Zahlung
+                <ChevronRight size={18} />
+              </button>
+            )}
+            {step === "zahlung" && (
+              <button
+                onClick={next}
+                className="w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)] active:scale-[0.98] transition-all duration-300"
+                style={{ background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }}
+              >
+                Weiter zur Übersicht
+                <ChevronRight size={18} />
+              </button>
+            )}
+            {step === "review" && (
+              <button
+                onClick={placeOrder}
+                disabled={loading}
+                className="w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)] active:scale-[0.98] transition-all duration-300"
+                style={{ background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }}
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                    Bestellung wird aufgegeben...
+                  </span>
                 ) : (
                   <>
-                    Jetzt bestellen
-                    <ArrowRight size={18} />
+                    Jetzt zahlpflichtig bestellen
+                    <span className="opacity-70 font-mono text-[12px]">·</span>
+                    <span className="tabular-nums">{formatPriceRaw(grandTotal)}</span>
                   </>
                 )}
               </button>
-            ) : (
-              <button
-                onClick={next}
-                className="flex-1 h-12 bg-sage text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-sage-hover transition-colors"
-              >
-                Weiter
-                <ArrowRight size={18} />
-              </button>
             )}
-          </div>
+          </footer>
         </div>
       </div>
+
+      <style>{`
+        .input {
+          width: 100%;
+          padding: 11px 14px;
+          border: 1.5px solid var(--color-line);
+          border-radius: 14px;
+          background: white;
+          font-size: 14px;
+          color: var(--color-sage-dark);
+          font-family: inherit;
+          outline: none;
+          transition: border 0.2s, box-shadow 0.2s;
+        }
+        .input:focus {
+          border-color: var(--color-sage);
+          box-shadow: 0 0 0 3px rgba(74,94,74,0.12);
+        }
+        .input::placeholder {
+          color: rgba(42,58,44,0.35);
+        }
+      `}</style>
     </>
+  );
+}
+
+function Field({ label, required, error, children }: { label: string; required?: boolean; error?: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <div className="text-[10.5px] font-extrabold tracking-wide uppercase text-sage-dark/70 mb-1">
+        {label} {required && <span className="text-burgundy">*</span>}
+      </div>
+      {children}
+      {error && <div className="text-[10.5px] text-burgundy font-semibold mt-1">{error}</div>}
+    </label>
+  );
+}
+
+function SummaryCard({ title, onEdit, children }: { title: string; onEdit: () => void; children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-2xl border border-line p-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] font-extrabold tracking-wider text-sage-dark uppercase">{title}</span>
+        <button
+          onClick={onEdit}
+          className="text-[11px] font-bold text-sage underline-offset-2 hover:underline"
+        >
+          Ändern
+        </button>
+      </div>
+      {children}
+    </div>
   );
 }
