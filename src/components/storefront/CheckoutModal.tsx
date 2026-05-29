@@ -18,9 +18,10 @@ interface Props {
   paymentMethods?: PaymentMethod[];
 }
 
-type Step = "lieferung" | "zahlung" | "upsell" | "review";
-const STEPS: Step[] = ["lieferung", "zahlung", "upsell", "review"];
+type Step = "plz-check" | "lieferung" | "zahlung" | "upsell" | "review";
+const STEPS: Step[] = ["plz-check", "lieferung", "zahlung", "upsell", "review"];
 const STEP_LABELS: Record<Step, string> = {
+  "plz-check": "PLZ",
   lieferung: "Lieferung",
   zahlung: "Zahlung",
   upsell: "Extras",
@@ -28,7 +29,8 @@ const STEP_LABELS: Record<Step, string> = {
 };
 
 export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts }: Props) {
-  const [step, setStep] = useState<Step>("lieferung");
+  const [step, setStep] = useState<Step>("plz-check");
+  const [plzChecked, setPlzChecked] = useState(false);
   const rawItems = useCartStore((s) => s.items);
   const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
   const subtotal = useCartStore((s) => s.subtotal(productMap));
@@ -152,6 +154,83 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
 
           {/* Body */}
           <div className="flex-1 overflow-y-auto px-5 py-5">
+            {step === "plz-check" && (
+              <div className="text-center py-2">
+                <div
+                  className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-3"
+                  style={{
+                    background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)",
+                    boxShadow: "0 8px 20px rgba(74,94,74,0.3)",
+                  }}
+                >
+                  <MapPin size={28} className="text-gold" strokeWidth={2.5} />
+                </div>
+                <h2
+                  className="font-display font-black text-sage-dark leading-tight"
+                  style={{ fontSize: "22px", letterSpacing: "-0.02em" }}
+                >
+                  Liefern wir <em className="italic text-sage">zu dir?</em>
+                </h2>
+                <p className="text-[13px] text-sage-dark/65 mt-1.5 max-w-[260px] mx-auto leading-snug">
+                  Lass uns kurz schauen ob wir in deiner Region liefern.
+                </p>
+
+                <div className="mt-5 max-w-[260px] mx-auto">
+                  <label className="block">
+                    <div className="text-left text-[10.5px] font-extrabold tracking-wide uppercase text-sage-dark/65 mb-1.5">
+                      Deine Postleitzahl
+                    </div>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={5}
+                      autoFocus
+                      value={form.plz}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, "").slice(0, 5);
+                        update("plz", v);
+                        if (v.length === 5) {
+                          if (VALID_PLZ.includes(v)) {
+                            setPlzError("");
+                            setPlzChecked(true);
+                          } else {
+                            setPlzError(`Leider liegt ${v} außerhalb unseres Liefergebiets (Aachen)`);
+                            setPlzChecked(false);
+                          }
+                        } else {
+                          setPlzError("");
+                          setPlzChecked(false);
+                        }
+                      }}
+                      placeholder="52062"
+                      className={`input text-center font-display text-2xl font-black tracking-[8px] tabular-nums ${plzError ? "border-burgundy" : plzChecked ? "border-sage" : ""}`}
+                      style={{ padding: "14px 12px" }}
+                    />
+                  </label>
+
+                  {plzChecked && (
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-sage font-bold text-[13px] animate-[reveal-up_0.3s_ease-out]">
+                      <CheckCircle2 size={16} fill="currentColor" className="text-sage" />
+                      <span>Andiamo! Wir liefern zu dir 🍝</span>
+                    </div>
+                  )}
+
+                  {plzError && (
+                    <div className="mt-3 text-burgundy font-semibold text-[12px] leading-snug">
+                      {plzError}
+                    </div>
+                  )}
+
+                  {!plzChecked && !plzError && (
+                    <div className="mt-3 text-[11.5px] text-sage-dark/55">
+                      Aachen Innenstadt + Umkreis (PLZ 52062–52080)
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {step === "lieferung" && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sage-dark/75 text-[12px] font-semibold mb-1">
@@ -193,21 +272,30 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                   />
                 </Field>
 
+                <div className="bg-sage/8 rounded-2xl px-3.5 py-2.5 flex items-center justify-between border border-sage/20">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={16} className="text-sage" fill="currentColor" />
+                    <div>
+                      <div className="text-[10px] font-extrabold tracking-wide uppercase text-sage-dark/65">Lieferung an</div>
+                      <div className="text-[13px] font-bold text-sage-dark">PLZ {form.plz} · Aachen</div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setStep("plz-check")}
+                    className="text-[11px] font-bold text-sage hover:text-sage-hover underline-offset-2 hover:underline"
+                  >
+                    Ändern
+                  </button>
+                </div>
+
                 <div className="grid grid-cols-[1fr_2fr] gap-2.5">
                   <Field label="PLZ" required error={plzError}>
                     <input
                       type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      maxLength={5}
                       value={form.plz}
-                      onChange={(e) => {
-                        update("plz", e.target.value);
-                        if (e.target.value.length === 5) validatePlz(e.target.value);
-                      }}
-                      autoComplete="postal-code"
-                      placeholder="52062"
-                      className={`input ${plzError ? "border-burgundy" : ""}`}
+                      readOnly
+                      className="input opacity-50 cursor-not-allowed"
                     />
                   </Field>
                   <Field label="Stadt">
@@ -376,6 +464,102 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
 
           {/* Footer CTA */}
           <footer className="border-t border-line bg-cream pt-3 px-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom, 16px), 16px)" }}>
+            {step === "plz-check" && (
+              <div className="text-center py-2">
+                <div
+                  className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-3"
+                  style={{
+                    background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)",
+                    boxShadow: "0 8px 20px rgba(74,94,74,0.3)",
+                  }}
+                >
+                  <MapPin size={28} className="text-gold" strokeWidth={2.5} />
+                </div>
+                <h2
+                  className="font-display font-black text-sage-dark leading-tight"
+                  style={{ fontSize: "22px", letterSpacing: "-0.02em" }}
+                >
+                  Liefern wir <em className="italic text-sage">zu dir?</em>
+                </h2>
+                <p className="text-[13px] text-sage-dark/65 mt-1.5 max-w-[260px] mx-auto leading-snug">
+                  Lass uns kurz schauen ob wir in deiner Region liefern.
+                </p>
+
+                <div className="mt-5 max-w-[260px] mx-auto">
+                  <label className="block">
+                    <div className="text-left text-[10.5px] font-extrabold tracking-wide uppercase text-sage-dark/65 mb-1.5">
+                      Deine Postleitzahl
+                    </div>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={5}
+                      autoFocus
+                      value={form.plz}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, "").slice(0, 5);
+                        update("plz", v);
+                        if (v.length === 5) {
+                          if (VALID_PLZ.includes(v)) {
+                            setPlzError("");
+                            setPlzChecked(true);
+                          } else {
+                            setPlzError(`Leider liegt ${v} außerhalb unseres Liefergebiets (Aachen)`);
+                            setPlzChecked(false);
+                          }
+                        } else {
+                          setPlzError("");
+                          setPlzChecked(false);
+                        }
+                      }}
+                      placeholder="52062"
+                      className={`input text-center font-display text-2xl font-black tracking-[8px] tabular-nums ${plzError ? "border-burgundy" : plzChecked ? "border-sage" : ""}`}
+                      style={{ padding: "14px 12px" }}
+                    />
+                  </label>
+
+                  {plzChecked && (
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-sage font-bold text-[13px] animate-[reveal-up_0.3s_ease-out]">
+                      <CheckCircle2 size={16} fill="currentColor" className="text-sage" />
+                      <span>Andiamo! Wir liefern zu dir 🍝</span>
+                    </div>
+                  )}
+
+                  {plzError && (
+                    <div className="mt-3 text-burgundy font-semibold text-[12px] leading-snug">
+                      {plzError}
+                    </div>
+                  )}
+
+                  {!plzChecked && !plzError && (
+                    <div className="mt-3 text-[11.5px] text-sage-dark/55">
+                      Aachen Innenstadt + Umkreis (PLZ 52062–52080)
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {step === "plz-check" && (
+              <button
+                onClick={next}
+                disabled={!plzChecked}
+                className={`w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] ${
+                  plzChecked
+                    ? "text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)]"
+                    : "bg-mint-deep/60 text-sage-dark/40 cursor-not-allowed"
+                }`}
+                style={
+                  plzChecked
+                    ? { background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)" }
+                    : undefined
+                }
+              >
+                {plzChecked ? "Weiter zur Lieferadresse" : "PLZ eingeben"}
+                <ChevronRight size={18} />
+              </button>
+            )}
             {step === "lieferung" && (
               <button
                 onClick={next}
