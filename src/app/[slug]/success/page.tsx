@@ -1,38 +1,30 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
-import { TrackingScreen } from "@/components/storefront/TrackingScreen";
 import { loadFrankyBundle } from "@/lib/load-tenant";
+import { SuccessClient } from "./SuccessClient";
 
-export default function SuccessPage() {
-  const params = useParams();
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get("order_id") ?? "—";
-  const [deliveryMin, setDeliveryMin] = useState(28);
-  const [showTracking, setShowTracking] = useState(true);
+export const dynamic = "force-dynamic";
 
-  useEffect(() => {
-    const slug = typeof params.slug === "string" ? params.slug : Array.isArray(params.slug) ? params.slug[0] : "frankys-pasta";
-    loadFrankyBundle(slug).then((bundle) => {
-      setDeliveryMin(bundle.tenant.durchschnittliche_lieferzeit_min);
-    });
-  }, [params.slug]);
+interface PageProps {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ order_id?: string }>;
+}
 
-  if (!showTracking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-bone">
-        <a href=".." className="text-sage font-bold underline">Zurück zur Speisekarte</a>
-      </div>
-    );
+export default async function SuccessPage({ params, searchParams }: PageProps) {
+  const { slug } = await params;
+  const { order_id } = await searchParams;
+
+  let deliveryMin = 28;
+  try {
+    const bundle = await loadFrankyBundle(decodeURIComponent(slug));
+    deliveryMin = bundle.tenant.durchschnittliche_lieferzeit_min;
+  } catch {
+    // fallback to default
   }
 
   return (
-    <TrackingScreen
-      orderId={orderId}
-      customerName=""
+    <SuccessClient
+      orderId={order_id ?? "—"}
       deliveryTimeMin={deliveryMin}
-      onClose={() => setShowTracking(false)}
+      backHref={`/biss-app/${slug}`}
     />
   );
 }

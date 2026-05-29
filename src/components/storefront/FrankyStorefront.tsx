@@ -23,16 +23,17 @@ import { ScrollToTop } from "./ScrollToTop";
 import { RevealSection } from "./RevealSection";
 import { ImpressumModal, DatenschutzModal, LiefergebietModal, AllergeneModal } from "./LegalModals";
 import { DietFilter } from "./DietFilter";
-import type { DietTag } from "@/lib/types";
+import type { DietTag, PaymentMethod } from "@/lib/types";
 
 interface Props {
   tenant: Tenant;
   categories: Category[];
   products: Product[];
   bestsellers: string[];
+  paymentMethods?: PaymentMethod[];
 }
 
-export function FrankyStorefront({ tenant, categories, products, bestsellers }: Props) {
+export function FrankyStorefront({ tenant, categories, products, bestsellers, paymentMethods }: Props) {
   const [sheetProduct, setSheetProduct] = useState<Product | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -211,6 +212,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
         }}
         productMap={productMap}
         tenant={tenant}
+        paymentMethods={paymentMethods}
       />
       <SearchOverlay
         open={searchOpen}

@@ -51,6 +51,13 @@
 - **CustomerName im Tracking** → `onComplete(orderId, customerName)` übergibt Namen aus Checkout-Formular
 - **Mindestbestellwert-Guard** → `submit()` in CheckoutModal prüft subtotal < mindestbestellwert und zeigt Fehler
 
+## Phase 7: Agent-Fixes ✅ (2026-05-29)
+- **PaymentMethods flow-through**: `loadFrankyBundle` liefert echte Zahlungsarten aus Supabase (`tenant_payment_methods`), die jetzt per Props bis zum `CheckoutModal` durchgereicht werden (bisher immer MOCK_PAYMENT_METHODS)
+- **TopBar Bonus-Club-Bar**: Schmale dunkelgrüne Bar (Row 1) über dem Hauptnav — "★ FRANKY'S BONUS-CLUB · Jede 2. Bestellung gratis →" — öffnet Bonus-Modal per `onBonusOpen`
+- **ProductCard Bild 300px**: `h-[240px]` → `h-[300px]` entsprechend dem Mockup-Briefing
+- **success/page.tsx refactored**: Server-Component lädt `deliveryMin` serverseitig und übergibt es an Client-Child `SuccessClient.tsx` (kein `loadFrankyBundle` mehr im Browser)
+- **defaultPayment dynamisch**: Checkout-Formular wählt erste aktivierte Zahlungsart statt hardcoded "paypal"
+
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
 - [ ] Echte Produktbilder in der Supabase DB eintragen (`bild_url`)

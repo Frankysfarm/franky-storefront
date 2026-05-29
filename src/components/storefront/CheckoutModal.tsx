@@ -14,13 +14,16 @@ interface Props {
   onComplete: (orderId: string, customerName: string) => void;
   productMap: Map<string, Product>;
   tenant: Tenant;
+  paymentMethods?: PaymentMethod[];
 }
 
 type Step = "plz" | "address" | "contact" | "payment" | "review";
 const STEPS: Step[] = ["plz", "address", "contact", "payment", "review"];
 
-export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }: Props) {
+export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, paymentMethods }: Props) {
+  const activePaymentMethods = (paymentMethods ?? MOCK_PAYMENT_METHODS).filter((pm) => pm.enabled_lieferung);
   const [step, setStep] = useState<Step>("plz");
+  const defaultPayment = (paymentMethods ?? MOCK_PAYMENT_METHODS).find((pm) => pm.enabled_lieferung)?.method ?? "bar";
   const [form, setForm] = useState<CheckoutForm>({
     plz: "",
     strasse: "",
@@ -29,7 +32,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
     name: "",
     telefon: "",
     email: "",
-    zahlungsart: "paypal",
+    zahlungsart: defaultPayment,
     anmerkung: "",
   });
   const [plzError, setPlzError] = useState("");
@@ -354,7 +357,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant }:
                 <p className="text-sm text-muted mb-4">Wähle deine bevorzugte Zahlungsart.</p>
 
                 <div className="grid grid-cols-2 gap-2">
-                  {MOCK_PAYMENT_METHODS.map((pm) => (
+                  {activePaymentMethods.map((pm) => (
                     <label
                       key={pm.method}
                       className={`flex items-center gap-2 p-3 rounded-xl cursor-pointer border transition-all ${

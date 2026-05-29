@@ -27,6 +27,7 @@ export default async function TenantPage({ params }: PageProps) {
       categories={bundle.categories}
       products={bundle.products}
       bestsellers={bundle.bestsellers}
+      paymentMethods={bundle.paymentMethods}
     />
   );
 }
