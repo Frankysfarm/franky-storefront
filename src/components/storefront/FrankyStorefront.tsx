@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 import type { Product, Category, Tenant } from "@/lib/types";
 import { useCartStore } from "@/lib/store";
 import { buildProductMap } from "@/lib/mock-data";
-import { formatPriceRaw } from "@/lib/format";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
@@ -112,6 +111,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         topProducts={topProducts}
         onAdd={handleAddDirect}
       />
+
+      <DietFilter active={dietFilter} onChange={setDietFilter} />
 
       <CategoryNav categories={categories} />
 
@@ -314,37 +315,6 @@ function BonusModal({ open, onClose }: { open: boolean; onClose: () => void }) {
           </p>
         </div>
       </div>
-    </div>
-  );
-}
-
-function MobileCartFab({
-  onOpen,
-  productMap,
-}: {
-  onOpen: () => void;
-  productMap: Map<string, Product>;
-  tenant: Tenant;
-}) {
-  const totalItems = useCartStore((s) => s.totalItems());
-  const subtotal = useCartStore((s) => s.subtotal(productMap));
-
-  if (totalItems === 0) return null;
-
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden px-4 pb-5 pt-2 bg-gradient-to-t from-cream via-cream/95 to-transparent pointer-events-none">
-      <button
-        onClick={onOpen}
-        className="pointer-events-auto w-full h-14 bg-sage text-white rounded-2xl flex items-center justify-between px-5 shadow-lg hover:bg-sage-hover transition-colors"
-      >
-        <div className="flex items-center gap-2">
-          <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-xs font-bold">
-            {totalItems}
-          </span>
-          <span className="font-bold">Warenkorb</span>
-        </div>
-        <span className="font-bold tabular-nums">{formatPriceRaw(subtotal)}</span>
-      </button>
     </div>
   );
 }
