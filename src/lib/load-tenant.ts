@@ -118,7 +118,7 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
       beliebt: item.beliebt,
       tags: item.tags ?? [],
       badges: item.beliebt ? ["star"] : [],
-      rating: 4.5 + Math.random() * 0.4,
+      rating: 4.5 + ((item.id.charCodeAt(0) ?? 0) % 10) * 0.04,
       sort_order: item.sort_order ?? 0,
       option_groups: (item.option_groups as OptionGroup[]) ?? null,
     }));

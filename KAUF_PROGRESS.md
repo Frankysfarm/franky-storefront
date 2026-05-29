@@ -62,7 +62,16 @@
 - **DietFilter gerendert**: `<DietFilter>` war in `FrankyStorefront.tsx` importiert und im State verdrahtet, aber nie gerendert — Diet-Filterung war komplett kaputt. Jetzt zwischen WelcomeBanner und CategoryNav eingefügt.
 - **Dead Code entfernt**: `MobileCartFab`-Funktion (war durch `StickyCart` ersetzt, nie aufgerufen) und deren verwaister `formatPriceRaw`-Import entfernt.
 
+## Phase 9: Analyse + Rating-Fix ✅ (2026-05-29)
+- **Vollständige Analyse**: Alle Phasen 1-8 bestätigt abgeschlossen — Build ✅, TypeScript ✅, kein Dead Code
+- **Deterministische Ratings**: `Math.random()` in `load-tenant.ts` ersetzt durch deterministischen Wert aus Produkt-ID-Hash — kein Rating-Flackern mehr zwischen Server-Requests
+- **Geprüft**: CrossSell ✅, DietFilter ✅, WelcomePopup ✅, TrackingScreen ✅, SuccessPage ✅, CartDrawer→CheckoutModal→Tracking ✅
+- **Geprüft**: SQL-Seed-Produkt-IDs stimmen mit TOP3_IDS/BESTSELLER_IDS überein (PAS-001/003, SID-002) ✅
+- **Geprüft**: Alle 41 Produktbilder in `/public/bilder/` vorhanden ✅
+- **Geprüft**: `free_delivery_threshold: 25` korrekt hardcoded (kein DB-Feld) ✅
+
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
-- [ ] Echte Produktbilder in der Supabase DB eintragen (`bild_url`)
-- [ ] Stripe-API: success_url auf `/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
+- [ ] Echte Produktbilder in Supabase Storage hochladen (bild_url auf volle CDN-URLs zeigen)
+- [ ] Stripe-API: success_url auf `/biss-app/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
+- [ ] `free_delivery_threshold` als Spalte in `tenants`-Tabelle und in select-Query
