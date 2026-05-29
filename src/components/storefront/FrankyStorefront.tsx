@@ -10,6 +10,7 @@ import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
 import { DeliveryInfoBand } from "./DeliveryInfoBand";
+import { WelcomePopup } from "./WelcomePopup";
 import { StickyCart } from "./StickyCart";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
@@ -44,6 +45,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
   const [allergeneOpen, setAllergeneOpen] = useState(false);
   const [dietFilter, setDietFilter] = useState<DietTag | "all">("all");
   const addItem = useCartStore((s) => s.addItem);
+  const drinkProducts = useMemo(() => products.filter(p => p.category_id && categories.find(c => c.id === p.category_id)?.name?.toLowerCase().includes("drink")), [products, categories]);
 
   // Detect Stripe success redirect: ?order_id=xxx
   useEffect(() => {
@@ -92,6 +94,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers }: 
 
   return (
     <div className="min-h-screen pb-32 sm:pb-28">
+      <WelcomePopup drinks={drinkProducts} />
       <TopBar
         tenant={tenant}
         onCartOpen={() => setCartOpen(true)}
