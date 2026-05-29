@@ -8,7 +8,6 @@ import { buildProductMap } from "@/lib/mock-data";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
-import { DeliveryInfoBand } from "./DeliveryInfoBand";
 import { WelcomePopup } from "./WelcomePopup";
 import { StickyCart } from "./StickyCart";
 import { CategoryNav } from "./CategoryNav";
@@ -101,8 +100,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         onSearchOpen={() => setSearchOpen(true)}
         onBonusOpen={() => setBonusOpen(true)}
       />
-
-      <DeliveryInfoBand tenant={tenant} />
 
       <LoyaltyCard filled={3} total={5} />
 
