@@ -7,6 +7,7 @@ import { useCartStore } from "@/lib/store";
 import { buildProductMap } from "@/lib/mock-data";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
+import { BestsellerRail } from "./BestsellerRail";
 import { LoyaltyCard } from "./LoyaltyCard";
 import { WelcomePopup } from "./WelcomePopup";
 import { StickyCart } from "./StickyCart";
@@ -101,11 +102,17 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         onBonusOpen={() => setBonusOpen(true)}
       />
 
-      <LoyaltyCard filled={3} total={5} />
+      <LoyaltyCard filled={3} total={5} onClick={() => setBonusOpen(true)} />
 
       <WelcomeBanner
         tenant={tenant}
         topProducts={topProducts}
+        onAdd={handleAddDirect}
+      />
+
+      <BestsellerRail
+        products={products}
+        bestsellers={bestsellers}
         onAdd={handleAddDirect}
       />
 
@@ -129,10 +136,10 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                   No. {num}
                 </span>
                 <h2
-                  className="font-display font-black text-sage-dark"
+                  className="font-display font-black italic text-sage-dark"
                   style={{ fontSize: "clamp(26px, 3.5vw, 38px)", letterSpacing: "-0.025em", lineHeight: 1 }}
                 >
-                  {cat.icon && <span>{cat.icon} </span>}
+                  {cat.icon && <span className="not-italic">{cat.icon} </span>}
                   {cat.name}
                 </h2>
                 <div className="flex-1 hidden sm:block" style={{ borderBottom: "1.5px solid var(--color-cream-deep)", marginBottom: "4px" }} />
