@@ -102,7 +102,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         onBonusOpen={() => setBonusOpen(true)}
       />
 
-      <LoyaltyCard filled={3} total={5} onClick={() => setBonusOpen(true)} />
+      <LoyaltyCard filled={1} total={2} onClick={() => setBonusOpen(true)} />
 
       <WelcomeBanner
         tenant={tenant}

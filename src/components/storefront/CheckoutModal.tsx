@@ -65,9 +65,10 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   const currentIdx = STEPS.indexOf(step);
   const update = (k: keyof CheckoutForm, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
+  const isValidPlz = (plz: string) => plz.trim().length > 0 && VALID_PLZ.includes(plz.trim());
+
   const validatePlz = (plz: string) => {
-    if (!plz.trim()) return false;
-    if (!VALID_PLZ.includes(plz.trim())) {
+    if (!plz.trim() || !VALID_PLZ.includes(plz.trim())) {
       setPlzError(`PLZ ${plz} liegt außerhalb unseres Liefergebiets (Aachen)`);
       return false;
     }
@@ -78,7 +79,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   const canProceedLieferung =
     form.name.trim().length >= 2 &&
     form.telefon.replace(/\D/g, "").length >= 6 &&
-    validatePlz(form.plz) &&
+    isValidPlz(form.plz) &&
     form.strasse.trim().length >= 3;
 
   const next = () => {

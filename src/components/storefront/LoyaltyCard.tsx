@@ -86,7 +86,7 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick }: Props) {
               className="not-italic font-black italic"
               style={{ color: "var(--color-gold)" }}
             >
-              5. Bestellung
+              2. Bestellung
             </em>{" "}
             = 1 Pasta gratis
           </div>
