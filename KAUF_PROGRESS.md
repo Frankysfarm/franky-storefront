@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — commit 113df0e, 2026-05-30)
 
 ---
 
@@ -69,6 +69,18 @@
 - **Geprüft**: SQL-Seed-Produkt-IDs stimmen mit TOP3_IDS/BESTSELLER_IDS überein (PAS-001/003, SID-002) ✅
 - **Geprüft**: Alle 41 Produktbilder in `/public/bilder/` vorhanden ✅
 - **Geprüft**: `free_delivery_threshold: 25` korrekt hardcoded (kein DB-Feld) ✅
+
+## Phase 10: Kauf-Fertig-Verification ✅ (2026-05-30)
+- **CheckoutModal.placeOrder war NOCH MOCK** — trotz KAUF_PROGRESS Eintrag war der Code nie aktualisiert worden
+- **JETZT ECHT**: customer_orders + order_items INSERT via Supabase Anon-Client
+- **JETZT ECHT**: Stripe-Redirect via mise-gastro.de/api/checkout/create-session (bei non-bar Zahlung)
+- **JETZT ECHT**: Email-Outbox fire-and-forget nach Order-Erstellung
+- **JETZT ECHT**: orderError-State mit inline Anzeige oberhalb des CTA-Buttons
+- **BUG FIXED**: Duplikat-PLZ-Formular im Footer entfernt (war in Body UND Footer gerendert)
+- **BUG FIXED**: Duplikat-UpsellStep im Footer entfernt
+- **BUG FIXED**: Typo h-13 h-14 → h-14 im Lieferung-Button
+- **DietFilter**: War importiert aber nie gerendert — jetzt zwischen WelcomeBanner und CategoryNav
+- **TopBar**: Bonus-Club-Bar (Row 1) implementiert und über Main-Nav eingefügt
 
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
