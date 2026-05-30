@@ -2,9 +2,10 @@
 
 import { useState, useMemo } from "react";
 import { UpsellStep } from "./UpsellStep";
-import { X, ArrowLeft, MapPin, CreditCard, Banknote, Apple, CheckCircle2, ChevronRight } from "lucide-react";
+import { X, ArrowLeft, MapPin, Apple, CheckCircle2, ChevronRight } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
+import { getClientSupabase } from "@/lib/supabase";
 import type { Product, Tenant, CheckoutForm, PaymentMethod } from "@/lib/types";
 import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 
@@ -51,6 +52,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   });
   const [plzError, setPlzError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [orderError, setOrderError] = useState("");
 
   if (!open) return null;
 
@@ -83,12 +85,75 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   };
 
   const placeOrder = async () => {
+    if (subtotal < tenant.mindestbestellwert) {
+      setOrderError(`Mindestbestellwert ${formatPriceRaw(tenant.mindestbestellwert)} nicht erreicht.`);
+      return;
+    }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    const orderId = `FR-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
-    clearCart();
-    onComplete(orderId, form.name);
-    setLoading(false);
+    setOrderError("");
+    try {
+      const sb = getClientSupabase();
+      const adresse = [form.strasse, form.hausnummer, form.etage].filter(Boolean).join(", ");
+
+      const { data: order, error: orderErr } = await sb
+        .from("customer_orders")
+        .insert({
+          location_id: tenant.location_id,
+          typ: "lieferung",
+          kunde_name: form.name,
+          kunde_telefon: form.telefon,
+          kunde_email: form.email || null,
+          kunde_adresse: adresse,
+          kunde_plz: form.plz,
+          zwischensumme: subtotal,
+          liefergebuehr: deliveryFee,
+          gesamtbetrag: grandTotal,
+          zahlungsart: form.zahlungsart,
+        })
+        .select("id,bestellnummer")
+        .single();
+
+      if (orderErr || !order) {
+        throw new Error(orderErr?.message ?? "Bestellung konnte nicht gespeichert werden.");
+      }
+
+      const orderItems = items.map((item) => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        product_name: item.product.name,
+        menge: item.qty,
+        einzelpreis: item.unitPrice,
+        gesamtpreis: item.lineTotal,
+        optionen: item.selections ?? null,
+      }));
+
+      await sb.from("order_items").insert(orderItems);
+
+      // Fire email outbox (fire-and-forget)
+      fetch("https://mise-gastro.de/api/email/process-outbox", { method: "POST" }).catch(() => {});
+
+      if (form.zahlungsart !== "bar") {
+        const res = await fetch("https://mise-gastro.de/api/checkout/create-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_id: order.id }),
+        });
+        if (res.ok) {
+          const { url } = await res.json();
+          if (url) {
+            window.location.href = url;
+            return;
+          }
+        }
+      }
+
+      clearCart();
+      onComplete(String(order.bestellnummer ?? order.id), form.name);
+    } catch (err) {
+      setOrderError(err instanceof Error ? err.message : "Fehler beim Bestellen. Bitte erneut versuchen.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -465,83 +530,6 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
           {/* Footer CTA */}
           <footer className="border-t border-line bg-cream pt-3 px-5" style={{ paddingBottom: "max(env(safe-area-inset-bottom, 16px), 16px)" }}>
             {step === "plz-check" && (
-              <div className="text-center py-2">
-                <div
-                  className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-3"
-                  style={{
-                    background: "linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-hover) 100%)",
-                    boxShadow: "0 8px 20px rgba(74,94,74,0.3)",
-                  }}
-                >
-                  <MapPin size={28} className="text-gold" strokeWidth={2.5} />
-                </div>
-                <h2
-                  className="font-display font-black text-sage-dark leading-tight"
-                  style={{ fontSize: "22px", letterSpacing: "-0.02em" }}
-                >
-                  Liefern wir <em className="italic text-sage">zu dir?</em>
-                </h2>
-                <p className="text-[13px] text-sage-dark/65 mt-1.5 max-w-[260px] mx-auto leading-snug">
-                  Lass uns kurz schauen ob wir in deiner Region liefern.
-                </p>
-
-                <div className="mt-5 max-w-[260px] mx-auto">
-                  <label className="block">
-                    <div className="text-left text-[10.5px] font-extrabold tracking-wide uppercase text-sage-dark/65 mb-1.5">
-                      Deine Postleitzahl
-                    </div>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      maxLength={5}
-                      autoFocus
-                      value={form.plz}
-                      onChange={(e) => {
-                        const v = e.target.value.replace(/\D/g, "").slice(0, 5);
-                        update("plz", v);
-                        if (v.length === 5) {
-                          if (VALID_PLZ.includes(v)) {
-                            setPlzError("");
-                            setPlzChecked(true);
-                          } else {
-                            setPlzError(`Leider liegt ${v} außerhalb unseres Liefergebiets (Aachen)`);
-                            setPlzChecked(false);
-                          }
-                        } else {
-                          setPlzError("");
-                          setPlzChecked(false);
-                        }
-                      }}
-                      placeholder="52062"
-                      className={`input text-center font-display text-2xl font-black tracking-[8px] tabular-nums ${plzError ? "border-burgundy" : plzChecked ? "border-sage" : ""}`}
-                      style={{ padding: "14px 12px" }}
-                    />
-                  </label>
-
-                  {plzChecked && (
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-sage font-bold text-[13px] animate-[reveal-up_0.3s_ease-out]">
-                      <CheckCircle2 size={16} fill="currentColor" className="text-sage" />
-                      <span>Andiamo! Wir liefern zu dir 🍝</span>
-                    </div>
-                  )}
-
-                  {plzError && (
-                    <div className="mt-3 text-burgundy font-semibold text-[12px] leading-snug">
-                      {plzError}
-                    </div>
-                  )}
-
-                  {!plzChecked && !plzError && (
-                    <div className="mt-3 text-[11.5px] text-sage-dark/55">
-                      Aachen Innenstadt + Umkreis (PLZ 52062–52080)
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {step === "plz-check" && (
               <button
                 onClick={next}
                 disabled={!plzChecked}
@@ -564,7 +552,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
               <button
                 onClick={next}
                 disabled={!canProceedLieferung}
-                className={`w-full h-13 h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] ${
+                className={`w-full h-14 rounded-2xl font-bold text-[15px] flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] ${
                   canProceedLieferung
                     ? "text-white shadow-[0_10px_28px_-8px_rgba(74,94,74,0.55)]"
                     : "bg-mint-deep/60 text-sage-dark/40 cursor-not-allowed"
@@ -599,14 +587,12 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                 <ChevronRight size={18} />
               </button>
             )}
-            {step === "upsell" && (
-              <UpsellStep
-                allProducts={allProducts}
-                productMap={productMap}
-                onSkip={next}
-              />
-            )}
 
+            {step === "review" && orderError && (
+              <div className="mb-3 px-4 py-2.5 rounded-xl bg-burgundy/10 border border-burgundy/30 text-burgundy text-[12px] font-semibold leading-snug">
+                {orderError}
+              </div>
+            )}
             {step === "review" && (
               <button
                 onClick={placeOrder}

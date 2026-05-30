@@ -109,6 +109,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         onAdd={handleAddDirect}
       />
 
+      <DietFilter active={dietFilter} onChange={setDietFilter} />
+
       <CategoryNav categories={categories} />
 
       {/* Product Sections */}

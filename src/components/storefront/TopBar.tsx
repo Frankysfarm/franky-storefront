@@ -32,6 +32,17 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         WebkitBackdropFilter: "saturate(180%) blur(12px)",
       }}
     >
+      {/* Row 1: Bonus-Club Bar */}
+      <button
+        onClick={onBonusOpen}
+        className="w-full flex items-center justify-center gap-2 py-1.5 text-[11px] font-bold tracking-wide text-gold hover:opacity-90 transition-opacity"
+        style={{ background: "var(--color-sage-dark)" }}
+      >
+        <span>★ FRANKY&apos;S BONUS-CLUB</span>
+        <span className="opacity-50">·</span>
+        <span>Jede 2. Bestellung gratis →</span>
+      </button>
+
       {/* Row 2: Main Nav Bar */}
       <div
         className={`transition-colors duration-250 ${
