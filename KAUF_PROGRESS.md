@@ -91,6 +91,11 @@
 - **FIX**: Apple-Pay Quick-Button nur sichtbar wenn apple_pay in den aktivierten Methoden
 - **FIX**: Review-Schritt zeigt korrektes Zahlungsart-Label aus echten Methoden
 
+## Phase 12: Bugfix-Runde ✅ (2026-05-30)
+- **Fraunces Italic**: Google Fonts URL fehlte `ital`-Achse → Browser nutzte synthetisches Oblique. Fix: `ital,opsz,wght@0,...;1,...` geladen
+- **canProceedLieferung Side-Effect**: `validatePlz()` wurde während Render aufgerufen und setzte State (`setPlzError`) → React Anti-Pattern. Fix: Neuer pure Helper `isValidPlz()` für die disabled-Logik; `validatePlz()` nur noch bei explizitem User-Action
+- **LoyaltyCard Widerspruch**: Zeigte "Jede 5. Bestellung = 1 Pasta gratis" (5/5 Zyklus) obwohl TopBar + BonusModal "Jede 2. Bestellung gratis" sagen. Fix: Text auf "2. Bestellung" und `filled=1 total=2` geändert
+
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
 - [ ] Echte Produktbilder in Supabase Storage hochladen (bild_url auf volle CDN-URLs zeigen)
