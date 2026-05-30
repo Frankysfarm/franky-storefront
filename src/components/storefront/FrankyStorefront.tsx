@@ -8,6 +8,7 @@ import { buildProductMap } from "@/lib/mock-data";
 import { TopBar } from "./TopBar";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { LoyaltyCard } from "./LoyaltyCard";
+import { ThemeWrap } from "./ThemeWrap";
 import { WelcomePopup } from "./WelcomePopup";
 import { StickyCart } from "./StickyCart";
 import { CategoryNav } from "./CategoryNav";
@@ -92,6 +93,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
   };
 
   return (
+    <ThemeWrap primaryColor={tenant.theme_primary} accentColor={tenant.theme_accent}>
     <div className="min-h-screen pb-32 sm:pb-28">
       <WelcomePopup
         drinks={drinkProducts}
