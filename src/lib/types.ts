@@ -80,6 +80,12 @@ export interface Tenant {
   liefergebuehr: number;
   free_delivery_threshold: number;
   durchschnittliche_lieferzeit_min: number;
+  storefront_settings?: {
+    welcome_popup?: { enabled?: boolean; title?: string; title_emphasis?: string; subtitle?: string; free_product_ids?: string[]; delay_ms?: number; };
+    loyalty?: { enabled?: boolean; target_stamps?: number; current_stamps?: number; reward_title?: string; reward_text?: string; };
+    hero?: { badge?: string; title?: string; title_italic?: string; };
+    delivery?: { min_minutes?: number; max_minutes?: number; };
+  };
   telefon: string | null;
   adresse: string | null;
   stadt: string | null;

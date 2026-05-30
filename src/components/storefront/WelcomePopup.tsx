@@ -7,25 +7,38 @@ import { useCartStore } from "@/lib/store";
 
 interface Props {
   drinks: Product[];
+  allProducts?: Product[];
+  settings?: {
+    enabled?: boolean;
+    title?: string;
+    title_emphasis?: string;
+    subtitle?: string;
+    free_product_ids?: string[];
+    delay_ms?: number;
+  };
 }
 
 const STORAGE_KEY = "franky_free_drink_chosen";
 
-export function WelcomePopup({ drinks }: Props) {
+export function WelcomePopup({ drinks, allProducts, settings }: Props) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [claimed, setClaimed] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
 
   useEffect(() => {
+    if (settings?.enabled === false) return;
     const already = typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY);
     if (already) return;
-    const t = setTimeout(() => setOpen(true), 1500);
+    const t = setTimeout(() => setOpen(true), settings?.delay_ms ?? 1500);
     return () => clearTimeout(t);
   }, []);
 
-  if (drinks.length < 4) return null;
-  const choices = drinks.slice(0, 4);
+  const customProductIds = settings?.free_product_ids ?? [];
+  const choices = customProductIds.length > 0 && allProducts
+    ? (customProductIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean) as Product[])
+    : drinks.slice(0, 4);
+  if (choices.length < 1) return null;
 
   const close = () => {
     sessionStorage.setItem(STORAGE_KEY, "skipped");
@@ -96,15 +109,15 @@ export function WelcomePopup({ drinks }: Props) {
               className="text-[9px] font-extrabold tracking-[1.5px]"
               style={{ color: "var(--color-gold)" }}
             >
-              GESCHENK FÜR DICH
+              {(settings?.title || settings?.title_emphasis) ? "GESCHENK FÜR DICH" : "GESCHENK FÜR DICH"}
             </div>
             <div
               className="font-display font-black leading-tight mt-0.5"
               style={{ fontSize: "16px", letterSpacing: "-0.01em" }}
             >
-              1 Getränk{" "}
+              {settings?.title ?? "1 Getränk"}{" "}
               <em className="not-italic italic" style={{ color: "var(--color-gold)" }}>
-                gratis 🍝
+                {settings?.title_emphasis ?? "gratis 🍝"}
               </em>
             </div>
           </div>

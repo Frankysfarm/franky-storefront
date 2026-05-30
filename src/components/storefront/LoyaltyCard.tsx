@@ -4,9 +4,13 @@ interface Props {
   filled?: number;
   total?: number;
   onClick?: () => void;
+  rewardTitle?: string;
+  rewardText?: string;
+  enabled?: boolean;
 }
 
-export function LoyaltyCard({ filled = 3, total = 5, onClick }: Props) {
+export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewardText, enabled = true }: Props) {
+  if (!enabled) return null;
   const progressPercent = (filled / total) * 100;
 
   return (
@@ -81,14 +85,11 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick }: Props) {
             className="font-display font-extrabold leading-tight text-white mb-3"
             style={{ fontSize: "clamp(14px, 2vw, 17px)", letterSpacing: "-0.02em" }}
           >
-            Jede{" "}
-            <em
-              className="not-italic font-black italic"
-              style={{ color: "var(--color-gold)" }}
-            >
-              5. Bestellung
-            </em>{" "}
-            = 1 Pasta gratis
+            {(rewardTitle ?? "Jede 5. Bestellung").split(/(\d+\.\s*Bestellung)/).map((part, i) =>
+              /\d+\.\s*Bestellung/.test(part) ? (
+                <em key={i} className="not-italic font-black italic" style={{ color: "var(--color-gold)" }}>{part}</em>
+              ) : part
+            )}{" = "}{rewardText ?? "1 Pasta gratis"}
           </div>
 
           {/* Progress bar with milestones */}

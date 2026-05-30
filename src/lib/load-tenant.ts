@@ -27,7 +27,7 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
 
     const { data: tenantRow, error: tenantErr } = await sb
       .from("tenants")
-      .select("id,slug,name,theme_primary,theme_accent,hero_image_url,logo_url,durchschnittliche_lieferzeit_min,mindestbestellwert,liefergebuehr")
+      .select("id,slug,name,theme_primary,theme_accent,hero_image_url,logo_url,durchschnittliche_lieferzeit_min,mindestbestellwert,liefergebuehr,free_delivery_threshold,storefront_settings")
       .eq("slug", slug)
       .maybeSingle();
 

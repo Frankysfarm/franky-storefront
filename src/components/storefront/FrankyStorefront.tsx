@@ -93,7 +93,11 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
 
   return (
     <div className="min-h-screen pb-32 sm:pb-28">
-      <WelcomePopup drinks={drinkProducts} />
+      <WelcomePopup
+        drinks={drinkProducts}
+        allProducts={products}
+        settings={tenant.storefront_settings?.welcome_popup}
+      />
       <TopBar
         tenant={tenant}
         onCartOpen={() => setCartOpen(true)}
@@ -101,12 +105,19 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         onBonusOpen={() => setBonusOpen(true)}
       />
 
-      <LoyaltyCard filled={3} total={5} />
+      <LoyaltyCard
+        filled={tenant.storefront_settings?.loyalty?.current_stamps ?? 3}
+        total={tenant.storefront_settings?.loyalty?.target_stamps ?? 5}
+        rewardTitle={tenant.storefront_settings?.loyalty?.reward_title}
+        rewardText={tenant.storefront_settings?.loyalty?.reward_text}
+        enabled={tenant.storefront_settings?.loyalty?.enabled !== false}
+      />
 
       <WelcomeBanner
         tenant={tenant}
         topProducts={topProducts}
         onAdd={handleAddDirect}
+        heroSettings={tenant.storefront_settings?.hero}
       />
 
       <DietFilter active={dietFilter} onChange={setDietFilter} />

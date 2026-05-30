@@ -7,9 +7,10 @@ interface Props {
   tenant: Tenant;
   topProducts: Product[];
   onAdd: (product: Product) => void;
+  heroSettings?: { badge?: string; title?: string; title_italic?: string; };
 }
 
-export function WelcomeBanner({ topProducts, onAdd }: Props) {
+export function WelcomeBanner({ topProducts, onAdd, heroSettings }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
@@ -23,14 +24,14 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
           {/* Left: Title + Subtext */}
           <div className="flex-shrink-0 sm:w-[260px]">
             <span className="inline-block text-[10px] sm:text-[11px] font-extrabold tracking-[1.4px] sm:tracking-[1.8px] text-burgundy-dark mb-1.5 sm:mb-2">
-              ✦ DIESE WOCHE TRENDING
+              {heroSettings?.badge ?? "✦ DIESE WOCHE TRENDING"}
             </span>
             <h2
               className="font-display font-black leading-[1.02] text-sage-dark"
               style={{ fontSize: "clamp(20px, 4vw, 42px)", letterSpacing: "-0.02em" }}
             >
-              Mamma Mia —{" "}
-              <span className="italic text-sage">die Top&nbsp;5</span>
+              {heroSettings?.title ?? "Mamma Mia —"}{" "}
+              <span className="italic text-sage">{heroSettings?.title_italic ?? "die Top 5"}</span>
             </h2>
             <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug hidden sm:block">
               Was Aachen aktuell am liebsten bestellt.
