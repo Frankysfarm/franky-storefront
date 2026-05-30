@@ -120,8 +120,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         heroSettings={tenant.storefront_settings?.hero}
       />
 
-      <DietFilter active={dietFilter} onChange={setDietFilter} />
-
       <CategoryNav categories={categories} />
 
       {/* Product Sections */}
