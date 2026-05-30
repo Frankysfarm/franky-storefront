@@ -94,7 +94,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
 
   return (
     <ThemeWrap primaryColor={tenant.theme_primary} accentColor={tenant.theme_accent}>
-    <div className="min-h-screen pb-32 sm:pb-28">
+    <div className="min-h-screen" style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 112px)" }}>
       <WelcomePopup
         drinks={drinkProducts}
         allProducts={products}
@@ -248,6 +248,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
       <LiefergebietModal open={liefergebietOpen} onClose={() => setLiefergebietOpen(false)} />
       <AllergeneModal open={allergeneOpen} onClose={() => setAllergeneOpen(false)} />
     </div>
+    </ThemeWrap>
   );
 }
 

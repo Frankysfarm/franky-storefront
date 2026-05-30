@@ -28,7 +28,7 @@ export function StickyCart({ onOpen, productMap, tenant }: Props) {
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none"
-      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      style={{ paddingBottom: "max(env(safe-area-inset-bottom), 12px)" }}
     >
       {/* Gradient fade above */}
       <div

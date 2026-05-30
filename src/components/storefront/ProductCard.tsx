@@ -68,7 +68,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
             e.stopPropagation();
             setLiked(!liked);
           }}
-          className={`absolute top-3 right-3 z-10 w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border border-line transition-colors ${
+          className={`absolute top-3 right-3 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border border-line transition-colors ${
             liked ? "text-burgundy" : "text-muted hover:text-sage-dark"
           }`}
           aria-label="Favorit"

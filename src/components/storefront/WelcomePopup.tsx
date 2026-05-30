@@ -26,6 +26,14 @@ export function WelcomePopup({ drinks, allProducts, settings }: Props) {
   const [claimed, setClaimed] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
 
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   useEffect(() => {
     if (settings?.enabled === false) return;
     const already = typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY);
@@ -60,6 +68,9 @@ export function WelcomePopup({ drinks, allProducts, settings }: Props) {
     <div
       className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/45 animate-[fade-in_0.25s_ease-out]"
       onClick={close}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="welcome-popup-title"
     >
       <div
         className="relative bg-bone w-full max-w-sm rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl animate-[reveal-up_0.3s_cubic-bezier(0.34,1.56,0.64,1)]"
@@ -112,6 +123,7 @@ export function WelcomePopup({ drinks, allProducts, settings }: Props) {
               {(settings?.title || settings?.title_emphasis) ? "GESCHENK FÜR DICH" : "GESCHENK FÜR DICH"}
             </div>
             <div
+              id="welcome-popup-title"
               className="font-display font-black leading-tight mt-0.5"
               style={{ fontSize: "16px", letterSpacing: "-0.01em" }}
             >
@@ -211,6 +223,7 @@ export function WelcomePopup({ drinks, allProducts, settings }: Props) {
               <button
                 onClick={handleClaim}
                 disabled={!selected}
+                aria-disabled={!selected}
                 className={`w-full mt-2.5 h-11 rounded-xl font-bold text-[13.5px] flex items-center justify-center gap-1.5 transition-all duration-300 ${
                   selected
                     ? "text-white shadow-[0_6px_18px_-6px_rgba(74,94,74,0.5)] active:scale-[0.98]"

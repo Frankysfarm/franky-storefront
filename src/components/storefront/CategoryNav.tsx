@@ -109,7 +109,7 @@ export function CategoryNav({ categories }: Props) {
                   else itemRefs.current.delete(cat.id);
                 }}
                 onClick={() => handleClick(cat.id)}
-                className={`relative shrink-0 flex items-center gap-1.5 py-2 px-3.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-300 active:scale-95 ${
+                className={`relative shrink-0 flex items-center gap-1.5 py-2.5 px-4 rounded-full text-[13px] min-h-[44px] font-bold whitespace-nowrap transition-all duration-300 active:scale-95 ${
                   isActive
                     ? "bg-sage text-white shadow-[0_4px_14px_-3px_rgba(74,94,74,0.5),0_0_0_1px_rgba(228,192,104,0.25)_inset]"
                     : "bg-mint text-[#2a3a2c] hover:bg-mint-deep"
