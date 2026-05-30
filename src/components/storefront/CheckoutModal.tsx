@@ -29,7 +29,7 @@ const STEP_LABELS: Record<Step, string> = {
   review: "Übersicht",
 };
 
-export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts }: Props) {
+export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts, paymentMethods = MOCK_PAYMENT_METHODS }: Props) {
   const [step, setStep] = useState<Step>("plz-check");
   const [plzChecked, setPlzChecked] = useState(false);
   const rawItems = useCartStore((s) => s.items);
@@ -38,6 +38,12 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   const deliveryFee = useCartStore((s) => s.deliveryFee(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold));
   const grandTotal = useCartStore((s) => s.grandTotal(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold));
   const clearCart = useCartStore((s) => s.clearCart);
+
+  const enabledMethods = useMemo(
+    () => paymentMethods.filter((pm) => pm.enabled_lieferung),
+    [paymentMethods],
+  );
+  const defaultPayment = enabledMethods[0]?.method ?? "karte";
 
   const [form, setForm] = useState<CheckoutForm>({
     name: "",
@@ -48,7 +54,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
     hausnummer: "",
     etage: "",
     anmerkung: "",
-    zahlungsart: "karte",
+    zahlungsart: defaultPayment,
   });
   const [plzError, setPlzError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -413,26 +419,30 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                 </div>
 
                 {/* Apple/Google Pay quick option */}
-                <button
-                  onClick={() => {
-                    update("zahlungsart", "apple_pay");
-                    next();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 h-14 bg-black text-white rounded-2xl font-bold text-[15px] active:scale-[0.98] transition-all"
-                >
-                  <Apple size={20} />
-                  <span>Pay · 1-Tap</span>
-                  <span className="opacity-70 font-mono text-[12px]">·</span>
-                  <span className="tabular-nums">{formatPriceRaw(grandTotal)}</span>
-                </button>
+                {enabledMethods.some((pm) => pm.method === "apple_pay") && (
+                  <>
+                    <button
+                      onClick={() => {
+                        update("zahlungsart", "apple_pay");
+                        next();
+                      }}
+                      className="w-full flex items-center justify-center gap-2 h-14 bg-black text-white rounded-2xl font-bold text-[15px] active:scale-[0.98] transition-all"
+                    >
+                      <Apple size={20} />
+                      <span>Pay · 1-Tap</span>
+                      <span className="opacity-70 font-mono text-[12px]">·</span>
+                      <span className="tabular-nums">{formatPriceRaw(grandTotal)}</span>
+                    </button>
 
-                <div className="flex items-center gap-3 my-1 text-[11px] text-sage-dark/50 font-semibold uppercase tracking-wider">
-                  <div className="flex-1 h-px bg-sage-dark/10" />
-                  Oder
-                  <div className="flex-1 h-px bg-sage-dark/10" />
-                </div>
+                    <div className="flex items-center gap-3 my-1 text-[11px] text-sage-dark/50 font-semibold uppercase tracking-wider">
+                      <div className="flex-1 h-px bg-sage-dark/10" />
+                      Oder
+                      <div className="flex-1 h-px bg-sage-dark/10" />
+                    </div>
+                  </>
+                )}
 
-                {MOCK_PAYMENT_METHODS.map((pm) => (
+                {enabledMethods.map((pm) => (
                   <button
                     key={pm.method}
                     onClick={() => update("zahlungsart", pm.method)}
@@ -482,7 +492,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                 {/* Payment summary */}
                 <SummaryCard title="Zahlung" onEdit={() => setStep("zahlung")}>
                   <div className="font-bold text-sage-dark text-[13px]">
-                    {MOCK_PAYMENT_METHODS.find((p) => p.method === form.zahlungsart)?.label ?? "Karte"}
+                    {enabledMethods.find((p) => p.method === form.zahlungsart)?.label ?? "Karte"}
                   </div>
                 </SummaryCard>
 

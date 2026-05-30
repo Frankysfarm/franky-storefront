@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — commit 113df0e, 2026-05-30)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-05-30)
 
 ---
 
@@ -81,6 +81,15 @@
 - **BUG FIXED**: Typo h-13 h-14 → h-14 im Lieferung-Button
 - **DietFilter**: War importiert aber nie gerendert — jetzt zwischen WelcomeBanner und CategoryNav
 - **TopBar**: Bonus-Club-Bar (Row 1) implementiert und über Main-Nav eingefügt
+
+## Phase 11: PaymentMethods-Bug Fix ✅ (2026-05-30)
+- **BUG FIXED**: `paymentMethods` prop war in CheckoutModal-Interface definiert aber NICHT destrukturiert → immer MOCK_PAYMENT_METHODS gezeigt
+- **FIX**: Prop jetzt korrekt destrukturiert mit `MOCK_PAYMENT_METHODS` als Fallback
+- **FIX**: `enabledMethods` useMemo filtert `enabled_lieferung: true` Zahlungsarten
+- **FIX**: Zahlung-Step zeigt jetzt echte DB-Zahlungsarten statt Mock
+- **FIX**: Default-Zahlungsart = erste aktivierte Methode (nicht hardcoded "karte")
+- **FIX**: Apple-Pay Quick-Button nur sichtbar wenn apple_pay in den aktivierten Methoden
+- **FIX**: Review-Schritt zeigt korrektes Zahlungsart-Label aus echten Methoden
 
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
