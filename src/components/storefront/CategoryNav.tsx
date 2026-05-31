@@ -29,8 +29,8 @@ export function CategoryNav({ categories }: Props) {
   const scrollPageToSection = useCallback((id: string) => {
     const el = document.getElementById(`section-${id}`);
     if (!el) return;
-    // TopBar (~60px) + Sticky Nav (~52px) + small gap
-    const offset = 130;
+    // TopBar (~90px: bonus bar ~30px + main nav ~60px) + Sticky Nav (~52px) + gap
+    const offset = 152;
     const target = window.scrollY + el.getBoundingClientRect().top - offset;
     window.scrollTo({ top: target, behavior: "smooth" });
   }, []);
@@ -76,7 +76,7 @@ export function CategoryNav({ categories }: Props) {
           }
         }
       },
-      { rootMargin: "-140px 0px -55% 0px", threshold: [0, 0.2, 0.5] },
+      { rootMargin: "-160px 0px -55% 0px", threshold: [0, 0.2, 0.5] },
     );
 
     for (const s of sections) observer.observe(s.el!);
@@ -86,7 +86,7 @@ export function CategoryNav({ categories }: Props) {
 
   return (
     <nav
-      className="sticky top-[60px] z-40"
+      className="sticky top-[90px] z-40"
       style={{
         background: "rgba(250,247,237,0.95)",
         backdropFilter: "saturate(180%) blur(14px)",
