@@ -9,6 +9,17 @@ import { getClientSupabase } from "@/lib/supabase";
 import type { Product, Tenant, CheckoutForm, PaymentMethod } from "@/lib/types";
 import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 
+const PAYMENT_ICONS: Record<string, string> = {
+  bar: "💵",
+  karte: "💳",
+  apple_pay: "🍎",
+  google_pay: "📱",
+  paypal: "🅿️",
+  klarna: "🛍️",
+  sepa: "🏦",
+  giropay: "🏦",
+};
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -454,10 +465,9 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                     }`}
                     style={{ border: "1.5px solid", borderColor: form.zahlungsart === pm.method ? "var(--color-sage)" : "var(--color-line)" }}
                   >
-                    <span className="text-2xl">{"💳"}</span>
+                    <span className="text-2xl">{pm.icon ?? PAYMENT_ICONS[pm.method] ?? "💳"}</span>
                     <div className="flex-1">
                       <div className="font-bold text-[13.5px] text-sage-dark">{pm.label}</div>
-                      
                     </div>
                     {form.zahlungsart === pm.method && (
                       <div className="w-6 h-6 rounded-full bg-sage flex items-center justify-center">

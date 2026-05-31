@@ -109,3 +109,12 @@
 - **BonusCard.tsx**: war bereits auf `return null` gestubbt — kein Problem
 - **Ergebnis**: Bonus-Info nur noch über TopBar Slim-Bar; kein doppelter Bonus-Block mehr auf der Seite
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 14: Stripe-Cart-Clear + Payment-Icons ✅ (2026-05-31)
+- **BUG FIXED**: Nach Stripe-Zahlung kam Kunde zurück zur Storefront mit vollem Warenkorb
+  - `FrankyStorefront.tsx`: `clearCart()` wird jetzt in `useEffect` aufgerufen wenn `?order_id=` erkannt
+  - `SuccessClient.tsx`: `clearCart()` wird in `useEffect` on-mount aufgerufen (für /success Route)
+- **VERBESSERT**: Zahlungsart-Icons im Checkout jetzt methoden-spezifisch statt überall "💳":
+  - bar → 💵, karte → 💳, apple_pay → 🍎, google_pay → 📱, paypal → 🅿️, klarna → 🛍️, sepa/giropay → 🏦
+  - Fallback: `pm.icon` aus DB falls vorhanden, sonst Icon-Map, sonst "💳"
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅

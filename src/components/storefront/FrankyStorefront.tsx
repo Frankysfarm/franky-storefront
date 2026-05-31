@@ -44,6 +44,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
   const [allergeneOpen, setAllergeneOpen] = useState(false);
   const [dietFilter, setDietFilter] = useState<DietTag | "all">("all");
   const addItem = useCartStore((s) => s.addItem);
+  const clearCart = useCartStore((s) => s.clearCart);
   const drinkProducts = useMemo(() => products.filter(p => p.category_id && categories.find(c => c.id === p.category_id)?.name?.toLowerCase().includes("drink")), [products, categories]);
 
   // Detect Stripe success redirect: ?order_id=xxx
@@ -51,8 +52,8 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get("order_id");
     if (orderId && !tracking) {
+      clearCart();
       setTracking({ orderId, customerName: "" });
-      // Clean URL without reloading
       window.history.replaceState({}, "", window.location.pathname);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

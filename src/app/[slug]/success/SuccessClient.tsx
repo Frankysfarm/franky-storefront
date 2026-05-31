@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TrackingScreen } from "@/components/storefront/TrackingScreen";
+import { useCartStore } from "@/lib/store";
 
 interface Props {
   orderId: string;
@@ -11,6 +12,12 @@ interface Props {
 
 export function SuccessClient({ orderId, deliveryTimeMin, backHref }: Props) {
   const [showTracking, setShowTracking] = useState(true);
+  const clearCart = useCartStore((s) => s.clearCart);
+
+  useEffect(() => {
+    clearCart();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!showTracking) {
     return (
