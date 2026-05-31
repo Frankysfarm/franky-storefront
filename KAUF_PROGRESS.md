@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-05-30)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-05-31)
 
 ---
 
@@ -101,3 +101,11 @@
 - [ ] Echte Produktbilder in Supabase Storage hochladen (bild_url auf volle CDN-URLs zeigen)
 - [ ] Stripe-API: success_url auf `/biss-app/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
 - [ ] `free_delivery_threshold` als Spalte in `tenants`-Tabelle und in select-Query
+
+## Phase 13: LoyaltyCard Standalone entfernt ✅ (2026-05-31)
+- **BUG/DUPLICATE**: LoyaltyCard standalone wurde in FrankyStorefront noch gerendert, obwohl
+  Phase 5 das hätte entfernen sollen (TopBar hat bereits die schmale Bonus-Club-Bar Row 1)
+- **FIX**: Import und `<LoyaltyCard>` aus FrankyStorefront.tsx entfernt
+- **BonusCard.tsx**: war bereits auf `return null` gestubbt — kein Problem
+- **Ergebnis**: Bonus-Info nur noch über TopBar Slim-Bar; kein doppelter Bonus-Block mehr auf der Seite
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
