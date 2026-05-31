@@ -102,6 +102,20 @@
 - [ ] Stripe-API: success_url auf `/biss-app/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
 - [ ] `free_delivery_threshold` als Spalte in `tenants`-Tabelle und in select-Query
 
+## Phase 15: Bugfix-Runde (notFound + ETA + backHref) ✅ (2026-05-31)
+- **BUG FIXED**: `notFound()` war in `[slug]/page.tsx` importiert aber nie aufgerufen
+  - `loadFrankyBundle` gibt jetzt `null` zurück (statt Mock) wenn Tenant/Location fehlt in DB
+  - `[slug]/page.tsx` ruft `notFound()` wenn bundle null → korrekte 404-Seite für unbekannte Slugs
+  - `[slug]/success/page.tsx` prüft `if (bundle)` vor Zugriff auf `bundle.tenant` (null-safe)
+  - Verhindert: unbekannte Slugs liefern Mock-Daten mit fake `location_id` → DB-Fehler beim Bestellen
+- **BUG FIXED**: `SuccessClient` backHref hardcoded auf `/biss-app/${slug}`
+  - `success/page.tsx` liest jetzt `NEXT_PUBLIC_BASE_PATH` aus Env und baut `backHref` dynamisch
+  - Funktioniert bei beliebigem basePath (prod: `/biss-app`, local: `""`)
+- **BUG FIXED**: ETA-Berechnung in `TrackingScreen` lief bei jedem Re-Render neu durch
+  - Extrahiert zu `calcEta()` Hilfsfunktion, Ergebnis in `useState(() => calcEta(...))` gehalten
+  - ETA-Fenster ist jetzt stabil seit Mount — kein "Zeitdrift" mehr beim Tap/Hover
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
 ## Phase 13: LoyaltyCard Standalone entfernt ✅ (2026-05-31)
 - **BUG/DUPLICATE**: LoyaltyCard standalone wurde in FrankyStorefront noch gerendert, obwohl
   Phase 5 das hätte entfernen sollen (TopBar hat bereits die schmale Bonus-Club-Bar Row 1)

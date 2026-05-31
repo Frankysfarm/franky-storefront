@@ -10,7 +10,7 @@ export interface TenantBundle {
   bestsellers: string[];
 }
 
-export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
+export async function loadFrankyBundle(slug: string): Promise<TenantBundle | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!supabaseUrl) {
     return {
@@ -36,14 +36,8 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
     }
 
     if (!tenantRow) {
-      console.warn(`Tenant "${slug}" not found in DB, using mock data`);
-      return {
-        tenant: MOCK_TENANT,
-        categories: MOCK_CATEGORIES,
-        products: MOCK_PRODUCTS,
-        paymentMethods: MOCK_PAYMENT_METHODS,
-        bestsellers: BESTSELLER_IDS,
-      };
+      console.warn(`Tenant "${slug}" not found in DB`);
+      return null;
     }
 
     const { data: location } = await sb
@@ -56,13 +50,8 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle> {
       .maybeSingle();
 
     if (!location) {
-      return {
-        tenant: MOCK_TENANT,
-        categories: MOCK_CATEGORIES,
-        products: MOCK_PRODUCTS,
-        paymentMethods: MOCK_PAYMENT_METHODS,
-        bestsellers: BESTSELLER_IDS,
-      };
+      console.warn(`No active location for tenant "${slug}"`);
+      return null;
     }
 
     const [{ data: dbCategories }, { data: dbItems }, { data: dbPayments }] = await Promise.all([

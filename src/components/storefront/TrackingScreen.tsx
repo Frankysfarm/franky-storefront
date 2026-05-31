@@ -19,15 +19,20 @@ const TRACKING_STEPS = [
   { id: 5, title: "Geliefert · Buon appetito!", icon: "✅" },
 ];
 
+function calcEta(deliveryTimeMin: number) {
+  const lo = new Date();
+  lo.setMinutes(lo.getMinutes() + deliveryTimeMin - 10);
+  const hi = new Date();
+  hi.setMinutes(hi.getMinutes() + deliveryTimeMin + 10);
+  return {
+    min: lo.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }),
+    max: hi.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }),
+  };
+}
+
 export function TrackingScreen({ orderId, customerName, deliveryTimeMin, onClose }: Props) {
   const [activeStep, setActiveStep] = useState(1);
-
-  const etaMin = new Date();
-  etaMin.setMinutes(etaMin.getMinutes() + deliveryTimeMin - 10);
-  const etaMax = new Date();
-  etaMax.setMinutes(etaMax.getMinutes() + deliveryTimeMin + 10);
-  const etaMinStr = etaMin.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
-  const etaMaxStr = etaMax.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+  const [eta] = useState(() => calcEta(deliveryTimeMin));
 
   useEffect(() => {
     const timers = [
@@ -125,7 +130,7 @@ export function TrackingScreen({ orderId, customerName, deliveryTimeMin, onClose
             VORAUSSICHTLICHE LIEFERUNG
           </div>
           <div className="font-display font-black text-3xl text-sage-dark tabular-nums">
-            {etaMinStr}–{etaMaxStr}
+            {eta.min}–{eta.max}
           </div>
           <div className="text-xs text-muted mt-1">
             Wir melden uns sobald das Restaurant bestätigt hat.

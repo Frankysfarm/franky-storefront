@@ -11,6 +11,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const bundle = await loadFrankyBundle(decodeURIComponent(slug));
+  if (!bundle) return { title: "Nicht gefunden" };
   return {
     title: `${bundle.tenant.name} — Online bestellen`,
     description: `Bestelle direkt bei ${bundle.tenant.name} — schnelle Lieferung, sichere Zahlung.`,
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function TenantPage({ params }: PageProps) {
   const { slug } = await params;
   const bundle = await loadFrankyBundle(decodeURIComponent(slug));
+  if (!bundle) notFound();
 
   return (
     <FrankyStorefront

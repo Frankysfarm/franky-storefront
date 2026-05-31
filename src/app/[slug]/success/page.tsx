@@ -15,16 +15,18 @@ export default async function SuccessPage({ params, searchParams }: PageProps) {
   let deliveryMin = 28;
   try {
     const bundle = await loadFrankyBundle(decodeURIComponent(slug));
-    deliveryMin = bundle.tenant.durchschnittliche_lieferzeit_min;
+    if (bundle) deliveryMin = bundle.tenant.durchschnittliche_lieferzeit_min;
   } catch {
     // fallback to default
   }
+
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   return (
     <SuccessClient
       orderId={order_id ?? "—"}
       deliveryTimeMin={deliveryMin}
-      backHref={`/biss-app/${slug}`}
+      backHref={`${basePath}/${slug}`}
     />
   );
 }
