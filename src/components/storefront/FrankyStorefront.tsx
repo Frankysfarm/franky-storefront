@@ -126,21 +126,21 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
           const num = String(catIndex + 1).padStart(2, "0");
           return (
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-baseline gap-4 mb-5 flex-wrap">
+              <div className="flex items-baseline gap-3 sm:gap-4 mb-5">
                 <span
                   className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
                   style={{ opacity: 0.85 }}
                 >
-                  No. {num}
+                  No.&nbsp;{num}
                 </span>
                 <h2
-                  className="font-display font-black italic text-sage-dark"
+                  className="font-display font-black italic text-sage-dark flex-shrink-0"
                   style={{ fontSize: "clamp(26px, 3.5vw, 38px)", letterSpacing: "-0.025em", lineHeight: 1 }}
                 >
                   {cat.icon && <span className="not-italic">{cat.icon} </span>}
                   {cat.name}
                 </h2>
-                <div className="flex-1 hidden sm:block" style={{ borderBottom: "1.5px solid var(--color-cream-deep)", marginBottom: "4px" }} />
+                <hr className="flex-1 border-0 border-t-[1.5px]" style={{ borderColor: "var(--color-cream-deep)", marginBottom: "4px" }} />
               </div>
 
               <RevealSection>

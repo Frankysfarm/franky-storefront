@@ -50,11 +50,11 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                   onClick={() => onAdd(product)}
                   role="button"
                   tabIndex={0}
-                  className="relative flex-shrink-0 w-[140px] bg-white rounded-xl p-2.5 text-center cursor-pointer hover:shadow-lg hover:-translate-y-px transition-all border border-line"
+                  className="relative flex-shrink-0 w-[130px] sm:w-[140px] bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-line"
                 >
                   {/* Rank badge */}
                   <div
-                    className="absolute top-1.5 left-1.5 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold border border-[rgba(228,192,104,0.5)]"
+                    className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold border border-[rgba(228,192,104,0.5)]"
                     style={{ background: "var(--color-sage-dark)", color: "var(--color-gold)" }}
                   >
                     {i + 1}
@@ -62,15 +62,15 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
 
                   {/* Popular badge */}
                   {isTop3 && (
-                    <div className="absolute top-1.5 right-1.5 z-10">
+                    <div className="absolute top-2 right-2 z-10">
                       <span className="text-[9px] font-bold bg-gold text-sage-dark px-1.5 py-0.5 rounded-full">
-                        ⭐ Beliebt
+                        ⭐
                       </span>
                     </div>
                   )}
 
-                  {/* Image */}
-                  <div className="w-14 h-14 rounded-lg overflow-hidden mx-auto mb-2 bg-mint">
+                  {/* Image — full width */}
+                  <div className="w-full h-[90px] sm:h-[100px] overflow-hidden bg-mint">
                     {product.bild_url ? (
                       <img
                         src={product.bild_url}
@@ -79,20 +79,20 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-muted text-xs">
+                      <div className="w-full h-full flex items-center justify-center text-muted text-2xl">
                         🍝
                       </div>
                     )}
                   </div>
 
-                  {/* Name */}
-                  <div className="text-[11px] font-bold text-sage-dark leading-tight line-clamp-2 mb-1 min-h-[28px]">
-                    {product.name}
-                  </div>
-
-                  {/* Price */}
-                  <div className="font-display font-black text-[15px] text-gold-deep tabular-nums">
-                    {formatPriceRaw(product.preis)}
+                  {/* Info */}
+                  <div className="p-2">
+                    <div className="text-[11px] font-bold text-sage-dark leading-tight line-clamp-2 mb-1 min-h-[28px]">
+                      {product.name}
+                    </div>
+                    <div className="font-display font-black text-[14px] text-gold-deep tabular-nums">
+                      {formatPriceRaw(product.preis)}
+                    </div>
                   </div>
                 </div>
               );

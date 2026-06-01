@@ -136,7 +136,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
           {hasOptions && (
             <span className="text-xs font-normal text-muted mr-0.5">ab </span>
           )}
-          <span className="font-display font-black text-[16px] sm:text-[24px] text-[#2a3a2c] leading-none">
+          <span className="font-display font-black text-[16px] sm:text-[24px] text-gold-deep leading-none">
             {formatPriceRaw(product.preis)}
           </span>
         </div>
