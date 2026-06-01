@@ -246,11 +246,12 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                       Deine Postleitzahl
                     </div>
                     <input
-                      type="text"
+                      type="tel"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={5}
-                      autoFocus
+                      autoComplete="postal-code"
+                      enterKeyHint="next"
                       value={form.plz}
                       onChange={(e) => {
                         const v = e.target.value.replace(/\D/g, "").slice(0, 5);

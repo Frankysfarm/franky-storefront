@@ -175,8 +175,12 @@ export const MOCK_PAYMENT_METHODS: PaymentMethod[] = [
 ];
 
 export const VALID_PLZ = [
+  // Aachen-Stadt
   "52062", "52064", "52066", "52068", "52070",
   "52072", "52074", "52076", "52078", "52080",
+  // Aachen-Umkreis (häufig angefragt)
+  "52134", "52146", "52152", "52159", "52223",
+  "52224", "52249", "52351", "52428", "52441",
 ];
 
 export function buildProductMap(products: Product[]): Map<string, Product> {
