@@ -103,7 +103,6 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
       />
 
       <WelcomeBanner
-        tenant={tenant}
         topProducts={topProducts}
         onAdd={handleAddDirect}
       />

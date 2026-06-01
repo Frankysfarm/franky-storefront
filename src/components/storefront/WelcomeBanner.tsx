@@ -1,10 +1,9 @@
 "use client";
 
-import type { Tenant, Product } from "@/lib/types";
+import type { Product } from "@/lib/types";
 import { formatPriceRaw } from "@/lib/format";
 
 interface Props {
-  tenant: Tenant;
   topProducts: Product[];
   onAdd: (product: Product) => void;
 }
@@ -13,7 +12,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="relative overflow-hidden rounded-xl border-[1.5px] border-line-strong p-4 sm:p-8"
+        className="relative overflow-hidden rounded-[20px] border-[1.5px] border-line-strong p-4 sm:p-8"
         style={{
           background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
