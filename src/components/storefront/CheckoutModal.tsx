@@ -298,10 +298,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
 
             {step === "lieferung" && (
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sage-dark/75 text-[12px] font-semibold mb-1">
-                  <MapPin size={14} />
-                  <span>Wohin sollen wir liefern?</span>
-                </div>
+                <div className="text-sage-dark/75 text-[12px] font-semibold mb-1">Lieferadresse</div>
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <Field label="Vorname & Name" required>
@@ -337,43 +334,21 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                   />
                 </Field>
 
-                <div className="bg-sage/8 rounded-2xl px-3.5 py-2.5 flex items-center justify-between border border-sage/20">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-sage" fill="currentColor" />
-                    <div>
-                      <div className="text-[10px] font-extrabold tracking-wide uppercase text-sage-dark/65">Lieferung an</div>
-                      <div className="text-[13px] font-bold text-sage-dark">PLZ {form.plz} · Aachen</div>
-                    </div>
+                <div className="bg-sage/8 rounded-xl px-3 py-2 flex items-center justify-between border border-sage/20">
+                  <div className="flex items-center gap-1.5 text-[12px]">
+                    <CheckCircle2 size={14} className="text-sage flex-shrink-0" fill="currentColor" />
+                    <span className="font-semibold text-sage-dark">PLZ {form.plz} · Aachen</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => setStep("plz-check")}
-                    className="text-[11px] font-bold text-sage hover:text-sage-hover underline-offset-2 hover:underline"
+                    className="text-[11px] font-bold text-sage hover:underline"
                   >
                     Ändern
                   </button>
                 </div>
 
-                <div className="grid grid-cols-[1fr_2fr] gap-2.5">
-                  <Field label="PLZ" required error={plzError}>
-                    <input
-                      type="text"
-                      value={form.plz}
-                      readOnly
-                      className="input opacity-50 cursor-not-allowed"
-                    />
-                  </Field>
-                  <Field label="Stadt">
-                    <input
-                      type="text"
-                      value="Aachen"
-                      readOnly
-                      className="input opacity-60"
-                    />
-                  </Field>
-                </div>
-
-                <Field label="Straße & Hausnummer" required>
+<Field label="Straße & Hausnummer" required>
                   <input
                     type="text"
                     value={form.strasse}
@@ -398,8 +373,8 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                   <textarea
                     value={form.anmerkung}
                     onChange={(e) => update("anmerkung", e.target.value)}
-                    placeholder="Bei 'Pizza' klingeln · Bitte nicht hupen"
-                    rows={2}
+                    placeholder="Optional: Bei Pizza klingeln, etc."
+                    rows={1}
                     className="input resize-none"
                   />
                 </Field>
