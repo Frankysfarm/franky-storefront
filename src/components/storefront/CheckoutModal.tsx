@@ -78,15 +78,6 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
 
   const isValidPlz = (plz: string) => plz.trim().length > 0 && VALID_PLZ.includes(plz.trim());
 
-  const validatePlz = (plz: string) => {
-    if (!plz.trim() || !VALID_PLZ.includes(plz.trim())) {
-      setPlzError(`PLZ ${plz} liegt außerhalb unseres Liefergebiets (Aachen)`);
-      return false;
-    }
-    setPlzError("");
-    return true;
-  };
-
   const canProceedLieferung =
     form.name.trim().length >= 2 &&
     form.telefon.replace(/\D/g, "").length >= 6 &&
@@ -506,6 +497,16 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
                     {enabledMethods.find((p) => p.method === form.zahlungsart)?.label ?? "Karte"}
                   </div>
                 </SummaryCard>
+
+                {/* Driver notes */}
+                {form.anmerkung.trim() && (
+                  <div className="bg-white rounded-2xl border border-line p-4">
+                    <div className="text-[11px] font-extrabold tracking-wider text-sage-dark uppercase mb-1.5">
+                      Hinweise für den Fahrer
+                    </div>
+                    <div className="text-[13px] text-sage-dark/80 leading-snug">{form.anmerkung}</div>
+                  </div>
+                )}
 
                 {/* Order summary */}
                 <div className="bg-white rounded-2xl border border-line p-4">

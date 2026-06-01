@@ -132,3 +132,11 @@
   - bar → 💵, karte → 💳, apple_pay → 🍎, google_pay → 📱, paypal → 🅿️, klarna → 🛍️, sepa/giropay → 🏦
   - Fallback: `pm.icon` aus DB falls vorhanden, sonst Icon-Map, sonst "💳"
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 16: Final Cleanup + Anmerkung Review ✅ (2026-06-01)
+- **Dead code entfernt**: `validatePlz()` Funktion war nie aufgerufen (ersetzt durch pure `isValidPlz()`) — entfernt
+- **Review-Step**: Fahrer-Hinweise (`form.anmerkung`) jetzt sichtbar in der Bestellübersicht wenn ausgefüllt
+- **Gesamtstatus**: Alle Kauf-Fertig-Kernfunktionen live ✅
+  - Produkte + Warenkorb ✅ | Checkout-Funnel ✅ | Supabase INSERT ✅
+  - Stripe Redirect ✅ | Email Outbox ✅ | Tracking-Screen ✅
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
