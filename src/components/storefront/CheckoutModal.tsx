@@ -161,13 +161,11 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
       <div className="fixed inset-0 z-[130] bg-black/60 backdrop-blur-sm animate-[fade-in_0.25s_ease-out]" onClick={onClose} />
 
       <div
-        className="fixed inset-x-0 bottom-0 sm:inset-0 z-[140] flex sm:items-center sm:justify-center"
-        onClick={onClose}
+        className="fixed inset-x-0 bottom-0 sm:inset-0 z-[140] flex sm:items-center sm:justify-center pointer-events-none"
       >
         <div
-          className="bg-bone w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col animate-[reveal-up_0.35s_cubic-bezier(0.34,1.56,0.64,1)]"
-          style={{ maxHeight: "94vh", minHeight: "60vh" }}
-          onClick={(e) => e.stopPropagation()}
+          className="bg-bone w-full sm:max-w-lg sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col animate-[reveal-up_0.35s_cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto"
+          style={{ maxHeight: "94dvh", minHeight: "60dvh" }}
         >
           {/* Header */}
           <header className="px-5 pt-3 pb-4 border-b border-line">
