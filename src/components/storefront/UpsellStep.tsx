@@ -2,42 +2,48 @@
 
 import { useMemo } from "react";
 import { Plus, Sparkles, X } from "lucide-react";
-import type { Product } from "@/lib/types";
+import type { Product, Category } from "@/lib/types";
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
 
 interface Props {
   allProducts: Product[];
   productMap: Map<string, Product>;
+  categories: Category[];
   onSkip: () => void;
 }
 
-export function UpsellStep({ allProducts, productMap, onSkip }: Props) {
+export function UpsellStep({ allProducts, productMap, categories, onSkip }: Props) {
   const rawItems = useCartStore((s) => s.items);
   const addItem = useCartStore((s) => s.addItem);
   const items = useMemo(() => useCartStore.getState().getComputedItems(productMap), [rawItems, productMap]);
 
+  // Map category_id → normalized name for real Supabase UUIDs
+  const catName = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const c of categories) m.set(c.id, c.name.toLowerCase());
+    return m;
+  }, [categories]);
+
+  const isCat = (p: Product, name: string) => (catName.get(p.category_id) ?? p.category_id) === name;
+
   // SMART UPSELL: contextual suggestions
   const suggestions = useMemo(() => {
     const inCart = new Set(items.map((i) => i.product.id));
-    const cartCats = new Set(items.map((i) => i.product.category_id));
 
-    const hasPasta = items.some((i) => i.product.category_id === "pasta");
-    const hasPizza = items.some((i) => i.product.category_id === "pizza");
-    const hasDrink = items.some((i) => i.product.category_id === "drinks");
-    const hasDessert = items.some((i) => i.product.category_id === "desserts");
-    const hasSide = items.some((i) => i.product.category_id === "sides");
+    const hasPasta = items.some((i) => isCat(i.product, "pasta"));
+    const hasPizza = items.some((i) => isCat(i.product, "pizza"));
+    const hasDrink = items.some((i) => isCat(i.product, "drinks"));
+    const hasDessert = items.some((i) => isCat(i.product, "desserts"));
+    const hasSide = items.some((i) => isCat(i.product, "sides") || isCat(i.product, "vorspeisen"));
 
     const score = (p: Product): number => {
       if (inCart.has(p.id)) return -1;
       let s = 0;
-      // Strong: missing category (perfect meal)
-      if (!hasDrink && p.category_id === "drinks") s += 100; // Most missing
-      if (!hasDessert && p.category_id === "desserts") s += 90;
-      if (!hasSide && p.category_id === "sides" && (hasPasta || hasPizza)) s += 85;
-      // Beliebt = boost
+      if (!hasDrink && isCat(p, "drinks")) s += 100;
+      if (!hasDessert && isCat(p, "desserts")) s += 90;
+      if (!hasSide && (isCat(p, "sides") || isCat(p, "vorspeisen")) && (hasPasta || hasPizza)) s += 85;
       if (p.beliebt) s += 30;
-      // Higher rating boost
       s += (p.rating ?? 4) * 3;
       return s;
     };
@@ -48,12 +54,14 @@ export function UpsellStep({ allProducts, productMap, onSkip }: Props) {
       .sort((a, b) => b.s - a.s)
       .slice(0, 4)
       .map((x) => x.p);
-  }, [allProducts, items]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allProducts, items, catName]);
 
   const taglineFor = (p: Product): string => {
-    if (p.category_id === "drinks") return "Perfekt dazu";
-    if (p.category_id === "desserts") return "Süßer Abschluss";
-    if (p.category_id === "sides") return "Beilage zur Hauptspeise";
+    const name = catName.get(p.category_id) ?? p.category_id;
+    if (name === "drinks") return "Perfekt dazu";
+    if (name === "desserts") return "Süßer Abschluss";
+    if (name === "sides" || name === "vorspeisen") return "Beilage zur Hauptspeise";
     return p.beliebt ? "Bestseller" : "Empfehlung";
   };
 
@@ -107,7 +115,7 @@ export function UpsellStep({ allProducts, productMap, onSkip }: Props) {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-3xl">
-                  {p.category_id === "drinks" ? "🥤" : p.category_id === "desserts" ? "🍰" : "🍽️"}
+                  {isCat(p, "drinks") ? "🥤" : isCat(p, "desserts") ? "🍰" : "🍽️"}
                 </div>
               )}
               {/* Add Button overlay */}

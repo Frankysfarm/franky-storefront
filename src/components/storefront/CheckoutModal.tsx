@@ -6,7 +6,7 @@ import { X, ArrowLeft, MapPin, Apple, CheckCircle2, ChevronRight } from "lucide-
 import { useCartStore } from "@/lib/store";
 import { formatPriceRaw } from "@/lib/format";
 import { getClientSupabase } from "@/lib/supabase";
-import type { Product, Tenant, CheckoutForm, PaymentMethod } from "@/lib/types";
+import type { Product, Tenant, CheckoutForm, PaymentMethod, Category } from "@/lib/types";
 import { VALID_PLZ, MOCK_PAYMENT_METHODS } from "@/lib/mock-data";
 
 const PAYMENT_ICONS: Record<string, string> = {
@@ -27,6 +27,7 @@ interface Props {
   productMap: Map<string, Product>;
   tenant: Tenant;
   allProducts: Product[];
+  categories: Category[];
   paymentMethods?: PaymentMethod[];
 }
 
@@ -40,7 +41,7 @@ const STEP_LABELS: Record<Step, string> = {
   review: "Übersicht",
 };
 
-export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts, paymentMethods = MOCK_PAYMENT_METHODS }: Props) {
+export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, allProducts, categories, paymentMethods = MOCK_PAYMENT_METHODS }: Props) {
   const [step, setStep] = useState<Step>("plz-check");
   const [plzChecked, setPlzChecked] = useState(false);
   const rawItems = useCartStore((s) => s.items);
@@ -474,6 +475,7 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
               <UpsellStep
                 allProducts={allProducts}
                 productMap={productMap}
+                categories={categories}
                 onSkip={next}
               />
             )}

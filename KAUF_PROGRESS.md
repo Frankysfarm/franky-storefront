@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-05-31)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-02)
 
 ---
 
@@ -139,4 +139,17 @@
 - **Gesamtstatus**: Alle Kauf-Fertig-Kernfunktionen live ✅
   - Produkte + Warenkorb ✅ | Checkout-Funnel ✅ | Supabase INSERT ✅
   - Stripe Redirect ✅ | Email Outbox ✅ | Tracking-Screen ✅
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 17: UpsellStep Category-Bug Fix ✅ (2026-06-02)
+- **BUG FIXED**: `UpsellStep.tsx` verglich `category_id` hardcoded gegen Strings wie `"pasta"`, `"drinks"` etc.
+  - Mit echten Supabase-Daten sind `category_id`-Werte UUIDs → alle Kategorie-Checks waren immer `false`
+  - Konsequenz: `score()` ignorierte komplett die Kategorie-Logik (kein Drink-/Dessert-Boost)
+  - `taglineFor()` zeigte immer Fallback "Bestseller"/"Empfehlung" statt "Perfekt dazu"/"Süßer Abschluss"
+  - Leeres-Bild-Fallback zeigte immer "🍽️" statt kategorie-spezifischem Emoji
+- **FIX**: `categories: Category[]` Prop zu `UpsellStep`, `CheckoutModal` und `FrankyStorefront` hinzugefügt
+- **FIX**: `catName` Map (category_id → name.toLowerCase()) in UpsellStep aufgebaut
+- **FIX**: `isCat()` Helper nutzt Map-Lookup, fällt auf raw `category_id` zurück (Rückwärtskompatibilität mit Mock)
+- **FIX**: `score()`, `taglineFor()`, Bild-Fallback nutzen jetzt `isCat()` statt direkten Stringvergleich
+- **FIX**: Sides auch als "vorspeisen" erkannt (falls Supabase-Kategorie so heißt)
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅

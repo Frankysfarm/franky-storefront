@@ -215,6 +215,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
         productMap={productMap}
         tenant={tenant}
         allProducts={products}
+        categories={categories}
         paymentMethods={paymentMethods}
       />
       <SearchOverlay
