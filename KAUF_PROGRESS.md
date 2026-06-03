@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, letzter Bugfix 2026-06-03)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-03)
 
 ---
 
@@ -174,3 +174,15 @@
 - Bestehender `catch`-Block fängt das und zeigt `orderError` inline über dem Bestellen-Button
 - Barzahlung (`zahlungsart === "bar"`) ist von dieser Änderung nicht betroffen
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 20: End-to-End-Verifikation ✅ (2026-06-03)
+- **Vollständige Verifikation**: Alle Phasen 1-19 und Kauf-Kernfunktionen erneut geprüft
+- **Checkout bestätigt echt**: `customer_orders` INSERT mit location_id, typ, alle Kundendaten, Beträge + `order_items` INSERT — kein Mock-Code mehr
+- **Stripe-Flow**: `zahlungsart !== 'bar'` → POST `/api/checkout/create-session` mit `order_id` → `window.location.href = url`; Fehler (non-ok, kein url) → throw → orderError sichtbar im UI
+- **Email-Outbox**: fire-and-forget nach Order-Erstellung, Fehler ignoriert (korrekt)
+- **Tracking nach Bar-Zahlung**: `clearCart()` + `onComplete(bestellnummer, name)` → TrackingScreen
+- **Tracking nach Stripe**: `?order_id=` URL-Param in `FrankyStorefront.useEffect` → clearCart + TrackingScreen; alternativ `/[slug]/success?order_id=xxx` → SuccessClient → TrackingScreen
+- **notFound()**: Unbekannte Slugs → null → 404
+- **PaymentMethods-Flow**: Supabase → FrankyStorefront → CheckoutModal; MOCK_PAYMENT_METHODS nur Dev-Fallback
+- **Visual**: TopBar (Bonus-Bar + Logo), WelcomeBanner, BestsellerRail, Section-Headers (No. 01 + HR), ProductCards (300px lg) — alle Mockup-Vorgaben erfüllt
+- **Build**: ✅ Kompiliert sauber (next build), TypeScript ✅, git clean ✅
