@@ -37,7 +37,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
       tabIndex={0}
     >
       {/* Image container */}
-      <div className="h-[160px] sm:h-[240px] lg:h-[300px] rounded-[12px] sm:rounded-[14px] overflow-hidden mb-2 sm:mb-3 relative bg-mint">
+      <div className="h-[185px] sm:h-[240px] lg:h-[300px] rounded-[12px] sm:rounded-[14px] overflow-hidden mb-2 sm:mb-3 relative bg-mint">
         {/* Badges over image */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
           {isTop3 && (
@@ -110,7 +110,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
       )}
 
       {/* Name */}
-      <h3 className="font-display font-black text-[14px] sm:text-[18px] leading-[1.2] text-[#2a3a2c] mb-1 sm:mb-1.5 line-clamp-2">
+      <h3 className="font-display font-black text-[16px] sm:text-[18px] leading-[1.2] text-[#2a3a2c] mb-1 sm:mb-1.5 line-clamp-2">
         {product.name}
       </h3>
 
