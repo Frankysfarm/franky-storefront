@@ -76,7 +76,7 @@ export function WelcomePopup({ drinks, allProducts, settings }: Props) {
         className="relative bg-bone w-full max-w-sm rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl animate-[reveal-up_0.3s_cubic-bezier(0.34,1.56,0.64,1)]"
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxHeight: "78dvh",
+          maxHeight: "min(78dvh, 78vh)",
           border: "1.5px solid rgba(228,192,104,0.4)",
         }}
       >

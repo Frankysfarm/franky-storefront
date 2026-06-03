@@ -98,7 +98,7 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
       <div
         ref={drawerRef}
         className="fixed inset-x-0 bottom-0 sm:inset-y-0 sm:right-0 sm:left-auto sm:w-[440px] z-[120] flex flex-col bg-bone shadow-2xl sm:rounded-l-3xl rounded-t-3xl sm:rounded-t-none animate-[reveal-up_0.35s_cubic-bezier(0.34,1.56,0.64,1)] sm:animate-none"
-        style={{ maxHeight: "92dvh", height: isEmpty ? "auto" : "92vh" }}
+        style={{ maxHeight: "min(92dvh, 92vh)", height: isEmpty ? "auto" : "min(92dvh, 92vh)" }}
       >
         {/* Drag handle (mobile) */}
         <div className="sm:hidden flex justify-center pt-2 pb-1">
