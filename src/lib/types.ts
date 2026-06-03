@@ -20,6 +20,7 @@ export interface Category {
   name: string;
   icon: string | null;
   sort_order: number;
+  description?: string | null;
 }
 
 export interface OptionGroup {

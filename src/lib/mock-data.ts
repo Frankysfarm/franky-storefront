@@ -101,11 +101,11 @@ export const MOCK_TENANT: Tenant = {
 };
 
 export const MOCK_CATEGORIES: Category[] = [
-  { id: "pasta", name: "Pasta", icon: "🍝", sort_order: 1 },
-  { id: "pizza", name: "Pizza", icon: "🍕", sort_order: 2 },
-  { id: "sides", name: "Vorspeisen", icon: "🥗", sort_order: 3 },
-  { id: "desserts", name: "Desserts", icon: "🍰", sort_order: 4 },
-  { id: "drinks", name: "Drinks", icon: "🥤", sort_order: 5 },
+  { id: "pasta", name: "Pasta", icon: "🍝", sort_order: 1, description: "Frisch gemacht · 5 Nudel-Sorten zur Wahl · 0 € Aufpreis Customization" },
+  { id: "pizza", name: "Pizza", icon: "🍕", sort_order: 2, description: "Fluffiger Focaccina-Teig · frisch aus dem Ofen" },
+  { id: "sides", name: "Vorspeisen", icon: "🥗", sort_order: 3, description: "Bruschetta · Salate · Suppen · Toasts" },
+  { id: "desserts", name: "Desserts", icon: "🍰", sort_order: 4, description: "San Sebastian Cheesecakes · Tiramisu · hausgemachte Cookies" },
+  { id: "drinks", name: "Drinks", icon: "🥤", sort_order: 5, description: "1 Drink gratis zu jeder Bestellung · Elephant Bay & Fritz" },
 ];
 
 export const MOCK_PRODUCTS: Product[] = [

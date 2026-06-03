@@ -125,21 +125,29 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
           const num = String(catIndex + 1).padStart(2, "0");
           return (
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-baseline gap-3 sm:gap-4 mb-5">
+              <div className="flex items-end gap-3 sm:gap-4 mb-5 flex-wrap">
                 <span
                   className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
-                  style={{ opacity: 0.85 }}
+                  style={{ opacity: 0.85, paddingBottom: "8px" }}
                 >
                   No.&nbsp;{num}
                 </span>
                 <h2
-                  className="font-display font-black italic text-sage-dark flex-shrink-0"
+                  className="font-display font-black text-sage-dark flex-shrink-0"
                   style={{ fontSize: "clamp(28px, 4vw, 42px)", letterSpacing: "-0.025em", lineHeight: 1 }}
                 >
-                  {cat.icon && <span className="not-italic">{cat.icon} </span>}
+                  {cat.icon && <span>{cat.icon} </span>}
                   {cat.name}
                 </h2>
-                <hr className="flex-1 border-0 border-t-[1.5px]" style={{ borderColor: "var(--color-cream-deep)", marginBottom: "4px" }} />
+                {cat.description && (
+                  <span
+                    className="text-muted font-medium italic flex-shrink-0 hidden sm:inline"
+                    style={{ fontSize: "13px", paddingBottom: "8px" }}
+                  >
+                    {cat.description}
+                  </span>
+                )}
+                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px]" style={{ borderColor: "var(--color-cream-deep)", marginBottom: "4px" }} />
               </div>
 
               <RevealSection>

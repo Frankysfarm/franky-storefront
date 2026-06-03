@@ -56,7 +56,7 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle | nul
 
     const [{ data: dbCategories }, { data: dbItems }, { data: dbPayments }] = await Promise.all([
       sb.from("menu_categories")
-        .select("id,name,icon,sort_order")
+        .select("id,name,icon,sort_order,beschreibung")
         .eq("location_id", location.id)
         .eq("aktiv", true)
         .order("sort_order"),
@@ -94,6 +94,7 @@ export async function loadFrankyBundle(slug: string): Promise<TenantBundle | nul
       name: c.name,
       icon: c.icon,
       sort_order: c.sort_order,
+      description: c.beschreibung ?? null,
     }));
 
     const products: Product[] = (dbItems ?? []).map((item: any) => ({

@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-02)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03)
 
 ---
 
@@ -152,4 +152,15 @@
 - **FIX**: `isCat()` Helper nutzt Map-Lookup, fällt auf raw `category_id` zurück (Rückwärtskompatibilität mit Mock)
 - **FIX**: `score()`, `taglineFor()`, Bild-Fallback nutzen jetzt `isCat()` statt direkten Stringvergleich
 - **FIX**: Sides auch als "vorspeisen" erkannt (falls Supabase-Kategorie so heißt)
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 18: Analyse + Section-Descriptions ✅ (2026-06-03)
+- **Vollständige Analyse**: Alle Phasen 1-17 bestätigt abgeschlossen — Build ✅, TypeScript ✅
+- **Checkout bestätigt echt**: customer_orders + order_items INSERT, Stripe-Redirect, Email-Outbox — alle live
+- **VERBESSERT**: Section-Count Untertitel aus Mockup implementiert:
+  - `Category`-Typ um optionales `description`-Feld erweitert
+  - `MOCK_CATEGORIES` mit passenden Subtexten befüllt (z.B. "Frisch gemacht · 5 Nudel-Sorten...")
+  - `load-tenant.ts` lädt `beschreibung` aus `menu_categories` Supabase-Tabelle
+  - `FrankyStorefront.tsx` Section-Header zeigt Beschreibung rechts neben Titel (ab sm, kursiv/muted)
+  - Section-Head Layout: items-baseline → items-end flex-wrap, h2 kein italic mehr (wie Mockup)
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
