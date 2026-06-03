@@ -155,6 +155,9 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
             return;
           }
         }
+        throw new Error(
+          "Online-Zahlung konnte nicht gestartet werden. Bitte erneut versuchen oder Barzahlung wählen."
+        );
       }
 
       clearCart();

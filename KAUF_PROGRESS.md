@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, letzter Bugfix 2026-06-03)
 
 ---
 
@@ -163,4 +163,14 @@
   - `load-tenant.ts` lädt `beschreibung` aus `menu_categories` Supabase-Tabelle
   - `FrankyStorefront.tsx` Section-Header zeigt Beschreibung rechts neben Titel (ab sm, kursiv/muted)
   - Section-Head Layout: items-baseline → items-end flex-wrap, h2 kein italic mehr (wie Mockup)
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 19: Stripe-Fehler-Fallthrough-Fix ✅ (2026-06-03)
+- **BUG FIXED**: Wenn Stripe `create-session` API nicht-ok zurückgab (oder keine URL lieferte),
+  fiel der Code stillschweigend durch zu `onComplete()` → Tracking-Screen zeigte sich, obwohl
+  der Kunde nicht bezahlt hatte. Bestellung war in DB, aber ohne Zahlung.
+- **FIX**: `throw new Error(...)` statt Fallthrough: "Online-Zahlung konnte nicht gestartet werden.
+  Bitte erneut versuchen oder Barzahlung wählen."
+- Bestehender `catch`-Block fängt das und zeigt `orderError` inline über dem Bestellen-Button
+- Barzahlung (`zahlungsart === "bar"`) ist von dieser Änderung nicht betroffen
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
