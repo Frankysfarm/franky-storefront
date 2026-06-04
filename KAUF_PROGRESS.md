@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-03)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-04)
 
 ---
 
@@ -193,4 +193,13 @@
 - **BUG FIXED**: `WelcomePopup` zeigte sich nicht wenn weniger als 4 Getränke im Menü sind
   - `if (drinks.length < 4) return null` → `if (drinks.length < 1) return null`
   - `choices = drinks.slice(0, 4)` funktioniert weiterhin korrekt mit 1-4 Getränken
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 22: Vollanalyse + order_items Bugfix ✅ (2026-06-04)
+- **Vollanalyse**: Alle Phasen 1-21 vollständig geprüft — Build ✅, TypeScript ✅, alle 5 Kauf-Kernfunktionen verifiziert
+  - Produkte + Warenkorb ✅ | Checkout-Funnel (PLZ → Adresse → Zahlung) ✅
+  - Supabase INSERT (customer_orders + order_items) ✅ | Stripe-Redirect ✅ | Email-Outbox ✅ | Tracking ✅
+- **BUG FIXED**: `order_items` INSERT hatte kein Error-Handling — bei fehlgeschlagenem Insert wurde stillschweigend weitergegangen, sodass eine bezahlte Bestellung ohne Positionen im System landen konnte
+  - Fix: `const { error: itemsErr } = await sb.from("order_items").insert(...)` + `if (itemsErr) throw new Error(...)`
+  - Fehler landen jetzt sauber im bestehenden catch-Block als sichtbarer orderError über dem Bestellen-Button
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅

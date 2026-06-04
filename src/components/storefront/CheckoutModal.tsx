@@ -137,7 +137,10 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
         optionen: item.selections ?? null,
       }));
 
-      await sb.from("order_items").insert(orderItems);
+      const { error: itemsErr } = await sb.from("order_items").insert(orderItems);
+      if (itemsErr) {
+        throw new Error("Bestellpositionen konnten nicht gespeichert werden. Bitte erneut versuchen.");
+      }
 
       // Fire email outbox (fire-and-forget)
       fetch("https://mise-gastro.de/api/email/process-outbox", { method: "POST" }).catch(() => {});
