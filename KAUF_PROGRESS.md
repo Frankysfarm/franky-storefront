@@ -186,3 +186,11 @@
 - **PaymentMethods-Flow**: Supabase → FrankyStorefront → CheckoutModal; MOCK_PAYMENT_METHODS nur Dev-Fallback
 - **Visual**: TopBar (Bonus-Bar + Logo), WelcomeBanner, BestsellerRail, Section-Headers (No. 01 + HR), ProductCards (300px lg) — alle Mockup-Vorgaben erfüllt
 - **Build**: ✅ Kompiliert sauber (next build), TypeScript ✅, git clean ✅
+
+## Phase 21: Animation-Fix + WelcomePopup-Fix ✅ (2026-06-04)
+- **BUG FIXED**: `@keyframes fade-in` fehlte in `franky-tokens.css` — alle Backdrop-Overlays (CartDrawer, CheckoutModal, WelcomePopup) hatten keine Einblend-Animation, erschienen sofort hart
+  - Fix: `@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }` hinzugefügt
+- **BUG FIXED**: `WelcomePopup` zeigte sich nicht wenn weniger als 4 Getränke im Menü sind
+  - `if (drinks.length < 4) return null` → `if (drinks.length < 1) return null`
+  - `choices = drinks.slice(0, 4)` funktioniert weiterhin korrekt mit 1-4 Getränken
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅

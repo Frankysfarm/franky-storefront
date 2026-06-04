@@ -24,7 +24,7 @@ export function WelcomePopup({ drinks }: Props) {
     return () => clearTimeout(t);
   }, []);
 
-  if (drinks.length < 4) return null;
+  if (drinks.length < 1) return null;
   const choices = drinks.slice(0, 4);
 
   const close = () => {
