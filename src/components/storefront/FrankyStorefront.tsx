@@ -125,15 +125,15 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
           const num = String(catIndex + 1).padStart(2, "0");
           return (
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-end gap-3 sm:gap-4 mb-5 flex-wrap">
+              <div className="flex items-baseline gap-3 sm:gap-4 mb-5 flex-wrap">
                 <span
-                  className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
-                  style={{ opacity: 0.85, paddingBottom: "8px" }}
+                  className="font-display font-black text-gold-deep text-lg flex-shrink-0"
+                  style={{ opacity: 0.85 }}
                 >
                   No.&nbsp;{num}
                 </span>
                 <h2
-                  className="font-display font-black text-sage-dark flex-shrink-0"
+                  className="font-display italic font-black text-sage-dark flex-shrink-0"
                   style={{ fontSize: "clamp(30px, 4vw, 42px)", letterSpacing: "-0.025em", lineHeight: 1 }}
                 >
                   {cat.icon && <span>{cat.icon} </span>}
@@ -141,13 +141,12 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                 </h2>
                 {cat.description && (
                   <span
-                    className="text-muted font-medium italic flex-shrink-0 hidden sm:inline"
-                    style={{ fontSize: "13px", paddingBottom: "8px" }}
+                    className="text-muted font-medium italic flex-shrink-0 hidden sm:inline text-[13px]"
                   >
                     {cat.description}
                   </span>
                 )}
-                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px]" style={{ borderColor: "var(--color-cream-deep)", marginBottom: "4px" }} />
+                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px]" style={{ borderColor: "var(--color-cream-deep)" }} />
               </div>
 
               <RevealSection>
