@@ -96,6 +96,17 @@
 - **canProceedLieferung Side-Effect**: `validatePlz()` wurde während Render aufgerufen und setzte State (`setPlzError`) → React Anti-Pattern. Fix: Neuer pure Helper `isValidPlz()` für die disabled-Logik; `validatePlz()` nur noch bei explizitem User-Action
 - **LoyaltyCard Widerspruch**: Zeigte "Jede 5. Bestellung = 1 Pasta gratis" (5/5 Zyklus) obwohl TopBar + BonusModal "Jede 2. Bestellung gratis" sagen. Fix: Text auf "2. Bestellung" und `filled=1 total=2` geändert
 
+## Phase 23: TOP3_IDS + Drink-Filter Bugfix ✅ (2026-06-04)
+- **BUG FIXED**: `TOP3_IDS` in `mock-data.ts` enthält hardcoded Mock-IDs ("PAS-001", "PAS-003", "SID-002").
+  Mit echten Supabase-Daten sind Produkt-IDs UUIDs → `TOP3_IDS.has(product.id)` war immer `false`
+  - `ProductCard.tsx`: `isTop3 = TOP3_IDS.has(...)` → `isTop3 = product.beliebt` (echtes DB-Feld)
+  - `BestsellerRail.tsx`: `isTop3 = TOP3_IDS.has(...)` → `isTop3 = i < 3` (Position im Bestseller-Rail)
+  - `TOP3_IDS` Import aus BestsellerRail entfernt — war der letzte Verbraucher in produtivem Code
+- **BUG FIXED**: `drinkProducts`-Filter in `FrankyStorefront.tsx` prüfte nur `.includes("drink")`
+  - Deutsche Kategorie "Getränke" → "getränk" → wurde nie gematcht → WelcomePopup zeigte nie
+  - Fix: `isDrinkCat()` Helper prüft "drink" | "getränk" | "getraenk"
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
 ## Noch offen / Nice-to-have
 - [ ] PLZ-Validierung aus Supabase laden statt aus mock-data (VALID_PLZ Array)
 - [ ] Echte Produktbilder in Supabase Storage hochladen (bild_url auf volle CDN-URLs zeigen)
