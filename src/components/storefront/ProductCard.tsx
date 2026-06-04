@@ -5,8 +5,6 @@ import { useState } from "react";
 import type { Product, DietTag } from "@/lib/types";
 import { DIET_TAG_SHORT } from "@/lib/types";
 import { formatPriceRaw } from "@/lib/format";
-import { TOP3_IDS } from "@/lib/mock-data";
-
 interface Props {
   product: Product;
   onAdd: (product: Product) => void;
@@ -22,7 +20,7 @@ const DIET_TAG_STYLES: Record<string, string> = {
 
 export function ProductCard({ product, onAdd, onOpen }: Props) {
   const [liked, setLiked] = useState(false);
-  const isTop3 = TOP3_IDS.has(product.id);
+  const isTop3 = product.beliebt;
   const hasOptions = product.option_groups && product.option_groups.length > 0;
 
   const seed = (product.id.charCodeAt(0) || 0) + (product.id.charCodeAt(product.id.length - 1) || 0);

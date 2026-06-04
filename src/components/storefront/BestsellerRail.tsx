@@ -2,7 +2,6 @@
 
 import type { Product } from "@/lib/types";
 import { formatPriceRaw } from "@/lib/format";
-import { TOP3_IDS } from "@/lib/mock-data";
 
 interface Props {
   products: Product[];
@@ -43,7 +42,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
         <div className="overflow-x-auto no-scrollbar -mx-6">
           <div className="flex gap-3 pb-1 px-6">
             {items.map((product, i) => {
-              const isTop3 = TOP3_IDS.has(product.id);
+              const isTop3 = i < 3;
               return (
                 <div
                   key={product.id}

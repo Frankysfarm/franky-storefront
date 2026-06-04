@@ -45,7 +45,13 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
   const [dietFilter, setDietFilter] = useState<DietTag | "all">("all");
   const addItem = useCartStore((s) => s.addItem);
   const clearCart = useCartStore((s) => s.clearCart);
-  const drinkProducts = useMemo(() => products.filter(p => p.category_id && categories.find(c => c.id === p.category_id)?.name?.toLowerCase().includes("drink")), [products, categories]);
+  const drinkProducts = useMemo(() => {
+    const isDrinkCat = (name: string) => {
+      const n = name.toLowerCase();
+      return n.includes("drink") || n.includes("getränk") || n.includes("getraenk");
+    };
+    return products.filter(p => p.category_id && isDrinkCat(categories.find(c => c.id === p.category_id)?.name ?? ""));
+  }, [products, categories]);
 
   // Detect Stripe success redirect: ?order_id=xxx
   useEffect(() => {
