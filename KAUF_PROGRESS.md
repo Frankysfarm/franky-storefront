@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-04)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-05)
 
 ---
 
@@ -105,6 +105,14 @@
 - **BUG FIXED**: `drinkProducts`-Filter in `FrankyStorefront.tsx` prüfte nur `.includes("drink")`
   - Deutsche Kategorie "Getränke" → "getränk" → wurde nie gematcht → WelcomePopup zeigte nie
   - Fix: `isDrinkCat()` Helper prüft "drink" | "getränk" | "getraenk"
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 24: Section-Header Mockup-Regression Fix ✅ (2026-06-05)
+- **BUG FIXED**: Phase 18 hatte Section-Header-Änderungen dokumentiert aber nicht korrekt angewendet
+  - `FrankyStorefront.tsx`: Flex-Container war `items-baseline` → jetzt `items-end` (wie Mockup `.section-head`)
+  - Section-Number-Span (`No. 01`) war ohne `italic` → jetzt `italic` (wie Mockup `.section-num { font-style: italic }`)
+  - Section-Title `h2` war `italic` → jetzt ohne italic (wie Mockup `.section-title` — kein font-style)
+  - Beschreibungs-Span: `paddingBottom: 8px` hinzugefügt (wie Mockup `.section-count { padding-bottom: 8px }`)
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
 
 ## Noch offen / Nice-to-have
