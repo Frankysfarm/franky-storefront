@@ -51,10 +51,10 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   const grandTotal = useCartStore((s) => s.grandTotal(productMap, tenant.liefergebuehr, tenant.free_delivery_threshold));
   const clearCart = useCartStore((s) => s.clearCart);
 
-  const enabledMethods = useMemo(
-    () => paymentMethods.filter((pm) => pm.enabled_lieferung),
-    [paymentMethods],
-  );
+  const enabledMethods = useMemo(() => {
+    const filtered = paymentMethods.filter((pm) => pm.enabled_lieferung);
+    return filtered.length > 0 ? filtered : MOCK_PAYMENT_METHODS.filter((pm) => pm.enabled_lieferung);
+  }, [paymentMethods]);
   const defaultPayment = enabledMethods[0]?.method ?? "karte";
 
   const [form, setForm] = useState<CheckoutForm>({

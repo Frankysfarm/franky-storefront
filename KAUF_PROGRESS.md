@@ -120,6 +120,26 @@
 - [ ] Echte Produktbilder in Supabase Storage hochladen (bild_url auf volle CDN-URLs zeigen)
 - [ ] Stripe-API: success_url auf `/biss-app/[slug]/success?order_id={order.id}` setzen (serverseitig bei mise-gastro.de)
 - [ ] `free_delivery_threshold` als Spalte in `tenants`-Tabelle und in select-Query
+- [ ] `form.anmerkung` (Fahrer-Hinweise) in `customer_orders` INSERT speichern, sobald DB-Spaltenname bekannt
+
+## Phase 25: Vollanalyse + enabledMethods-Fallback ✅ (2026-06-05)
+- **Vollanalyse**: Alle Phasen 1–24 geprüft — Build ✅ (Next.js 16.2.4, 3.3s, TypeScript clean)
+- **Verifiziert**: Alle 5 Kauf-Kernfunktionen live:
+  - Produkte/Warenkorb ✅ | PLZ→Adresse→Zahlung→Upsell→Review ✅
+  - Supabase INSERT (customer_orders + order_items, mit Error-Handling) ✅
+  - Stripe-Redirect (POST create-session → window.location.href) ✅
+  - Stripe-Fallback-Error sichtbar im UI ✅
+  - Email-Outbox fire-and-forget ✅ | Tracking-Screen (Bar + Stripe-Param) ✅
+- **Verifiziert**: Visual Layout stimmt mit Mockup überein:
+  - TopBar: Bonus-Club-Bar (Row 1 dark-green) + zentriertes Logo (Row 2) ✅
+  - WelcomeBanner: "Mamma Mia — die Top 5" + horizontale Karten ✅
+  - BestsellerRail: cream/beige, weiße Karten mit Border ✅
+  - Section-Headers: "No. 01" italic gold + h2 + HR-Divider + Beschreibung ✅
+  - ProductCards: h-[185px] sm:h-[240px] lg:h-[300px] ✅
+- **BUG FIXED**: `enabledMethods` konnte leer sein wenn Supabase 0 Zahlungsarten zurückgibt
+  - War: leeres Array → Zahlung-Step zeigt keine Optionen → Benutzer feststeckend
+  - Fix: Fallback auf `MOCK_PAYMENT_METHODS` wenn `filtered.length === 0`
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
 
 ## Phase 15: Bugfix-Runde (notFound + ETA + backHref) ✅ (2026-05-31)
 - **BUG FIXED**: `notFound()` war in `[slug]/page.tsx` importiert aber nie aufgerufen
