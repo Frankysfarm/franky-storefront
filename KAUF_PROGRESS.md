@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-05)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-05, re-verifiziert 2026-06-05)
 
 ---
 
@@ -242,3 +242,27 @@
   - Fix: `const { error: itemsErr } = await sb.from("order_items").insert(...)` + `if (itemsErr) throw new Error(...)`
   - Fehler landen jetzt sauber im bestehenden catch-Block als sichtbarer orderError über dem Bestellen-Button
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 26: Re-Verifikation vollständig ✅ (2026-06-05)
+- **Vollständige Neuanalyse** aller Phasen 1-25 — kein Regressions-Bug gefunden
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 4.0s compile, TypeScript clean, alle 4 Routen korrekt
+- **Checkout-Flow verifiziert**:
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT real (keine Mocks)
+  - Adresse korrekt aus `strasse` + optionalem `etage` zusammengesetzt (`hausnummer` immer leer — kein eigenes Feld, User tippt alles in `strasse`)
+  - Stripe-Redirect: `zahlungsart !== 'bar'` → POST `mise-gastro.de/api/checkout/create-session` → `window.location.href`; bei Fehler throws → `orderError` inline sichtbar
+  - Bar-Zahlung: direkt `clearCart()` + `onComplete(bestellnummer, name)` → TrackingScreen
+  - Email-Outbox: fire-and-forget, Fehler ignoriert (korrekt)
+- **Stripe-Success-Flow**:
+  - `/[slug]/success?order_id=xxx` → SuccessClient → TrackingScreen
+  - `FrankyStorefront.useEffect` erkennt `?order_id=` → clearCart + setTracking
+- **Visual vollständig**:
+  - TopBar: Row 1 Bonus-Club-Bar (dark-green, gold text) + Row 2 Logo zentriert (Fraunces italic) ✅
+  - WelcomeBanner: "Mamma Mia — die Top 5" + horizontale Top-5-Karten ✅
+  - BestsellerRail: cream-soft/bone Hintergrund, weiße Karten mit Border ✅
+  - Section-Headers: `No. 01` italic gold + `h2` + `<hr>` + optionale Kategoriebeschreibung ✅
+  - ProductCards: h-[185px] sm:h-[240px] lg:h-[300px] ✅
+- **Animationen**: `fade-in`, `reveal-up`, `dp-pulse` alle in `franky-tokens.css` definiert ✅
+- **Offen (non-blocking)**:
+  - `form.anmerkung` (Fahrer-Hinweise) nicht in DB gespeichert — DB-Spaltenname unbekannt
+  - PLZ-Liste hardcoded in mock-data.ts (VALID_PLZ)
+  - `free_delivery_threshold` hardcoded 25 in load-tenant.ts
