@@ -122,6 +122,16 @@
 - [ ] `free_delivery_threshold` als Spalte in `tenants`-Tabelle und in select-Query
 - [ ] `form.anmerkung` (Fahrer-Hinweise) in `customer_orders` INSERT speichern, sobald DB-Spaltenname bekannt
 
+## Phase 27: Kritischer Cart-Quantity-Bug Fix ✅ (2026-06-06)
+- **BUG FIXED**: `updateQty` in `store.ts` ist ein Delta-Funktion (`next = item.qty + delta`)
+  - `CartDrawer.tsx` übergab fälschlicherweise absolute Werte (`item.qty - 1` / `item.qty + 1`) statt Deltas (`-1` / `+1`)
+  - Konsequenz: Bei qty=2, Minus-Klick → übergab 1 → store berechnete 2+1=3 (falsche Richtung!)
+  - Bei qty=2, Plus-Klick → übergab 3 → store berechnete 2+3=5 (statt 3)
+  - Durch Re-Renders akkumulierte sich der Fehler exponentiell: jeder Klick ergab einen noch falschen Wert
+  - Fix: `updateQty(item.cartKey, item.qty - 1)` → `updateQty(item.cartKey, -1)`
+  - Fix: `updateQty(item.cartKey, item.qty + 1)` → `updateQty(item.cartKey, 1)`
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
 ## Phase 25: Vollanalyse + enabledMethods-Fallback ✅ (2026-06-05)
 - **Vollanalyse**: Alle Phasen 1–24 geprüft — Build ✅ (Next.js 16.2.4, 3.3s, TypeScript clean)
 - **Verifiziert**: Alle 5 Kauf-Kernfunktionen live:

@@ -208,7 +208,7 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
                       </div>
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={() => updateQty(item.cartKey, item.qty - 1)}
+                          onClick={() => updateQty(item.cartKey, -1)}
                           className="w-7 h-7 rounded-lg bg-mint hover:bg-mint-deep flex items-center justify-center text-sage-dark active:scale-90 transition-all"
                           aria-label="Weniger"
                         >
@@ -218,7 +218,7 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
                           {item.qty}
                         </span>
                         <button
-                          onClick={() => updateQty(item.cartKey, item.qty + 1)}
+                          onClick={() => updateQty(item.cartKey, 1)}
                           className="w-7 h-7 rounded-lg bg-sage hover:bg-sage-hover text-white flex items-center justify-center active:scale-90 transition-all"
                           aria-label="Mehr"
                         >
