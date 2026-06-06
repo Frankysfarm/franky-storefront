@@ -1,6 +1,23 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-05, re-verifiziert 2026-06-05)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06)
+
+## Phase 28: Vollanalyse ✅ (2026-06-06)
+- **Vollständige Code-Durchsicht**: Alle Phasen 1–27 geprüft — Build ✅ (3.8s), TypeScript ✅, 4 Routen korrekt
+- **Checkout-Flow bestätigt echt**:
+  - `customer_orders` INSERT mit `location_id`, `typ`, Kundendaten, `zwischensumme`, `liefergebuehr`, `gesamtbetrag`, `zahlungsart`
+  - `order_items` INSERT mit Error-Handling (wirft wenn fehlgeschlagen)
+  - Stripe-Redirect: `zahlungsart !== 'bar'` → POST `mise-gastro.de/api/checkout/create-session` → `window.location.href`; Fehler → throw → `orderError` inline sichtbar
+  - Bar-Zahlung: `clearCart()` + `onComplete(bestellnummer, name)` → TrackingScreen
+  - Email-Outbox: fire-and-forget, korrekt
+- **CartDrawer Phase 27 bestätigt**: `updateQty(-1)` / `updateQty(+1)` — Delta-Übergabe korrekt ✅
+- **Store-Logik bestätigt**: `updateQty(key, delta)` in store.ts rechnet `next = item.qty + delta`, löscht wenn `next <= 0` ✅
+- **Zahlungsarten aus Supabase bestätigt**: Seed hat alle 8 Methoden (`paypal`, `klarna`, `apple_pay`, `google_pay`, `karte`, `sepa`, `giropay`, `bar`) mit `enabled_lieferung: true`
+- **MOCK_PAYMENT_METHODS Fallback korrekt**: `paypal` als erste Option (statt `karte`) — kein Fehler
+- **Visual vollständig**: TopBar (Row1 Bonus + Row2 Logo), WelcomeBanner (null-guard wenn keine top-products), BestsellerRail (cream, weiße Karten, 100/110px Images), Section-Headers (No.01 italic + h2 + HR), ProductCards (185/240/300px) ✅
+- **CSS vollständig**: alle Animations (`fade-in`, `reveal-up`, `confetti-pop`, `bump`, `glow-pulse`, `dp-pulse`, `bb-live-pulse`) in `franky-tokens.css` ✅
+- **Keine TODOs/FIXMEs/Math.random** im Produktiv-Code
+- **Offen (non-blocking)**: `form.anmerkung` nicht in DB (Spaltenname unbekannt), PLZ-Liste hardcoded, free_delivery_threshold hardcoded
 
 ---
 
