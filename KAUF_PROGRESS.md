@@ -1,6 +1,24 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, re-verifiziert 2026-06-06)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, re-verifiziert 2026-06-06, Neusession 2026-06-06)
+
+## Phase 30: Frische Vollanalyse (Neusession) ✅ (2026-06-06)
+- **Unabhängige Code-Durchsicht** aller Phasen 1–29 aus frischer Session — kein Regressions-Bug
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.3s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Checkout-Flow vollständig bestätigt**:
+  - `customer_orders` INSERT: `location_id`, `typ`, `kunde_name`, `kunde_telefon`, `kunde_email|null`, `kunde_adresse`, `kunde_plz`, `zwischensumme`, `liefergebuehr`, `gesamtbetrag`, `zahlungsart` ✅
+  - `order_items` INSERT: `order_id`, `product_id`, `product_name`, `menge`, `einzelpreis`, `gesamtpreis`, `optionen|null` + Error-Handling (wirft) ✅
+  - Stripe: `zahlungsart !== 'bar'` → POST `create-session` → `window.location.href`; non-ok oder kein URL → throw → inline `orderError` ✅
+  - Bar: `clearCart()` + `onComplete(bestellnummer, name)` → TrackingScreen ✅
+  - Email-Outbox: fire-and-forget, Fehler ignoriert ✅
+- **Alle 5 Kauf-Kernfunktionen live**:
+  1. Produkte sehen + Warenkorb ✅ (ProductCard → addItem / ProductSheet mit Optionen)
+  2. Checkout-Funnel PLZ→Adresse→Zahlung→Upsell→Review ✅
+  3. Stripe-Zahlung ✅
+  4. Email-Bestätigung ✅ (outbox fire-and-forget)
+  5. Live-Tracking ✅ (TrackingScreen nach Bar oder Stripe-Redirect)
+- **Visual bestätigt**: TopBar (Bonus-Bar + Logo), WelcomeBanner ("Mamma Mia — die Top 5"), BestsellerRail (cream/beige), Section-Headers (No. 01 italic gold + h2 + HR), ProductCards (185/240/300px) ✅
+- **Offen (non-blocking)**: `form.anmerkung` nicht in DB (Spaltenname unklar), PLZ hardcoded, `free_delivery_threshold` hardcoded 25
 
 ## Phase 28: Vollanalyse ✅ (2026-06-06)
 - **Vollständige Code-Durchsicht**: Alle Phasen 1–27 geprüft — Build ✅ (3.8s), TypeScript ✅, 4 Routen korrekt
