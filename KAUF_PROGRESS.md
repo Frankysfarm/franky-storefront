@@ -1,6 +1,6 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, re-verifiziert 2026-06-06)
 
 ## Phase 28: Vollanalyse ✅ (2026-06-06)
 - **Vollständige Code-Durchsicht**: Alle Phasen 1–27 geprüft — Build ✅ (3.8s), TypeScript ✅, 4 Routen korrekt
@@ -269,6 +269,24 @@
   - Fix: `const { error: itemsErr } = await sb.from("order_items").insert(...)` + `if (itemsErr) throw new Error(...)`
   - Fehler landen jetzt sauber im bestehenden catch-Block als sichtbarer orderError über dem Bestellen-Button
 - **Build**: ✅ Kompiliert sauber, TypeScript ✅
+
+## Phase 29: Vollanalyse + Re-Verifikation ✅ (2026-06-06)
+- **Vollständige Neuanalyse** aller Phasen 1-28 — kein neuer Bug gefunden
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 4.6s compile, TypeScript clean, alle 4 Routen korrekt
+- **Checkout-Flow vollständig geprüft**:
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT real, kein Mock-Code ✅
+  - Stripe: `zahlungsart !== 'bar'` → POST `create-session` → `window.location.href` ✅
+  - Bar: `clearCart()` + `onComplete(bestellnummer, name)` → TrackingScreen ✅
+  - Email-Outbox: fire-and-forget, Fehler ignoriert ✅
+  - `orderError` mit inline Anzeige bei Fehler ✅
+- **Store-Logik**: `updateQty(key, delta)` korrekt; CartDrawer übergibt `-1`/`+1` Deltas ✅
+- **TrackingScreen**: `customerName || "Gast"` — leerer Name (nach Stripe-Redirect) korrekt behandelt ✅
+- **Supabase-Client**: `getClientSupabase()` und `getServerSupabase()` korrekt getrennt ✅
+- **CSS-Tokens**: alle Keyframes (`fade-in`, `reveal-up`, `confetti-pop`, `bump`, `glow-pulse`, `dp-pulse`, `bb-live-pulse`) definiert ✅
+- **Types**: alle Interfaces vollständig (`Tenant` mit `id`+`location_id`, `CheckoutForm` mit `anmerkung`) ✅
+- **`notFound()`**: unbekannte Slugs → `null` → 404 ✅
+- **Success-Route**: `/[slug]/success?order_id=xxx` → `SuccessClient` → clearCart + TrackingScreen ✅
+- **Offen (non-blocking)**: `form.anmerkung` DB-Spaltenname unbekannt, PLZ hardcoded, free_delivery_threshold hardcoded
 
 ## Phase 26: Re-Verifikation vollständig ✅ (2026-06-05)
 - **Vollständige Neuanalyse** aller Phasen 1-25 — kein Regressions-Bug gefunden
