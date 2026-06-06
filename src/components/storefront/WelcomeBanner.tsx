@@ -9,6 +9,8 @@ interface Props {
 }
 
 export function WelcomeBanner({ topProducts, onAdd }: Props) {
+  if (topProducts.length === 0) return null;
+
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
@@ -30,7 +32,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
             </span>
             <h2
               className="font-display font-black leading-[1.02] text-sage-dark"
-              style={{ fontSize: "clamp(20px, 4vw, 42px)", letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(24px, 4vw, 42px)", letterSpacing: "-0.02em" }}
             >
               Mamma Mia —{" "}
               <span className="italic text-sage">die Top&nbsp;5</span>

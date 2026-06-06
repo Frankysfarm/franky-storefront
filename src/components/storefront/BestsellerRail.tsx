@@ -69,7 +69,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                   )}
 
                   {/* Image — full width */}
-                  <div className="w-full h-[90px] sm:h-[100px] overflow-hidden bg-mint">
+                  <div className="w-full h-[100px] sm:h-[110px] overflow-hidden bg-mint">
                     {product.bild_url ? (
                       <img
                         src={product.bild_url}

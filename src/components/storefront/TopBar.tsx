@@ -38,6 +38,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         className="w-full flex items-center justify-center gap-2 py-1.5 text-[11px] font-bold tracking-wide text-gold hover:opacity-90 transition-opacity"
         style={{ background: "var(--color-sage-dark)" }}
       >
+        <span>🎁</span>
         <span>FRANKY&apos;S BONUS CLUB</span>
         <span className="opacity-40">·</span>
         <span>Jede 2. Bestellung gratis</span>
@@ -69,7 +70,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
                 className="h-[44px] max-h-[44px] w-auto hover:-translate-y-px hover:scale-[1.02] transition-transform"
               />
             ) : (
-              <span className="font-display italic font-black text-xl text-sage-dark tracking-tight">
+              <span className="font-display italic font-black text-2xl sm:text-[28px] text-sage-dark tracking-tight">
                 {tenant.name}
               </span>
             )}
