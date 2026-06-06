@@ -22,7 +22,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
       >
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
           {/* Left: Title + Subtext */}
-          <div className="flex-shrink-0 sm:w-[260px]">
+          <div className="flex-shrink-0 sm:w-[280px]">
             <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-extrabold tracking-[1.4px] sm:tracking-[1.8px] text-sage-dark mb-1.5 sm:mb-2">
               <span
                 className="w-[7px] h-[7px] rounded-full bg-green-400 flex-shrink-0"
@@ -32,10 +32,10 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
             </span>
             <h2
               className="font-display font-black leading-[1.02] text-sage-dark"
-              style={{ fontSize: "clamp(24px, 4vw, 42px)", letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(26px, 3.6vw, 38px)", letterSpacing: "-0.02em" }}
             >
               Mamma Mia —{" "}
-              <span className="italic text-sage">die Top&nbsp;5</span>
+              <span className="italic text-burgundy">die Top&nbsp;5</span>
             </h2>
             <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug hidden sm:block">
               Was Aachen aktuell am liebsten bestellt.
