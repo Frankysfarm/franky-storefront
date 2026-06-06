@@ -147,13 +147,13 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                 </h2>
                 {cat.description && (
                   <span
-                    className="text-muted font-medium italic flex-shrink-0 hidden sm:inline text-[13px]"
-                    style={{ paddingBottom: "8px" }}
+                    className="text-muted font-medium italic flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]"
+                    style={{ paddingBottom: "4px", marginTop: "-2px" }}
                   >
                     {cat.description}
                   </span>
                 )}
-                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px]" style={{ borderColor: "var(--color-cream-deep)" }} />
+                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px] hidden sm:block" style={{ borderColor: "var(--color-cream-deep)" }} />
               </div>
 
               <RevealSection>

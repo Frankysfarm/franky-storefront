@@ -1,6 +1,18 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, re-verifiziert 2026-06-06, Neusession 2026-06-06)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, Neusession-31 2026-06-06)
+
+## Phase 31: Mockup-Delta-Fixes ✅ (2026-06-06)
+- **SQL-Seed**: `menu_categories` INSERT fehlte `beschreibung` Spalte → Section-Descriptions waren in Produktion nie sichtbar
+  - Fix: `INSERT INTO menu_categories (..., beschreibung) VALUES (..., 'Frisch gemacht · ...')` für alle 5 Kategorien
+  - `ON CONFLICT (id) DO UPDATE SET beschreibung = EXCLUDED.beschreibung` damit Re-Run beschreibung aktualisiert
+- **Body-CSS**: Subtile Pasta-Noodle SVG-Textur fehlte (war im MOCKUP-REFERENCE.html, aber nicht in franky-tokens.css)
+  - Fix: `background-image` auf 3 Layer erweitert: Gradient1, Gradient2, SVG-Textur (`opacity=0.045`, `repeat, scroll`)
+  - `background-attachment: fixed, fixed, scroll` und `background-repeat: no-repeat, no-repeat, repeat` hinzugefügt
+- **Section-Description Mobile**: War `hidden sm:inline` → jetzt `basis-full sm:basis-auto text-[11px] sm:text-[13px]`
+  - Auf Mobile: nimmt volle Zeilenbreite (flex-basis 100%), 11px; auf sm+: inline neben Titel, 13px
+  - `<hr>` Divider auf Mobile versteckt (`hidden sm:block`) — sieht auf kleinen Screens sauberer aus
+- **Build**: ✅ Kompiliert sauber, TypeScript ✅
 
 ## Phase 30: Frische Vollanalyse (Neusession) ✅ (2026-06-06)
 - **Unabhängige Code-Durchsicht** aller Phasen 1–29 aus frischer Session — kein Regressions-Bug

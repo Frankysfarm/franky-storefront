@@ -39,13 +39,13 @@ VALUES (
 ) ON CONFLICT (id) DO NOTHING;
 
 -- 3. Kategorien
-INSERT INTO menu_categories (id, location_id, name, icon, sort_order, aktiv) VALUES
-  ('fp-cat-pasta',    'fp-loc-001', 'Pasta',      '🍝', 1, true),
-  ('fp-cat-pizza',    'fp-loc-001', 'Pizza',      '🍕', 2, true),
-  ('fp-cat-sides',    'fp-loc-001', 'Vorspeisen', '🥗', 3, true),
-  ('fp-cat-desserts', 'fp-loc-001', 'Desserts',   '🍰', 4, true),
-  ('fp-cat-drinks',   'fp-loc-001', 'Drinks',     '🥤', 5, true)
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO menu_categories (id, location_id, name, icon, sort_order, aktiv, beschreibung) VALUES
+  ('fp-cat-pasta',    'fp-loc-001', 'Pasta',      '🍝', 1, true, 'Frisch gemacht · 5 Nudel-Sorten zur Wahl · 0 € Aufpreis Customization'),
+  ('fp-cat-pizza',    'fp-loc-001', 'Pizza',      '🍕', 2, true, 'Fluffiger Focaccina-Teig · frisch aus dem Ofen'),
+  ('fp-cat-sides',    'fp-loc-001', 'Vorspeisen', '🥗', 3, true, 'Bruschetta · Salate · Suppen · Toasts'),
+  ('fp-cat-desserts', 'fp-loc-001', 'Desserts',   '🍰', 4, true, 'San Sebastian Cheesecakes · Bowls · Tiramisu · hausgemachte Cookies'),
+  ('fp-cat-drinks',   'fp-loc-001', 'Drinks',     '🥤', 5, true, '1 Drink gratis zu jeder Bestellung · Elephant Bay & Fritz')
+ON CONFLICT (id) DO UPDATE SET beschreibung = EXCLUDED.beschreibung;
 
 -- 4. Pasta-Option-Groups (als JSONB Template)
 -- Wird in jedes Pasta-Item als option_groups eingefügt

@@ -95,7 +95,10 @@ body {
   background-color: var(--color-cream);
   background-image:
     radial-gradient(ellipse 800px 500px at 10% 0%, rgba(228, 192, 104, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 700px 400px at 95% 30%, rgba(74, 94, 74, 0.07) 0%, transparent 55%);
+    radial-gradient(ellipse 700px 400px at 95% 30%, rgba(74, 94, 74, 0.07) 0%, transparent 55%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'><g stroke='%234a5e4a' stroke-width='1.4' fill='none' stroke-linecap='round' opacity='0.045'><path d='M30 80 Q 60 50 100 70 T 180 80 T 260 70'/><path d='M30 100 Q 70 75 110 95 T 190 100 T 260 90'/><path d='M20 180 Q 50 150 90 170 T 170 180 T 260 170'/><path d='M20 200 Q 60 175 100 195 T 180 200 T 260 190'/></g></svg>");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, scroll;
   color: var(--color-text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
