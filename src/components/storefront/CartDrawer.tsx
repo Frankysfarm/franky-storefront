@@ -78,7 +78,7 @@ export function CartDrawer({ open, onClose, onCheckout, productMap, tenant, allP
   const crossSellItems = useMemo(() => {
     const inCart = new Set(items.map((i) => i.product.id));
     return allProducts
-      .filter((p) => !inCart.has(p.id) && (p.beliebt || p.id.startsWith("DRI")))
+      .filter((p) => !inCart.has(p.id) && p.beliebt)
       .slice(0, 4);
   }, [allProducts, items]);
 
