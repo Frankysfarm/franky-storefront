@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShoppingBag, Search } from "lucide-react";
+import { ShoppingBag, Search, User as UserIcon } from "lucide-react";
+import { useCustomerAuth } from "@/lib/useCustomerAuth";
+import { LoginModal } from "./LoginModal";
+import Link from "next/link";
+import { useState as useStateAuth } from "react";
 import { useCartStore } from "@/lib/store";
 import type { Tenant } from "@/lib/types";
 
@@ -14,6 +18,8 @@ interface Props {
 
 export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props) {
   const [scrolled, setScrolled] = useState(false);
+  const [loginOpen, setLoginOpen] = useStateAuth(false);
+  const { user, profile } = useCustomerAuth();
   const totalItems = useCartStore((s) => s.totalItems());
 
   useEffect(() => {
@@ -23,6 +29,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
   }, []);
 
   return (
+    <>
     <header
       className={`sticky top-0 z-50 transition-shadow duration-250 ${
         scrolled ? "shadow-[0_6px_24px_-8px_rgba(42,58,44,0.12)]" : ""
@@ -30,6 +37,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
       style={{
         backdropFilter: "saturate(180%) blur(12px)",
         WebkitBackdropFilter: "saturate(180%) blur(12px)",
+        paddingTop: "env(safe-area-inset-top)",
       }}
     >
       {/* Row 2: Main Nav Bar */}
@@ -39,7 +47,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         }`}
         style={{ borderBottom: "1px solid var(--color-line)" }}
       >
-        <div className="max-w-[1240px] mx-auto px-6 flex items-center justify-between relative min-h-[60px]">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 flex items-center justify-between relative min-h-[64px] sm:min-h-[76px] py-2.5">
           {/* Search icon left */}
           <button
             onClick={onSearchOpen}
@@ -50,12 +58,12 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
           </button>
 
           {/* Logo Center */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center">
             {tenant.logo_url ? (
               <img
                 src={tenant.logo_url}
                 alt={tenant.name}
-                className="h-[44px] max-h-[44px] w-auto hover:-translate-y-px hover:scale-[1.02] transition-transform"
+                className="h-[44px] sm:h-[56px] w-auto object-contain transition-transform hover:scale-[1.02]" style={{ maxWidth: "clamp(110px, 42vw, 240px)" }}
               />
             ) : (
               <span className="font-display italic font-black text-xl text-sage-dark tracking-tight">
@@ -63,6 +71,28 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
               </span>
             )}
           </div>
+
+          {/* Login / Mein Konto */}
+          {user ? (
+            <Link
+              href="/mein-konto"
+              className="px-2.5 sm:px-3 h-9 sm:h-10 flex items-center gap-1.5 rounded-full text-sage-dark hover:bg-mint transition-colors mr-1 text-xs sm:text-sm font-bold"
+              aria-label="Mein Konto"
+              title="Mein Konto"
+            >
+              <UserIcon size={16} />
+              <span className="hidden sm:inline">{profile?.name?.split(" ")[0] ?? "Konto"}</span>
+            </Link>
+          ) : (
+            <button
+              onClick={() => setLoginOpen(true)}
+              className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-sage-dark hover:bg-mint transition-colors mr-1"
+              aria-label="Anmelden"
+              title="Anmelden"
+            >
+              <UserIcon size={20} />
+            </button>
+          )}
 
           {/* Cart Icon Right */}
           <button
@@ -80,5 +110,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         </div>
       </div>
     </header>
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
+    </>
   );
 }
