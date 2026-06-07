@@ -47,7 +47,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
         }`}
         style={{ borderBottom: "1px solid var(--color-line)" }}
       >
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 flex items-center justify-between relative min-h-[64px] sm:min-h-[76px] py-2.5">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 flex items-center justify-between relative min-h-[80px] sm:min-h-[98px] py-2.5">
           {/* Search icon left */}
           <button
             onClick={onSearchOpen}
@@ -63,7 +63,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
               <img
                 src={tenant.logo_url}
                 alt={tenant.name}
-                className="h-[44px] sm:h-[56px] w-auto object-contain transition-transform hover:scale-[1.02]" style={{ maxWidth: "clamp(110px, 42vw, 240px)" }}
+                className="h-[58px] sm:h-[76px] w-auto object-contain transition-transform hover:scale-[1.02]" style={{ maxWidth: "clamp(150px, 52vw, 320px)" }}
               />
             ) : (
               <span className="font-display italic font-black text-xl text-sage-dark tracking-tight">
@@ -86,11 +86,12 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
           ) : (
             <button
               onClick={() => setLoginOpen(true)}
-              className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-sage-dark hover:bg-mint transition-colors mr-1"
+              className="h-9 sm:h-10 px-3 sm:px-4 flex items-center gap-1.5 rounded-full bg-sage/10 text-sage-dark hover:bg-mint transition-colors mr-1.5 text-xs sm:text-sm font-bold"
               aria-label="Anmelden"
-              title="Anmelden"
+              title="Anmelden / Mein Konto"
             >
-              <UserIcon size={20} />
+              <UserIcon size={16} />
+              <span>Anmelden</span>
             </button>
           )}
 

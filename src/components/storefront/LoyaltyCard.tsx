@@ -1,5 +1,8 @@
 "use client";
 
+import { Gift } from "lucide-react";
+import { useCustomerAuth } from "@/lib/useCustomerAuth";
+
 interface Props {
   filled?: number;
   total?: number;
@@ -9,7 +12,7 @@ interface Props {
   enabled?: boolean;
 }
 
-export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewardText, enabled = true }: Props) {
+export function LoyaltyCardInner({ filled = 3, total = 5, onClick, rewardTitle, rewardText, enabled = true }: Props) {
   if (!enabled) return null;
   const progressPercent = (filled / total) * 100;
 
@@ -60,14 +63,14 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewar
 
         {/* Gift Icon (big, with glow) */}
         <div
-          className="relative z-[1] flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl"
+          className="relative z-[1] flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-sage-dark"
           style={{
             background: "linear-gradient(135deg, #e4c068 0%, #c9a227 100%)",
             boxShadow: "0 4px 12px rgba(201,162,39,0.4)",
-            animation: "loyalty-icon-bob 3s ease-in-out infinite",
           }}
         >
-          🎁
+          <Gift size={28} strokeWidth={2.2} className="sm:hidden" />
+          <Gift size={32} strokeWidth={2.2} className="hidden sm:block" />
         </div>
 
         {/* Content */}
@@ -136,7 +139,7 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewar
                 })}
                 {/* Gift milestone */}
                 <div
-                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-xs"
+                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-sage-dark"
                   style={{
                     background: filled >= total
                       ? "linear-gradient(135deg, #e4c068, #c9a227)"
@@ -144,7 +147,7 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewar
                     border: filled >= total ? "none" : "2px solid rgba(245,242,231,0.35)",
                   }}
                 >
-                  🎁
+                  <Gift size={11} strokeWidth={2.4} />
                 </div>
               </div>
             </div>
@@ -179,4 +182,14 @@ export function LoyaltyCard({ filled = 3, total = 5, onClick, rewardTitle, rewar
       </button>
     </section>
   );
+}
+
+
+export function LoyaltyCard(props: React.ComponentProps<typeof LoyaltyCardInner>) {
+  const { profile } = useCustomerAuth();
+  const total = props.total ?? 5;
+  // Echte Stempel des eingeloggten Kunden. Anonyme/neue Besucher sehen 0/total —
+  // NICHT das irreführende Preset (current_stamps), das „3 schon gemacht" suggerierte.
+  const filled = profile ? (profile.bonus_points ?? 0) % total : 0;
+  return <LoyaltyCardInner {...props} filled={filled} total={total} />;
 }
