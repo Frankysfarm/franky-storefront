@@ -37,7 +37,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
               Mamma Mia —{" "}
               <span className="italic text-burgundy">die Top&nbsp;5</span>
             </h2>
-            <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug hidden sm:block">
+            <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug">
               Was Aachen aktuell am liebsten bestellt.
               Zwei Klicks, und es ist im Warenkorb.
             </p>
@@ -50,7 +50,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
                 <button
                   key={product.id}
                   onClick={() => onAdd(product)}
-                  className="relative flex-shrink-0 w-[100px] sm:w-[112px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
+                  className="relative flex-shrink-0 w-[108px] sm:w-[120px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
                 >
                   {/* Rank badge */}
                   <div
