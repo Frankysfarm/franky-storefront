@@ -1,6 +1,25 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, Neusession-31 2026-06-06)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-06, Neusession-32 2026-06-07)
+
+## Phase 32: Vollanalyse + Build-Verifikation ✅ (2026-06-07)
+- **Frische Analyse** aller 31 vorigen Phasen — kein neuer Bug, kein Regressions-Problem
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.0s compile, TypeScript clean, 4 Routen korrekt
+- **Alle 5 Kauf-Kernfunktionen live bestätigt**:
+  1. Produkte sehen + Warenkorb ✅ (`ProductCard` → `addItem` / `ProductSheet`)
+  2. Checkout-Funnel PLZ→Adresse→Zahlung→Upsell→Review ✅
+  3. Supabase INSERT real: `customer_orders` + `order_items` mit Error-Handling ✅
+  4. Stripe-Redirect: POST `mise-gastro.de/api/checkout/create-session` → `window.location.href` ✅
+  5. Email-Outbox: fire-and-forget, Fehler ignoriert ✅
+  6. Tracking: TrackingScreen für Bar-Zahlung + Stripe-Redirect (`?order_id=`) + `/success`-Route ✅
+- **Checkout-Flow Schlüssel-Details**:
+  - `adresse = [strasse, hausnummer, etage].filter(Boolean).join(", ")` — hausnummer immer leer (User tippt in strasse)
+  - `zahlungsart !== 'bar'` → Stripe; `bar` → direkt clearCart + onComplete
+  - Stripe non-ok oder kein URL → throw → `orderError` inline sichtbar
+  - `notFound()` für unbekannte Slugs ✅
+- **Visual vollständig**: TopBar (Bonus-Bar + Logo), WelcomeBanner (Top-5), BestsellerRail (cream), Section-Headers (No.01 gold italic + h2 + HR), ProductCards (185/240/300px) ✅
+- **Git**: sauber, up to date mit origin/main ✅
+- **Offen (non-blocking)**: `form.anmerkung` DB-Spaltenname unbekannt, PLZ hardcoded, `free_delivery_threshold` hardcoded 25
 
 ## Phase 31: Mockup-Delta-Fixes ✅ (2026-06-06)
 - **SQL-Seed**: `menu_categories` INSERT fehlte `beschreibung` Spalte → Section-Descriptions waren in Produktion nie sichtbar
