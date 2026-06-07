@@ -1,6 +1,19 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-34 2026-06-07)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-35 2026-06-07)
+
+## Phase 35: Vollanalyse + Build-Verifikation ✅ (2026-06-07)
+- **Frische Vollanalyse** aus neuer Session — alle Phasen 1–34 geprüft, kein Regressions-Bug
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 4.3s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Alle Kauf-Kernfunktionen live bestätigt**:
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT ✅, Stripe-Redirect ✅, Email-Outbox ✅, orderError inline ✅
+  - `TopBar.tsx`: Bonus-Club-Bar Row 1 (sage-dark BG, gold Text, Fraunces Logo Row 2) ✅
+  - `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" + horizontale Top-5-Karten ✅
+  - `BestsellerRail.tsx`: cream/beige BG, weiße scrollbare Karten ✅
+  - `ProductCard.tsx`: 185px/240px/300px Bildgrößen (mobile/sm/lg) ✅
+  - `FrankyStorefront.tsx`: "No. XX" Section-Header + Trennlinie ✅
+  - `TrackingScreen.tsx`: Live-Tracking nach Bar-Zahlung und Stripe-Redirect ✅
+- **Offen (non-blocking)**: `form.anmerkung` DB-Spaltenname unbekannt, PLZ hardcoded, `free_delivery_threshold` hardcoded 25
 
 ## Phase 34: Vollanalyse + Build-Verifikation ✅ (2026-06-07)
 - **Frische Vollanalyse** aller 33 vorigen Phasen — kein Regressions-Bug, kein neuer Bug
