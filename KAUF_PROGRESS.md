@@ -1,6 +1,21 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-33 2026-06-07)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-34 2026-06-07)
+
+## Phase 34: Vollanalyse + Build-Verifikation ✅ (2026-06-07)
+- **Frische Vollanalyse** aller 33 vorigen Phasen — kein Regressions-Bug, kein neuer Bug
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.5s compile, TypeScript clean, 4 Routen korrekt
+- **Alle Kernkomponenten einzeln gelesen und verifiziert**:
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT ✅, Stripe-Redirect ✅, Email-Outbox ✅
+  - `TopBar.tsx`: Bonus-Club-Bar (sage-dark BG, gold Text) + zentrales Fraunces-Logo ✅
+  - `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" + horizontale Top-5-Karten-Leiste ✅
+  - `BestsellerRail.tsx`: Cream/Beige BG, weiße scrollbare Karten, Rank-Badges ✅
+  - `ProductCard.tsx`: 185px/240px/300px Bildgrößen (mobile/sm/lg) ✅
+  - `FrankyStorefront.tsx`: "No. XX" Section-Header + Trennlinie ✅
+  - `TrackingScreen.tsx`: 5-Schritt-Tracking mit ETA-Karte ✅
+  - `/[slug]/success/page.tsx`: Stripe-Callback-Route lädt Tenant + zeigt TrackingScreen ✅
+- **load-tenant.ts**: Supabase-Fallback auf Mock wenn kein SUPABASE_URL gesetzt ✅
+- **Offen (non-blocking)**: `form.anmerkung` DB-Spaltenname unbekannt, `free_delivery_threshold` hardcoded 25
 
 ## Phase 33: Vollanalyse + CartDrawer-Filter-Fix ✅ (2026-06-07)
 - **Frische Vollanalyse** aller 32 vorigen Phasen — kein Regressions-Bug
