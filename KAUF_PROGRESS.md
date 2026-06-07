@@ -1,6 +1,16 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-35 2026-06-07)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-36 2026-06-07)
+
+## Phase 36: Vollanalyse + anmerkung-Fix ✅ (2026-06-07)
+- **Frische Vollanalyse** aus neuer Session — Build sauber (4.6s, TypeScript clean, 4 Routen)
+- **Alle Kauf-Kernfunktionen live bestätigt** (identisch zu Phase 35):
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT ✅, Stripe-Redirect ✅, Email-Outbox ✅
+  - `TopBar.tsx`, `WelcomeBanner.tsx`, `BestsellerRail.tsx`, `FrankyStorefront.tsx`: visuelle Layout-Anforderungen alle ✅
+- **BUG FIXED**: `form.anmerkung` (Hinweise für den Fahrer) wurde nicht in DB gespeichert
+  - Fix: Separates fire-and-forget `.update({ lieferhinweis: form.anmerkung.trim() })` nach Haupt-INSERT
+  - Hauptbestellung schlägt nie wegen unbekanntem Spaltenname fehl; `lieferhinweis`-Spalte optional
+- **Offen (non-blocking)**: `free_delivery_threshold` hardcoded 25, PLZ-Liste hardcoded in mock-data
 
 ## Phase 35: Vollanalyse + Build-Verifikation ✅ (2026-06-07)
 - **Frische Vollanalyse** aus neuer Session — alle Phasen 1–34 geprüft, kein Regressions-Bug

@@ -142,6 +142,14 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
         throw new Error("Bestellpositionen konnten nicht gespeichert werden. Bitte erneut versuchen.");
       }
 
+      // Save driver notes (fire-and-forget — separate update so main insert never fails on unknown column)
+      if (form.anmerkung.trim()) {
+        sb.from("customer_orders")
+          .update({ lieferhinweis: form.anmerkung.trim() })
+          .eq("id", order.id)
+          .then(() => {});
+      }
+
       // Fire email outbox (fire-and-forget)
       fetch("https://mise-gastro.de/api/email/process-outbox", { method: "POST" }).catch(() => {});
 
