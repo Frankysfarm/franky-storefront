@@ -1,6 +1,26 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-36 2026-06-07)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-07, Neusession-37 2026-06-08)
+
+## Phase 37: Vollanalyse + Build-Verifikation ✅ (2026-06-08)
+- **Frische Vollanalyse** aus neuer Session — alle 36 vorigen Phasen geprüft
+- **Build**: ✅ Next.js, 3.9s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Env**: `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` + `SUPABASE_SERVICE_ROLE_KEY` vorhanden ✅
+- **Alle Kauf-Kernfunktionen live bestätigt**:
+  - `CheckoutModal.tsx`: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect ✅, Email-Outbox ✅, `anmerkung`→`lieferhinweis` fire-and-forget ✅
+  - `TopBar.tsx`: Row1 Bonus-Club-Bar (sage-dark, gold text) + Row2 Logo zentriert (Fraunces italic) ✅
+  - `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" + horizontale Top-5-Karten ✅
+  - `BestsellerRail.tsx`: cream/bone BG, weiße scrollbare Karten mit Border ✅
+  - `ProductCard.tsx`: 185/240/300px Bildgrößen (mobile/sm/lg) ✅
+  - `FrankyStorefront.tsx`: "No. XX" italic gold + h2 + HR-Divider Section-Header ✅
+  - `TrackingScreen.tsx`: 5-Schritt-Tracking mit stabilem ETA-Fenster ✅
+  - `SuccessClient.tsx`: clearCart on-mount + TrackingScreen ✅
+  - `/[slug]/success/page.tsx`: Stripe-Callback-Route lädt Tenant-ETA + zeigt TrackingScreen ✅
+- **CartDrawer**: CrossSell nutzt `p.beliebt` statt Mock-IDs ✅; `updateQty(-1/+1)` Delta-Logik ✅
+- **load-tenant.ts**: Supabase-Fallback auf Mock wenn kein SUPABASE_URL gesetzt ✅; `notFound()` für unbekannte Slugs ✅
+- **CSS**: alle Keyframes definiert (`fade-in`, `reveal-up`, `confetti-pop`, `bump`, `glow-pulse`, `dp-pulse`, `bb-live-pulse`) ✅; Pasta-Textur-BG ✅; Fraunces italic axis geladen ✅
+- **Git**: sauber, up to date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url (serverseitig bei mise-gastro.de)
 
 ## Phase 36: Vollanalyse + anmerkung-Fix ✅ (2026-06-07)
 - **Frische Vollanalyse** aus neuer Session — Build sauber (4.6s, TypeScript clean, 4 Routen)
