@@ -1,6 +1,23 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-09, Neusession-39 2026-06-09)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-09, Neusession-40 2026-06-09)
+
+## Phase 40: Vollanalyse + Build-Verifikation ✅ (2026-06-09)
+- **Frische Vollanalyse** aus neuer Session — alle 39 vorigen Phasen geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 4.4s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Kein Math.random, kein TODO/FIXME** im Produktiv-Code ✅
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect ✅, Email-Outbox ✅, `anmerkung`→`lieferhinweis` fire-and-forget ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark, gold text) + Row2 Logo zentriert (Fraunces italic) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" + horizontale Top-5-Karten mit Rank-Badge, Social Proof, Preis ✅
+- **BestsellerRail.tsx**: cream/bone BG, weiße scrollbare Karten mit Border ✅
+- **FrankyStorefront.tsx**: "No. XX" italic gold + h2 + HR-Divider Section-Header ✅
+- **ProductCard.tsx**: 200px/240px/300px Bildgrößen (mobile/sm/lg) ✅
+- **TrackingScreen.tsx**: 5-Schritt-Tracking mit stabilem ETA-Fenster ✅
+- **SuccessClient.tsx**: clearCart on-mount + TrackingScreen ✅
+- **/[slug]/success/page.tsx**: Stripe-Callback-Route lädt Tenant-ETA + zeigt TrackingScreen ✅
+- **supabase.ts**: `getClientSupabase()` (anon, browser) + `getServerSupabase()` (service key) ✅
+- **Git**: sauber, up to date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 39: Vollanalyse + Build-Verifikation ✅ (2026-06-09)
 - **Frische Vollanalyse** aus neuer Session — alle 38 vorigen Phasen geprüft
