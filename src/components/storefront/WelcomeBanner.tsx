@@ -14,12 +14,22 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="relative overflow-hidden rounded-[20px] border-[1.5px] border-line-strong p-4 sm:p-8"
+        className="relative overflow-hidden rounded-[20px] border-[1.5px] border-line-strong p-5 sm:p-8"
         style={{
           background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
         }}
       >
+        {/* Decorative pasta swirl — bottom right corner, matches mockup */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[-40px] bottom-[-40px] w-[180px] h-[180px] opacity-100"
+          style={{
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g stroke='%234a5e4a' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.18'><path d='M10 50 Q 25 25 50 35 T 90 50'/><path d='M10 60 Q 30 40 50 50 T 90 60'/><path d='M15 40 Q 35 55 55 35 T 90 45'/><path d='M20 70 Q 40 50 60 70 T 90 65'/></g></svg>")`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
           {/* Left: Title + Subtext */}
           <div className="flex-shrink-0 sm:w-[280px]">
