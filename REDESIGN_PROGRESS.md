@@ -6,28 +6,37 @@
 - Body background gradients already present
 - All loyalty/confetti/animation keyframes already defined
 
-## Phase 2 - TopBar ✅
-- Cart badge uses `bg-burgundy-dark` (dark red) instead of `bg-burgundy`
-- ETA badge hidden on mobile (correct)
-- Delivery pill on left with green dot pulse
+## Phase 2 - TopBar ✅ (LAYOUT-REBUILT Phase 42)
+- TWO-ROW layout: Row 1 = slim FRANKY'S BONUS CLUB bar (sage-dark bg, gold text, click → BonusModal)
+- Row 2 = cream main nav: Search icon LEFT · Logo centered (Fraunces italic) · Cart icon RIGHT
+- NO delivery pill, NO 'Liefern · Aachen' element
+- CategoryNav sticks at `top-[90px]` (= ~26px bonus bar + 60px main nav)
 
-## Phase 3 - BonusCard / Loyalty Card ✅
-- `BonusCard.tsx` already existed with full dark-green animated card
-- Registered in `FrankyStorefront.tsx` after WelcomeBanner
-- Loyalty animations (loyalty-shine-sweep, loyalty-icon-bob, loyalty-glow-pulse, loyalty-enter) in CSS
+## Phase 3 - BonusCard / Loyalty Card ✅ (REMOVED Phase 42)
+- `BonusCard.tsx` returns null — bonus info is the slim TopBar row 1
+- `LoyaltyCard.tsx` returns null — replaced by slim TopBar bonus bar
+- NOT imported/used in `FrankyStorefront.tsx`
 
-## Phase 4 - BestsellerRail ✅
-- Dark green banner with radial gradient overlays
-- Scrollable white product cards with rank circles (dark green bg, gold text)
-- Top-3 "⭐ Beliebt" pill overlay on image
-- Left column: kicker text, live dot, title
+## Phase 4 - BestsellerRail ✅ (CREAM Phase 42)
+- Background: CREAM/BONE (`linear-gradient(cream-soft → bone)`) — NOT dark green
+- Header: '✨ Heute beliebt' in sage-dark + bg-green-400 live dot (#4ade80)
+- Scrollable white product cards with rank circles (dark-green bg, gold text)
+- 'Andiamo! 🍝' microcopy bottom-right
+- WelcomeBanner ABOVE (cream 'Mamma Mia — die Top 5'), BestsellerRail BELOW
+
+## Phase 4b - WelcomeBanner ✅ (REBUILT Phase 42)
+- Headline: 'Mamma Mia — die Top 5' (NOT 'Pasta wie bei Mamma')
+- Layout: LEFT 280px (kicker + title + subtext) · RIGHT flex-1 (scrollable top-5 cards)
+- Background: cream radial gold glow + linear cream-deep → cream-soft
+- Live dot: bg-green-400 (#4ade80), kicker 'DIESE WOCHE TRENDING'
+- Section headers: No. 01 (italic gold-deep) + Category name (italic Fraunces) + <hr> (cream-deep)
 
 ## Phase 5 - CategoryNav ✅
 - Active: `bg-sage` with gold-tinted box-shadow + inset border
 - Inactive: `bg-mint` with transparent border, hover darkens
 - Icon wrapper with `text-gold` when active
 - Padding: `py-2 px-3.5` gap-2, rounded-full
-- Sticky `top-[60px]`
+- Sticky `top-[90px]` (accounts for 2-row TopBar: ~26px bonus bar + 60px main nav)
 
 ## Phase 6 - ProductCard ✅
 - Card: `rounded-[18px]`, no overflow-hidden on wrapper, `p-[14px]`

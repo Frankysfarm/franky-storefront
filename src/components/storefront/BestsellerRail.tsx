@@ -33,7 +33,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
             <span className="text-[11px] font-extrabold tracking-[1.5px] text-sage-dark uppercase">
               ✨ Heute beliebt
             </span>
-            <span className="w-2 h-2 rounded-full bg-sage-bright animate-[dp-pulse_2.4s_ease-out_infinite]" />
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-[dp-pulse_2.4s_ease-out_infinite]" />
           </div>
           <span className="text-[11px] text-muted italic hidden sm:inline">Andiamo! 🍝</span>
         </div>
