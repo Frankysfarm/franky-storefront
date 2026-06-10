@@ -153,7 +153,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                     {cat.description}
                   </span>
                 )}
-                <hr className="flex-1 border-0 border-t-[1.5px] min-w-[20px] hidden sm:block" style={{ borderColor: "var(--color-cream-deep)" }} />
+                <hr className="flex-1 border-0 border-t-[1.5px] border-cream-deep min-w-[20px]" />
               </div>
 
               <RevealSection>

@@ -60,7 +60,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
                 <button
                   key={product.id}
                   onClick={() => onAdd(product)}
-                  className="relative flex-shrink-0 w-[108px] sm:w-[120px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
+                  className="relative flex-shrink-0 w-[120px] sm:w-[140px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
                 >
                   {/* Rank badge */}
                   <div
