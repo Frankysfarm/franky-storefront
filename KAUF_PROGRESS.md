@@ -1,6 +1,19 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-45 2026-06-10)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-46 2026-06-10)
+
+## Phase 46: Section-Header Regressionsfix ✅ (2026-06-10)
+- **Frische Vollanalyse** aus neuer Session — alle 45 vorigen Phasen geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.6s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **BUG FIXED**: Commit 51d2d38 hatte Phase-45-Fixes erneut revertiert (`FrankyStorefront.tsx` Section-Header):
+  - `items-baseline` → zurück zu `items-end` (Mockup: `align-items: flex-end`)
+  - `No.&nbsp;{num}` Span: `italic` hinzugefügt (Mockup: `.section-num { font-style: italic }`)
+  - h2: `italic` entfernt → h2 ist wieder non-italic (Mockup: `.section-title` — kein font-style)
+  - Description-Span: `paddingBottom: "4px"` → `"8px"` (Mockup: `.section-count { padding-bottom: 8px }`)
+- **Alle anderen Komponenten unverändert korrekt**: TopBar ✅, WelcomeBanner ✅, BestsellerRail ✅, ProductCard ✅, TrackingScreen ✅, CheckoutModal ✅
+- **CheckoutModal**: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect ✅, Email-Outbox fire-and-forget ✅, anmerkung→lieferhinweis ✅, orderError inline ✅, Mindestbestellwert-Guard ✅
+- **Git**: sauber, gepusht → origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 45: Section-Header Mockup-Korrekturrunde ✅ (2026-06-10)
 - **Frische Vollanalyse** aus neuer Session — alle 44 vorigen Phasen geprüft
