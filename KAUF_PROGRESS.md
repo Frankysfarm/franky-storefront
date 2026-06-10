@@ -1,6 +1,24 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-43 2026-06-10)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-44 2026-06-10)
+
+## Phase 44: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
+- **Frische Vollanalyse** aus neuer Session — alle 43 vorigen Phasen geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.4s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Kein Math.random, kein TODO/FIXME** im Produktiv-Code ✅
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect für alle Non-Bar-Zahlungen ✅, Email-Outbox fire-and-forget ✅, `anmerkung`→`lieferhinweis` fire-and-forget ✅, inline `orderError` ✅, Mindestbestellwert-Guard ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark, gold text) + Row2 Logo zentriert (Fraunces italic) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" + horizontale Top-5-Karten mit Rank-Badge, Social Proof, Preis ✅
+- **BestsellerRail.tsx**: cream/bone BG, weiße scrollbare Karten mit Border, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: "No. XX" italic gold + h2 + HR-Divider Section-Header, Stripe-Redirect-Detection via `?order_id=` ✅
+- **ProductCard.tsx**: 200px/240px/300px Bildgrößen (mobile/sm/lg) ✅, Heart-Toggle, Diet-Tags, Rating-Urgency ✅
+- **TrackingScreen.tsx**: 5-Schritt-Tracking mit stabilem ETA-Fenster, auto-advance nach 5s/12s ✅
+- **SuccessClient.tsx**: clearCart on-mount + TrackingScreen ✅
+- **/[slug]/success/page.tsx**: Stripe-Callback-Route lädt Tenant-ETA + zeigt TrackingScreen ✅
+- **supabase.ts**: `getClientSupabase()` (anon, browser) + `getServerSupabase()` (service key) ✅
+- **CartDrawer.tsx**: Konfetti-Animation bei Free-Delivery-Erreichen, Cross-Sell, Mindestbestellwert-Guard ✅
+- **Git**: sauber, up to date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 43: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
 - **Frische Vollanalyse** aus neuer Session — alle 42 vorigen Phasen geprüft
