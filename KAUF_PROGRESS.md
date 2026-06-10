@@ -1,6 +1,20 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-09, Neusession-40 2026-06-09)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-41 2026-06-10)
+
+## Phase 41: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
+- **Frische Vollanalyse** aus neuer Session — alle 40 vorigen Phasen geprüft
+- **Build**: ✅ Next.js, 4.6s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Kein Math.random, kein TODO/FIXME** im Produktiv-Code ✅
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect ✅, Email-Outbox ✅, `anmerkung`→`lieferhinweis` fire-and-forget ✅, inline `orderError` ✅, Mindestbestellwert-Guard ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark, gold text) + Row2 Logo zentriert (Fraunces italic) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" + horizontale Top-5-Karten mit Rank-Badge ✅
+- **BestsellerRail.tsx**: cream/bone BG, weiße scrollbare Karten mit Border, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: "No. XX" italic gold + h2 + HR-Divider Section-Header, Stripe-Redirect-Detection via `?order_id=` ✅
+- **TrackingScreen.tsx**: 5-Schritt-Tracking mit stabilem ETA-Fenster, `calcEta()` stable via useState ✅
+- **supabase.ts**: `getClientSupabase()` (anon, browser) + `getServerSupabase()` (service key) ✅
+- **Git**: sauber, up to date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 40: Vollanalyse + Build-Verifikation ✅ (2026-06-09)
 - **Frische Vollanalyse** aus neuer Session — alle 39 vorigen Phasen geprüft
