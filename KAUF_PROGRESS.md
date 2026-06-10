@@ -1,6 +1,15 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-41 2026-06-10)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-43 2026-06-10)
+
+## Phase 43: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
+- **Frische Vollanalyse** aus neuer Session — alle 42 vorigen Phasen geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.6s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **Kein Math.random, kein TODO/FIXME** im Produktiv-Code ✅
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT real ✅, Stripe-Redirect ✅, Email-Outbox fire-and-forget ✅, `anmerkung`→`lieferhinweis` fire-and-forget ✅, inline `orderError` ✅, Mindestbestellwert-Guard ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark, gold text) + Row2 Logo zentriert (Fraunces italic) ✅
+- **Git**: sauber, up to date mit origin/main ✅ (letzter Commit: Phase-42 Layout-Verifikation)
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 41: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
 - **Frische Vollanalyse** aus neuer Session — alle 40 vorigen Phasen geprüft
