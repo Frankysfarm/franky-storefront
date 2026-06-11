@@ -1,6 +1,13 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11)
+
+## Phase 53: Layout-Bugfix ✅ (2026-06-11)
+- **Vollanalyse**: MOCKUP-REFERENCE.html komplett gelesen · alle Komponenten gegen Mockup-CSS verifiziert
+- **Fix**: Section-Header `No.XX` span hatte `paddingBottom` auf dem Description-Span statt auf dem Nummer-Span · korrigiert zu `style={{ opacity: 0.85, paddingBottom: "8px" }}` auf No.-Span (gemäß Mockup `.section-num { padding-bottom: 8px }`)
+- **Build**: ✅ Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen korrekt
+- **Vollständig korrekt (unverändert)**: TopBar 2-Row (Bonus-Bar + Cream-Nav) ✅ · WelcomeBanner "Mamma Mia — die Top 5" cream ✅ · BestsellerRail cream/bone ✅ · BonusCard null ✅ · ProductCard 200/240/300px responsive ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 52: Vollverifikation ✅ (2026-06-11)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft

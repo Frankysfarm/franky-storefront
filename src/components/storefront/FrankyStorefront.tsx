@@ -134,7 +134,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
               <div className="flex items-end gap-3 sm:gap-4 mb-5 flex-wrap">
                 <span
                   className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
-                  style={{ opacity: 0.85 }}
+                  style={{ opacity: 0.85, paddingBottom: "8px" }}
                 >
                   No.&nbsp;{num}
                 </span>
@@ -148,7 +148,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                 {cat.description && (
                   <span
                     className="text-muted font-medium italic flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]"
-                    style={{ paddingBottom: "8px", marginTop: "-2px" }}
+                    style={{ paddingBottom: "6px" }}
                   >
                     {cat.description}
                   </span>
