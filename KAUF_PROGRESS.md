@@ -1,6 +1,18 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11)
+
+## Phase 51: Vollverifikation ✅ (2026-06-11)
+- **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
+- **Build**: ✅ Next.js, 3.3s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **CheckoutModal.tsx**: Supabase `customer_orders` (location_id, typ, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) ✅, `order_items` INSERT mit Error-Handling ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar, throws on failure) ✅, Mindestbestellwert-Guard ✅, orderError inline ✅, loading state ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search links · Logo zentral Fraunces italic · Cart rechts) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten mit Rank-Badge, Image, Social Proof, Preis ✅
+- **BestsellerRail.tsx**: cream-soft/bone Gradient, weiße scrollbare Karten mit Border, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: Section-Header items-end + No.XX italic gold + h2 non-italic + HR-Divider ✅, Stripe `?order_id=` Detection ✅, clearCart on-redirect ✅
+- **ProductCard.tsx**: h-[200px]/sm:h-[240px]/lg:h-[300px] responsive ✅
+- **Git**: sauber, up to date mit origin/main ✅ (letzter Commit vor dieser Session: Phase-50)
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 50: Vollverifikation ✅ (2026-06-11)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
