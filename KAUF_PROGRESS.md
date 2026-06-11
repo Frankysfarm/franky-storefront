@@ -1,6 +1,19 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11)
+
+## Phase 49: Layout-Vollverifikation ✅ (2026-06-11)
+- **Frische Vollanalyse** aus neuer Session — MOCKUP-REFERENCE.html vollständig analysiert
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.4s compile, TypeScript clean, 4 Routen korrekt
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁, click→BonusModal) + Row2 cream nav (Search links · Logo zentral Fraunces italic · Cart rechts) — KEIN Liefern-Pill ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" (nicht "Pasta wie bei Mamma") · Left 280px title+subtext · Right scrollable Top-5-Karten mit Rank-Badge, Image, Social Proof, Preis ✅
+- **BestsellerRail.tsx**: cream/bone Gradient (nicht dark-green) · "✨ Heute beliebt" sage-dark · weiße scrollbare Karten · "Andiamo! 🍝" ✅
+- **BonusCard.tsx**: returns null · nicht in FrankyStorefront importiert ✅
+- **FrankyStorefront.tsx**: Section-Header items-end · No.XX italic gold · h2 non-italic · description paddingBottom 8px · HR-Divider ✅ · BonusCard NICHT aufgerufen ✅
+- **ProductCard.tsx**: h-[200px]/sm:h-[240px]/lg:h-[300px] responsive · Fraunces 900 18px Titel · gold-deep Preis · sage Add-Button ✅
+- **Alle Layout-Anforderungen aus dem Redesign-Brief erfüllt** — keine Abweichungen vom Mockup gefunden
+- **Git**: sauber, up to date mit origin/main ✅ (letzter Commit vor dieser Session: ef069be Phase-48)
+- **Offen (non-blocking)**: PLZ-Liste hardcoded in mock-data.ts, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 48: Vollanalyse + Build-Verifikation ✅ (2026-06-11)
 - **Frische Vollanalyse** aus neuer Session — alle 47 vorigen Phasen geprüft
