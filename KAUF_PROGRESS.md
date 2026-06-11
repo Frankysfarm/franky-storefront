@@ -1,6 +1,20 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11)
+
+## Phase 48: Vollanalyse + Build-Verifikation ✅ (2026-06-11)
+- **Frische Vollanalyse** aus neuer Session — alle 47 vorigen Phasen geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.5s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **CheckoutModal.tsx**: Supabase `customer_orders` (location_id, typ, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) ✅, `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar) ✅, Mindestbestellwert-Guard ✅, orderError inline ✅, loading state ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark, gold text, gift emoji) + Row2 Logo zentriert (Fraunces italic) + Search + Cart ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" headline + horizontale Top-5-Karten (Rank-Badge, Image, Social Proof, Preis, Add-CTA) ✅
+- **BestsellerRail.tsx**: cream/bone BG, weiße scrollbare Karten mit Border, Rank-Badge, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end` + `No.&nbsp;{num}` italic gold + h2 non-italic + HR-Divider ✅, Stripe `?order_id=` Detection ✅, load-tenant.ts: alle Felder aus Supabase ✅
+- **TrackingScreen.tsx**: 5-Schritt-Tracking mit stabilem ETA-Fenster, auto-advance 5s/12s ✅
+- **ProductCard.tsx**: h-[200px]/sm:h-[240px]/lg:h-[300px] responsive Bilder ✅
+- **BonusCard.tsx**: existiert aber nicht in FrankyStorefront verwendet ✅
+- **Git**: sauber, up to date mit origin/main ✅ (letzter Commit: c92313f Phase-47)
+- **Offen (non-blocking)**: PLZ-Liste hardcoded in mock-data.ts, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 47: Vollanalyse + Build-Verifikation ✅ (2026-06-10)
 - **Frische Vollanalyse** aus neuer Session — alle 46 vorigen Phasen geprüft
