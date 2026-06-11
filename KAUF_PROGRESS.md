@@ -1,6 +1,15 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11)
+
+## Phase 50: Vollverifikation ✅ (2026-06-11)
+- **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
+- **Build**: ✅ Next.js 16.2.4 Turbopack, 3.5s compile, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **CheckoutModal.tsx**: Supabase `customer_orders` (location_id, typ, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) ✅, `order_items` INSERT mit Error-Handling ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar, throws on failure) ✅, Mindestbestellwert-Guard ✅, orderError inline ✅, loading state ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search links · Logo zentral Fraunces italic · Cart rechts) ✅
+- **FrankyStorefront.tsx**: Stripe `?order_id=` Detection ✅, clearCart on-redirect ✅, Section-Header items-end + No.XX italic gold + h2 non-italic + HR-Divider ✅
+- **Git**: sauber, up to date mit origin/main ✅ (letzter Commit vor dieser Session: 63b160a Phase-49)
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 49: Layout-Vollverifikation ✅ (2026-06-11)
 - **Frische Vollanalyse** aus neuer Session — MOCKUP-REFERENCE.html vollständig analysiert
