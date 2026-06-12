@@ -59,6 +59,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
               {topProducts.map((product, i) => (
                 <button
                   key={product.id}
+                  type="button"
                   onClick={() => onAdd(product)}
                   className="relative flex-shrink-0 w-[120px] sm:w-[140px] bg-white rounded-xl p-1.5 sm:p-2 text-left cursor-pointer hover:shadow-md hover:-translate-y-px transition-all border border-line"
                 >
@@ -92,12 +93,12 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
                   </div>
 
                   {/* Social Proof */}
-                  <div className="text-[9px] font-semibold text-sage-dark/55 mb-1 flex items-center gap-0.5">
-                    <span className="text-gold-deep">★</span>
-                    <span>{(4.5 + (i * 0.07)).toFixed(1)}</span>
-                    <span className="mx-0.5">·</span>
-                    <span>{70 - i * 8}× heute</span>
-                  </div>
+                  {product.rating > 0 && (
+                    <div className="text-[9px] font-semibold text-sage-dark/55 mb-1 flex items-center gap-0.5">
+                      <span className="text-gold-deep">★</span>
+                      <span>{product.rating.toFixed(1)}</span>
+                    </div>
+                  )}
 
                   {/* Price */}
                   <div className="font-display font-black text-[13px] text-gold-deep tabular-nums">
