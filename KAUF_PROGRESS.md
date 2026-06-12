@@ -1,6 +1,21 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12)
+
+## Phase 57: Vollverifikation ✅ (2026-06-12)
+- **Frische Vollanalyse** aus neuer Session — alle Kernkomponenten geprüft
+- **KEINE REGRESSION** — Stand fed6b6b (Phase 56, WelcomeBanner real rating) korrekt
+- **Build**: ✅ Next.js TypeScript clean, 4 Routen (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar) ✅, Mindestbestellwert-Guard ✅, Loading + inline Error ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar + Row2 cream nav (Search · Logo Fraunces italic · Cart) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" scrollbare Top-5-Karten mit echten product.rating ✅
+- **BestsellerRail.tsx**: Cream-Hintergrund, weiße Karten, Rank-Badges ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end` + No.XX italic gold paddingBottom 8px + h2 non-italic + description italic paddingBottom 8px + HR-Divider ✅
+- **ProductCard.tsx**: Bilder `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+- **BonusCard/LoyaltyCard**: return null ✅
+- **CategoryNav**: sticky `top-[90px]` ✅
+- **Git**: sauber, origin/main up-to-date ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 56: Vollverifikation ✅ (2026-06-12)
 - **Frische Vollanalyse** aus neuer Session — alle Kernkomponenten geprüft
