@@ -1,6 +1,23 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12, Neusession-63 2026-06-12)
+
+## Phase 63: Regressions-Fix + Vollverifikation ✅ (2026-06-12)
+- **Regression behoben**: Commit e8f8571 (nach Phase 62) hatte Section-Header falsch gesetzt:
+  - `items-baseline` → zurück zu `items-end` (Mockup `.section-head { align-items: flex-end }`)
+  - h2 `italic` entfernt (Mockup `.section-title` hat kein italic)
+  - `paddingBottom: "8px"` auf No.XX span wiederhergestellt (Mockup `.section-num { padding-bottom: 8px }`)
+  - `paddingBottom: "8px"` auf description span wiederhergestellt (Mockup `.section-count { padding-bottom: 8px }`)
+  - Gap `gap-4` (16px) → `gap-[14px]` (Mockup `.section-head { gap: 14px }`)
+- **Build clean** (TypeScript clean, 4 Routen: / + /_not-found + /[slug] + /[slug]/success)
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar, throws on failure) ✅, Mindestbestellwert-Guard ✅, Loading + inline Error ✅, useEffect-Reset on open ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search · Logo Fraunces italic · Cart) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" scrollbare Top-5-Karten mit echten product.rating ✅
+- **BestsellerRail.tsx**: Cream-soft/bone Gradient, weiße scrollbare Karten, Rank-Badges, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end gap-[14px]` + No.XX italic gold paddingBottom 8px + h2 non-italic + description italic paddingBottom 8px + HR-Divider ✅, Stripe `?order_id=` Detection + clearCart ✅
+- **ProductCard.tsx**: Bilder `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+- **Git**: sauber, up-to-date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 62: Vollverifikation ✅ (2026-06-12)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
