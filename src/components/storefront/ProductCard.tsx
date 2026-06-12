@@ -79,7 +79,7 @@ export function ProductCard({ product, onAdd, onOpen }: Props) {
             src={product.bild_url}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted text-sm font-medium">
