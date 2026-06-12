@@ -1,6 +1,13 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12)
+
+## Phase 60: Fix + Vollverifikation ✅ (2026-06-12)
+- **Frische Vollanalyse** — alle Kernkomponenten gelesen und geprüft
+- **Build clean** (3.3s compile, TypeScript clean, 4 Routen: / + /_not-found + /[slug] + /[slug]/success)
+- **Bug gefixt**: CheckoutModal hat jetzt `useEffect` auf `open`-Prop — setzt Step auf `plz-check` + resettet Fehler/Loading jedes Mal wenn Modal geöffnet wird. Verhindert Sticky-on-Review-Step nach vorheriger Bestellung
+- **KEINE REGRESSION** — alle Kernfunktionen bestätigt wie Phase 59
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 59: Vollverifikation ✅ (2026-06-12)
 - **Frische Vollanalyse** aus neuer Session — alle Kernkomponenten geprüft

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { UpsellStep } from "./UpsellStep";
 import { X, ArrowLeft, MapPin, Apple, CheckCircle2, ChevronRight } from "lucide-react";
 import { useCartStore } from "@/lib/store";
@@ -71,6 +71,19 @@ export function CheckoutModal({ open, onClose, onComplete, productMap, tenant, a
   const [plzError, setPlzError] = useState("");
   const [loading, setLoading] = useState(false);
   const [orderError, setOrderError] = useState("");
+
+  // Reset to PLZ step each time the modal is opened
+  useEffect(() => {
+    if (open) {
+      setStep("plz-check");
+      setPlzError("");
+      setOrderError("");
+      setLoading(false);
+      // Restore checked state if a valid PLZ is already in form
+      setPlzChecked(VALID_PLZ.includes(form.plz.trim()));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   if (!open) return null;
 
