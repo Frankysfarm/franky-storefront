@@ -1,6 +1,21 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12)
+
+## Phase 55: Regressions-Fix + Vollverifikation ✅ (2026-06-12)
+- **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
+- **REGRESSION GEFUNDEN + BEHOBEN**: Commit `cd37624` (Redesign-Agent, nach Phase 54) hatte Section-Header erneut falsch gesetzt:
+  - `items-baseline` → zurück zu `items-end` (Mockup `.section-head { align-items: flex-end }`)
+  - `No.` span: `italic` + `paddingBottom: "8px"` wiederhergestellt (Mockup `.section-num { font-style: italic; padding-bottom: 8px }`)
+  - `h2`: `italic` entfernt (Mockup `.section-title` — kein font-style)
+  - description span: `italic` + `paddingBottom: "8px"` hinzugefügt (Mockup `.section-count { font-style: italic; padding-bottom: 8px }`)
+- **Build**: ✅ Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen korrekt (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`)
+- **CheckoutModal.tsx**: Supabase `customer_orders` (location_id, typ, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) ✅, `order_items` INSERT mit Error-Handling ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar, throws on failure) ✅, Mindestbestellwert-Guard ✅, orderError inline ✅, loading state ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search links · Logo zentral Fraunces italic · Cart rechts) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten mit Rank-Badge, Image, Social Proof, Preis ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end` + No.XX italic gold + paddingBottom 8px + h2 non-italic + description italic paddingBottom 8px + HR-Divider ✅, Stripe `?order_id=` Detection + clearCart ✅
+- **Git**: sauber, gepusht → origin/main (3a02a84) ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, `free_delivery_threshold` hardcoded 25 in load-tenant.ts, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 54: Vollverifikation ✅ (2026-06-11)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
