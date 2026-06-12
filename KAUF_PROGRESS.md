@@ -1,6 +1,20 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12)
+
+## Phase 61: Vollverifikation ✅ (2026-06-12)
+- **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
+- **Build clean** (4.6s compile, TypeScript clean, 4 Routen: / + /_not-found + /[slug] + /[slug]/success)
+- **KEINE REGRESSION** — Stand c6bf07e (Phase 60) korrekt, alle Kernfunktionen bestätigt
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar, throws on failure) ✅, Mindestbestellwert-Guard ✅, Loading + inline Error ✅, useEffect-Reset on open ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search · Logo Fraunces italic · Cart) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" scrollbare Top-5-Karten mit echten product.rating ✅
+- **BestsellerRail.tsx**: Cream-soft/bone Gradient, weiße scrollbare Karten, Rank-Badges ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end` + No.XX italic gold paddingBottom 8px + h2 non-italic + HR-Divider ✅, Stripe `?order_id=` Detection + clearCart ✅
+- **ProductCard.tsx**: Bilder `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+- **load-tenant.ts**: Supabase Vollabfrage (tenant + location + categories + menu_items + payment_methods) ✅, Mock-Fallback ✅
+- **Git**: sauber, up-to-date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded, free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 60: Fix + Vollverifikation ✅ (2026-06-12)
 - **Frische Vollanalyse** — alle Kernkomponenten gelesen und geprüft
