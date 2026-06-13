@@ -1,6 +1,20 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12, Neusession-63 2026-06-12, Neusession-64 2026-06-12, Neusession-65 2026-06-12, Neusession-66 2026-06-12, Neusession-67 2026-06-12, Neusession-68 2026-06-12, Neusession-69 2026-06-12, Neusession-70 2026-06-12, Neusession-71 2026-06-13, Neusession-72 2026-06-13)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12, Neusession-63 2026-06-12, Neusession-64 2026-06-12, Neusession-65 2026-06-12, Neusession-66 2026-06-12, Neusession-67 2026-06-12, Neusession-68 2026-06-12, Neusession-69 2026-06-12, Neusession-70 2026-06-12, Neusession-71 2026-06-13, Neusession-72 2026-06-13, Neusession-73 2026-06-13)
+
+## Phase 73: Vollverifikation ✅ (2026-06-13)
+- **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
+- **Build clean** (3.4s compile, TypeScript clean, 4 Routen: / + /_not-found + /[slug] + /[slug]/success)
+- **KEINE REGRESSION** — Stand von Phase 72 korrekt, alle Kernfunktionen bestätigt
+- **CheckoutModal.tsx**: Supabase `customer_orders` + `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (non-bar → mise-gastro.de/api/checkout/create-session) ✅, Mindestbestellwert-Guard ✅, Loading + inline Error ✅, useEffect-Reset on open ✅
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁) + Row2 cream nav (Search · Logo Fraunces italic · Cart) ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" scrollbare Top-5-Karten mit echten product.rating ✅
+- **BestsellerRail.tsx**: Cream-soft/bone Gradient, weiße scrollbare Karten mit Border, dp-pulse animation ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end gap-[14px]` + No.XX italic gold paddingBottom 8px + h2 non-italic + description italic paddingBottom 8px + HR-Divider ✅, Stripe `?order_id=` Detection + clearCart ✅
+- **ProductCard.tsx**: Bilder `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+- **TrackingScreen.tsx**: 5-Step Live-Tracking, ETA-Card, Timer-Steps ✅
+- **Git**: sauber, up-to-date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded (52062–52080), free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 72: Vollverifikation ✅ (2026-06-13)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
