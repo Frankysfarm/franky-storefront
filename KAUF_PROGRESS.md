@@ -1,6 +1,22 @@
 # Kauf-Fertig Progress
 
-## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12, Neusession-63 2026-06-12, Neusession-64 2026-06-12, Neusession-65 2026-06-12, Neusession-66 2026-06-12, Neusession-67 2026-06-12, Neusession-68 2026-06-12, Neusession-69 2026-06-12, Neusession-70 2026-06-12, Neusession-71 2026-06-13, Neusession-72 2026-06-13, Neusession-73 2026-06-13, Neusession-74 2026-06-13, Neusession-75 2026-06-13, Neusession-76 2026-06-13, Neusession-77 2026-06-13, Neusession-78 2026-06-13, Neusession-79 2026-06-13, Neusession-80 2026-06-13, Neusession-81 2026-06-13)
+## Status: KAUF-FERTIG ✅ (alle Kernfunktionen live — 2026-06-03, verifiziert 2026-06-10, Neusession-47 2026-06-10, Neusession-48 2026-06-11, Neusession-49 2026-06-11, Neusession-50 2026-06-11, Neusession-51 2026-06-11, Neusession-52 2026-06-11, Neusession-53 2026-06-11, Neusession-54 2026-06-11, Neusession-55 2026-06-12, Neusession-56 2026-06-12, Neusession-57 2026-06-12, Neusession-58 2026-06-12, Neusession-59 2026-06-12, Neusession-60 2026-06-12, Neusession-61 2026-06-12, Neusession-62 2026-06-12, Neusession-63 2026-06-12, Neusession-64 2026-06-12, Neusession-65 2026-06-12, Neusession-66 2026-06-12, Neusession-67 2026-06-12, Neusession-68 2026-06-12, Neusession-69 2026-06-12, Neusession-70 2026-06-12, Neusession-71 2026-06-13, Neusession-72 2026-06-13, Neusession-73 2026-06-13, Neusession-74 2026-06-13, Neusession-75 2026-06-13, Neusession-76 2026-06-13, Neusession-77 2026-06-13, Neusession-78 2026-06-13, Neusession-79 2026-06-13, Neusession-80 2026-06-13, Neusession-81 2026-06-13, Neusession-82 2026-06-13)
+
+## Phase 82: Vollverifikation ✅ (2026-06-13)
+- **Frische Vollanalyse** aus neuer Session — alle Komponenten gegen Redesign-Brief + MOCKUP-REFERENCE.html geprüft
+- **Build clean** (Next.js 16.2.4 Turbopack, 4.4s compile, TypeScript clean, 4 Routen: / + /_not-found + /[slug] + /[slug]/success)
+- **KEINE REGRESSION** — Stand von Phase 81 (Commit 2e0fdf0) korrekt, alle Layout-Anforderungen bestätigt
+- **TopBar.tsx**: Row1 Bonus-Club-Bar (sage-dark bg, gold text, 🎁, click→BonusModal) + Row2 cream nav (Search links · Logo Fraunces italic zentral · Cart rechts) — KEIN Liefern-Pill ✅
+- **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" (nicht "Pasta wie bei Mamma") · Left 280px kicker+title+subtext · Right scrollable Top-5-Karten (Rank-Badge, Image, Rating, Preis) ✅
+- **BestsellerRail.tsx**: cream-soft/bone Gradient (nicht dark-green) · "✨ Heute beliebt" sage-dark · weiße scrollbare Karten mit Border + Rank-Badges · dp-pulse animation · "Andiamo! 🍝" ✅
+- **BonusCard.tsx**: returns null — nicht in FrankyStorefront importiert ✅
+- **DeliveryInfoBand.tsx**: existiert aber nicht importiert/verwendet ✅
+- **FrankyStorefront.tsx**: Section-Header `items-end gap-[14px]` + No.XX italic gold-deep paddingBottom 8px + h2 non-italic Fraunces font-black sage-dark + description italic paddingBottom 8px + HR-Divider (cream-deep) ✅, Stripe `?order_id=` Detection + clearCart ✅
+- **ProductCard.tsx**: Bilder `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+- **CheckoutModal.tsx**: Supabase `customer_orders` (location_id: tenant.location_id) + `order_items` INSERT ✅, lieferhinweis fire-and-forget ✅, Email-Outbox ✅, Stripe-Redirect (alle non-bar Zahlarten → mise-gastro.de/api/checkout/create-session) ✅, Mindestbestellwert-Guard ✅, Loading + inline Error ✅, useEffect-Reset on open ✅
+- **Hinweis**: Alle in DRINGENDE ÜBERARBEITUNG beschriebenen Probleme (Liefern-Pill, falscher WelcomeBanner-Text, doppelte BonusCard, dark-green BestsellerRail, falscher Section-Header) sind seit Phase 42 im Repo behoben — die Live-Site zeigte einen alten Deploy-Stand
+- **Git**: sauber, up-to-date mit origin/main ✅
+- **Offen (non-blocking)**: PLZ-Liste hardcoded (52062–52080), free_delivery_threshold hardcoded 25, Stripe success_url serverseitig bei mise-gastro.de
 
 ## Phase 81: Vollverifikation ✅ (2026-06-13)
 - **Frische Vollanalyse** aus neuer Session — KAUF_PROGRESS.md gelesen, alle Kernkomponenten geprüft
