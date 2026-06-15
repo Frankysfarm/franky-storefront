@@ -44,12 +44,11 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
             {items.map((product, i) => {
               const isTop3 = i < 3;
               return (
-                <div
+                <button
                   key={product.id}
+                  type="button"
                   onClick={() => onAdd(product)}
-                  role="button"
-                  tabIndex={0}
-                  className="relative flex-shrink-0 w-[130px] sm:w-[140px] bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-line shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+                  className="relative flex-shrink-0 w-[130px] sm:w-[140px] bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-line shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-left"
                 >
                   {/* Rank badge */}
                   <div
@@ -93,7 +92,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                       {formatPriceRaw(product.preis)}
                     </div>
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
