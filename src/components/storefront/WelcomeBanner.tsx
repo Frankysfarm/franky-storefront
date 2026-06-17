@@ -65,7 +65,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
                 >
                   {/* Rank badge */}
                   <div
-                    className="absolute top-1.5 left-1.5 z-10 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-extrabold border border-[rgba(228,192,104,0.5)]"
+                    className="absolute top-1.5 left-1.5 z-10 w-5 h-5 rounded-full flex items-center justify-center font-display font-black text-[10px] leading-none border border-[rgba(228,192,104,0.5)]"
                     style={{ background: "var(--color-sage-dark)", color: "var(--color-gold)" }}
                   >
                     {i + 1}

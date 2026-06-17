@@ -52,7 +52,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                 >
                   {/* Rank badge */}
                   <div
-                    className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold border border-[rgba(228,192,104,0.5)]"
+                    className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center font-display font-black text-[12px] leading-none border border-[rgba(228,192,104,0.5)]"
                     style={{ background: "var(--color-sage-dark)", color: "var(--color-gold)" }}
                   >
                     {i + 1}
