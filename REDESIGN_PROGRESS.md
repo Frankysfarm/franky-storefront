@@ -1,5 +1,16 @@
 # Redesign Progress
 
+## Phase 136 — Vollverifikation (2026-06-18) ✅
+- **Kontext**: "DRINGENDE ÜBERARBEITUNG" Redesign-Task erhalten — alle genannten Punkte bereits korrekt implementiert
+- **TopBar**: ✅ Zwei-Zeilen-Layout — Row1 sage-dark Bonus-Club-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal) + Row2 cream-Hintergrund (Search links · Logo zentral Fraunces Italic · Cart rechts) — KEINE Liefern-Pill
+- **WelcomeBanner**: ✅ "Mamma Mia — die Top 5" Headline, Layout LEFT 280px + RIGHT scrollable Top-5-Karten, cream radial gold glow
+- **BonusCard**: ✅ returns null — nur slim TopBar-Row1
+- **BestsellerRail**: ✅ CREAM/BONE Gradient (cream-soft → bone), "✨ Heute beliebt", echte Produktbilder, weiße Karten, "Andiamo! 🍝"
+- **Section-Header**: ✅ `items-end gap-[14px]`, No.XX italic gold paddingBottom 8px, h2 font-black sage-dark (KEIN italic per Mockup-CSS + 22x bestätigt), `<hr className="flex-1 border-cream-deep" />`
+- **ProductCard**: ✅ h-[200px] sm:h-[240px] lg:h-[300px], Fraunces Titel, gold-deep Preis
+- **Build**: ✅ Clean (Next.js Turbopack, TypeScript clean, 4 Routen)
+- **WICHTIG**: Der Redesign-Task beschreibt den Stand VOR Phase 42 (Sommer 2026) — alle genannten Änderungen sind seit Phasen 42–135 bereits vollständig live
+
 ## Phase 1 - Design System Tokens ✅
 - Verified `franky-tokens.css` has all required tokens
 - `--color-burgundy-dark: #5e221f` already present
