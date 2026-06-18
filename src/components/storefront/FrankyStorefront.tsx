@@ -133,7 +133,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
               <div className="flex items-end gap-[14px] mb-[18px] flex-wrap">
                 <span
-                  className="font-display italic font-black text-gold-deep text-lg flex-shrink-0"
+                  className="font-display italic font-black text-gold-deep text-lg flex-shrink-0 opacity-[0.85]"
                   style={{ paddingBottom: "8px" }}
                 >
                   No.&nbsp;{num}

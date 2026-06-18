@@ -33,7 +33,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
           {/* Left: Title + Subtext */}
           <div className="flex-shrink-0 sm:w-[280px]">
-            <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-extrabold tracking-[1.4px] sm:tracking-[1.8px] text-sage-dark mb-1.5 sm:mb-2">
+            <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-extrabold tracking-[1.4px] sm:tracking-[1.8px] text-burgundy-dark mb-1.5 sm:mb-2">
               <span
                 className="w-[7px] h-[7px] rounded-full bg-green-400 flex-shrink-0"
                 style={{ animation: "bb-live-pulse 1.8s ease-out infinite" }}

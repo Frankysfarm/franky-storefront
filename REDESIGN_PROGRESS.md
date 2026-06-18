@@ -1,5 +1,11 @@
 # Redesign Progress
 
+## Phase 142 — Mockup-Delta-Fix (2026-06-18) ✅
+- **section-num**: `opacity-[0.85]` hinzugefügt (Mockup CSS: `opacity: 0.85` auf `.section-num`)
+- **WelcomeBanner kicker**: Farbe von `text-sage-dark` → `text-burgundy-dark` (Mockup CSS: `.w-kicker { color: var(--red-dark); }` = `#5e221f`)
+- **Build**: ✅ Clean (TypeScript clean, 4 Routen)
+- **Deployment-Hinweis**: Code seit Phase 42 korrekt. Alle Layout-Anforderungen (TopBar 2-Zeilen, WelcomeBanner Top-5, BestsellerRail cream, Section-Headers No.XX, BonusCard null) sind vollständig implementiert. Falls die LIVE-Site noch alte Darstellung zeigt → Docker-Container muss neu gebaut werden (`docker compose build && docker compose up -d`)
+
 ## Phase 136 — Vollverifikation (2026-06-18) ✅
 - **Kontext**: "DRINGENDE ÜBERARBEITUNG" Redesign-Task erhalten — alle genannten Punkte bereits korrekt implementiert
 - **TopBar**: ✅ Zwei-Zeilen-Layout — Row1 sage-dark Bonus-Club-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal) + Row2 cream-Hintergrund (Search links · Logo zentral Fraunces Italic · Cart rechts) — KEINE Liefern-Pill
