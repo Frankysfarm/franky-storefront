@@ -1,5 +1,17 @@
 # Redesign Progress
 
+## Phase 157 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-19) ✅
+- **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
+- **Ergebnis**: Alle genannten Änderungen bereits seit Phase 42 implementiert und korrekt
+- **TopBar**: ✅ Row1 sage-dark Bonus-Club-Bar + Row2 cream Logo zentral — KEINE Liefern-Pill
+- **WelcomeBanner**: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5, cream radial gold glow, kein Bonus-Info
+- **BonusCard**: ✅ returns null, nicht in FrankyStorefront importiert
+- **BestsellerRail**: ✅ CREAM/BONE Gradient (cream-soft→bone), "✨ Heute beliebt", weiße Karten, "Andiamo! 🍝"
+- **Section-Header**: ✅ `items-end gap-[14px]`, No.XX italic gold-deep opacity-0.85 + paddingBottom:8px, h2 italic font-black sage-dark, `<hr border-cream-deep>`
+- **ProductCard**: ✅ h-[200px] sm:h-[240px] lg:h-[300px], Fraunces Titel, gold-deep Preis
+- **Build**: ✅ Clean (Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen)
+- **Deployment-Hinweis**: Falls LIVE-Site noch alte Darstellung zeigt → `docker compose build && docker compose up -d`
+
 ## Phase 142 — Mockup-Delta-Fix (2026-06-18) ✅
 - **section-num**: `opacity-[0.85]` hinzugefügt (Mockup CSS: `opacity: 0.85` auf `.section-num`)
 - **WelcomeBanner kicker**: Farbe von `text-sage-dark` → `text-burgundy-dark` (Mockup CSS: `.w-kicker { color: var(--red-dark); }` = `#5e221f`)
