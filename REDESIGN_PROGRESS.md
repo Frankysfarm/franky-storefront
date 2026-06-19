@@ -1,5 +1,17 @@
 # Redesign Progress
 
+## Phase 161 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-19) ✅
+- **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
+- **Ergebnis**: Alle genannten Änderungen bereits seit Phase 42 implementiert und korrekt. Build clean (Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen).
+- **TopBar**: ✅ Row1 sage-dark Bonus-Club-Bar (🎁, gold text, click→BonusModal) + Row2 cream nav (Search links · Logo zentral Fraunces italic · Cart rechts) — KEINE Liefern-Pill
+- **WelcomeBanner**: ✅ "Mamma Mia — die Top 5" Headline, LEFT 280px + RIGHT scrollable Top-5-Karten, cream radial gold glow, kein Bonus-Info
+- **BonusCard**: ✅ returns null — nur slim TopBar-Row1
+- **BestsellerRail**: ✅ cream-soft/bone Gradient (NICHT dark green), "✨ Heute beliebt", weiße Karten mit Bildern, "Andiamo! 🍝"
+- **Section-Header**: ✅ `items-end gap-[14px]`, No.XX italic gold paddingBottom 8px, h2 italic font-black sage-dark (explizit Phase 147), hr cream-deep — KEIN items-baseline, KEIN gap-4
+- **ProductCard**: ✅ h-[200px] sm:h-[240px] lg:h-[300px], Fraunces title, gold-deep price
+- **WICHTIG — KEIN EINGRIFF NOTWENDIG**: Die Redesign-Task-JSX-Snippet mit `items-baseline gap-4` ist falsch. Mockup-CSS: `.section-head { align-items: flex-end; gap: 14px; }`. NICHT ändern!
+- **Deployment-Hinweis**: Falls Live-Site anders aussieht → Docker-Container neu bauen (`docker compose build && docker compose up -d`), nicht Code ändern.
+
 ## Phase 157 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-19) ✅
 - **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
 - **Ergebnis**: Alle genannten Änderungen bereits seit Phase 42 implementiert und korrekt
