@@ -1,5 +1,16 @@
 # Redesign Progress
 
+## Phase 167 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-19) ✅
+- **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
+- **Ergebnis**: Alle genannten Änderungen seit Phase 42 vollständig implementiert. Build clean (Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen).
+- **TopBar**: ✅ Row1 slim sage-dark Bonus-Club-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal) + Row2 cream Hauptbar (Search icon links · Logo zentral Fraunces italic · Cart icon rechts) — KEINE Liefern-Pill
+- **WelcomeBanner**: ✅ "Mamma Mia — die Top 5" Headline, LEFT flex-shrink-0 sm:w-[280px] (kicker + title + subtext) + RIGHT flex-1 scrollable Top-5-Karten (120px/140px cards, rank badge, image, name, rating, price), cream radial gold glow
+- **BonusCard**: ✅ returns null — nicht in FrankyStorefront importiert
+- **BestsellerRail**: ✅ linear-gradient(135deg, cream-soft → bone) — NICHT dark green, "✨ Heute beliebt" sage-dark, weiße Karten mit Produktbildern, "Andiamo! 🍝"
+- **Section-Header**: ✅ items-end gap-[14px], No.XX italic gold-deep opacity-[0.85] paddingBottom:8px, h2 italic font-black sage-dark, hr flex-1 border-cream-deep — KEIN items-baseline KEIN gap-4
+- **ProductCard**: ✅ h-[200px] sm:h-[240px] lg:h-[300px], Fraunces font-black title, gold-deep price, Heart favoritButton, badge row
+- **DEPLOYMENT-HINWEIS**: Code seit Phase 42 zu 100% korrekt. Falls Live-Site (`mise-gastro.de/biss-app/frankys-pasta`) noch alte Darstellung zeigt → Docker-Container muss neu gebaut werden: `docker compose build && docker compose up -d`
+
 ## Phase 161 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-19) ✅
 - **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
 - **Ergebnis**: Alle genannten Änderungen bereits seit Phase 42 implementiert und korrekt. Build clean (Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen).
