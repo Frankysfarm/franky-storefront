@@ -1,6 +1,17 @@
 # Kauf-Fertig Progress
 
 
+## Phase 195: Vollverifikation ✅ — Kein Eingriff notwendig (2026-06-20)
+- **Build**: Next.js 16.2.4 Turbopack clean (3.4s compile, 4.7s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: Bonus-Club-Bar (Row1 gold text) + Row2 Fraunces-Logo zentral ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten ✅
+- **BestsellerRail**: cream-soft/bone Gradient, "Andiamo! 🍝", weiße Karten ✅
+- **BonusCard**: returns null ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Git**: up-to-date, clean ✅
+- **🚨 KRITISCHE WARNUNG (74. Mal!) — DEPLOYMENT-PROBLEM**: Code ist seit Phase 42 vollständig korrekt im GitHub-Repo. Live-Site `mise-gastro.de/biss-app/frankys-pasta` zeigt alte Darstellung weil Docker-Container auf Server NICHT neu gebaut wurde. Server-Befehl ausführen: `docker compose build --no-cache && docker compose up -d`
+
 ## Phase 194: Vollverifikation ✅ — Kein Eingriff notwendig (2026-06-20)
 - **Build**: Next.js clean (3.2s compile, 4.2s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
