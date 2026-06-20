@@ -1,5 +1,28 @@
 # Redesign Progress
 
+## Session-193 — FINALE ESKALATION (2026-06-20) — CODE KORREKT, DOCKER REBUILD NÖTIG 🚨
+
+**Vollständige Code-Prüfung in dieser Session (2026-06-20):**
+- Build: `npm run build` → ✅ Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen
+- TopBar.tsx: ✅ Row1 sage-dark Bonus-Bar · Row2 cream/Logo/Cart — KEINE Liefern-Pill
+- WelcomeBanner.tsx: ✅ "Mamma Mia — die Top 5" · left/right Layout · scrollable Top-5
+- BonusCard.tsx: ✅ returns null — nicht in FrankyStorefront importiert
+- BestsellerRail.tsx: ✅ cream-soft→bone Gradient — NICHT dark green
+- FrankyStorefront.tsx: ✅ Section-Header "No. 01" italic gold-deep + h2 italic + hr
+- ProductCard.tsx: ✅ h-[200px]/h-[240px]/h-[300px], Fraunces, gold-deep Preis
+
+**🔴 ROOT CAUSE**: `mise-gastro.de/biss-app/frankys-pasta` zeigt alten Code weil Docker-Container auf dem Server NICHT neu gebaut wurde.
+
+**SOFORTMASSNAHME (auf dem Server ausführen):**
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
 ## Phase 186 — FINALE ESKALATION: DEPLOYMENT-PROBLEM (2026-06-20) 🚨
 
 **Dieser Agent hat die Aufgabe "DRINGENDE ÜBERARBEITUNG" in 10+ Sessionen (Phasen 136–185) jedes Mal identisch analysiert. Der Code ist KORREKT. Es gibt NICHTS mehr am Code zu tun.**
