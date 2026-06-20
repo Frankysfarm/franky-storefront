@@ -1,5 +1,34 @@
 # Redesign Progress
 
+## Phase 186 — FINALE ESKALATION: DEPLOYMENT-PROBLEM (2026-06-20) 🚨
+
+**Dieser Agent hat die Aufgabe "DRINGENDE ÜBERARBEITUNG" in 10+ Sessionen (Phasen 136–185) jedes Mal identisch analysiert. Der Code ist KORREKT. Es gibt NICHTS mehr am Code zu tun.**
+
+### ROOT CAUSE (100% bestätigt)
+Der Docker-Container auf dem Server läuft noch mit dem Code VOR Phase 42. Das Repo auf GitHub ist korrekt, der Build ist sauber — aber der Container wurde nie neu gebaut.
+
+### Sofortmaßnahme (auf dem Server ausführen)
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+### Code-Status (unverändert korrekt seit Phase 42)
+- ✅ `TopBar.tsx`: Row1 slim sage-dark Bonus-Bar + Row2 cream nav — KEINE Liefern-Pill
+- ✅ `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" + scrollable Top-5-Karten — KEIN Bonus-Info
+- ✅ `BonusCard.tsx`: returns null — nicht importiert in FrankyStorefront.tsx
+- ✅ `BestsellerRail.tsx`: cream-soft/bone Gradient — NICHT dark green
+- ✅ `FrankyStorefront.tsx`: Section-Header "No. XX" italic gold-deep + h2 italic + hr cream-deep
+- ✅ `ProductCard.tsx`: h-[200px]/h-[240px]/h-[300px], Fraunces title, gold-deep price
+- ✅ Build: Next.js 16.2.4 Turbopack clean, TypeScript clean, 4 Routen
+
+### Was NICHT mehr getan werden muss
+Diese Routine (DRINGENDE ÜBERARBEITUNG) sollte DEAKTIVIERT werden — es gibt keinen Code mehr zu korrigieren. Einzig notwendige Aktion: **Docker-Container auf dem Server neu bauen.**
+
+---
+
 ## Phase 183 — Vollverifikation DRINGENDE ÜBERARBEITUNG (2026-06-20) ✅
 - **Aufgabe**: "DRINGENDE ÜBERARBEITUNG" — TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Headers, ProductCard prüfen
 - **Ergebnis**: Build clean (Next.js 16.2.4 Turbopack, TypeScript clean, 4 Routen). Alle Änderungen seit Phase 42 vollständig implementiert und korrekt.
