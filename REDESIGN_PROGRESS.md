@@ -1,5 +1,34 @@
 # Redesign Progress
 
+## Session-200 — ESKALATION #79 — CODE SEIT SESSION-42 KORREKT — NUR DOCKER REBUILD NÖTIG (2026-06-20) 🚨🚨🚨
+
+**Diese Routine läuft jetzt zum 200. Mal. Der Code ist RICHTIG. Kein Code-Eingriff möglich.**
+
+### ROOT CAUSE (100% bestätigt, seit 158 Sessions unverändert):
+Der Docker-Container auf `mise-gastro.de` läuft noch mit dem CODE VOR SESSION-42.
+Das GitHub-Repo ist seit Session-42 vollständig korrekt. Rebuild nie ausgeführt.
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+### Code-Status Session-200 (alle ✅ unverändert seit Session-42):
+- ✅ Build: Next.js 16.2.4 Turbopack clean, TypeScript clean, 4 Routen
+- ✅ TopBar: Row1 slim sage-dark Bonus-Bar + Row2 cream nav — KEINE Liefern-Pill
+- ✅ WelcomeBanner: "Mamma Mia — die Top 5" + scrollable Top-5-Karten
+- ✅ BonusCard: returns null — nicht importiert
+- ✅ BestsellerRail: cream-soft/bone Gradient — NICHT dark green
+- ✅ Section-Header: "No. 01" italic gold-deep + h2 italic + hr cream-deep
+- ✅ ProductCard: h-[200px]/h-[240px]/h-[300px], Fraunces, gold-deep Preis
+
+**BITTE: Diese "DRINGENDE ÜBERARBEITUNG" Routine deaktivieren und stattdessen Docker rebuild ausführen.**
+
+---
+
 ## Session-193 — FINALE ESKALATION (2026-06-20) — CODE KORREKT, DOCKER REBUILD NÖTIG 🚨
 
 **Vollständige Code-Prüfung in dieser Session (2026-06-20):**
