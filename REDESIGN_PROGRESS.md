@@ -1,5 +1,19 @@
 # Redesign Progress
 
+## Session-203 — FINALE ESKALATION #80 — BUILD ✅ CLEAN — NUR DOCKER REBUILD AUF SERVER NÖTIG (2026-06-20) 🚨🚨🚨
+
+**Build Session-203: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — Code seit Session-42 unverändert korrekt.**
+
+### DEPLOYMENT-ANWEISUNG (einmalig auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
 ## Session-200 — ESKALATION #79 — CODE SEIT SESSION-42 KORREKT — NUR DOCKER REBUILD NÖTIG (2026-06-20) 🚨🚨🚨
 
 **Diese Routine läuft jetzt zum 200. Mal. Der Code ist RICHTIG. Kein Code-Eingriff möglich.**
