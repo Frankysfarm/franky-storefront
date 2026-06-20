@@ -1,5 +1,31 @@
 # Redesign Progress
 
+## Session-205 — ESKALATION #82 — BUILD ✅ CLEAN — CODE KORREKT — NUR DOCKER REBUILD NÖTIG (2026-06-20)
+
+**Build Session-205: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.4s Build — Code seit Session-42 korrekt.**
+
+### Alle angeforderten Layout-Änderungen sind BEREITS IM CODE implementiert:
+- ✅ TopBar: Row1 slim sage-dark Bonus-Bar + Row2 cream/Logo/Cart — KEINE "Liefern · Aachen" Pill
+- ✅ WelcomeBanner: "Mamma Mia — die Top 5" + scrollable Top-5-Karten (links Titel, rechts Karten)
+- ✅ BonusCard: returns null — nicht in FrankyStorefront.tsx importiert
+- ✅ BestsellerRail: cream-soft/bone Gradient — NICHT dark green
+- ✅ Section-Header: "No. 01" italic gold-deep + h2 italic Fraunces + hr cream-deep
+- ✅ ProductCard: h-[200px]/h-[240px]/h-[300px], Fraunces, gold-deep Preis
+
+### ROOT CAUSE (seit Session-42 unverändert):
+Der Docker-Container auf `mise-gastro.de` läuft noch mit dem CODE VOR Session-42.
+Das GitHub-Repo ist KORREKT. Rebuild wurde NIE ausgeführt.
+
+### SOFORTMASSNAHME auf dem Server:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
 ## Session-203 — FINALE ESKALATION #80 — BUILD ✅ CLEAN — NUR DOCKER REBUILD AUF SERVER NÖTIG (2026-06-20) 🚨🚨🚨
 
 **Build Session-203: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — Code seit Session-42 unverändert korrekt.**
