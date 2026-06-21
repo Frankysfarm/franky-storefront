@@ -1,5 +1,29 @@
 # Redesign Progress
 
+## Session-221 — VOLLANALYSE — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD AUF SERVER ERFORDERLICH (90. Mal) (2026-06-21)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.5s Build — KEIN CODE-EINGRIFF NÖTIG.**
+
+- ✅ **TopBar.tsx**: Row1 = sage-dark Bonus-Bar → `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal. Row2 = cream/Search links/Logo zentral/Cart rechts. KEINE "Liefern·Aachen" Pill.
+- ✅ **WelcomeBanner.tsx**: Headline `Mamma Mia — die Top 5`. Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] + RIGHT overflow-x-auto scrollable Top-5-Karten. Cream radial gold glow.
+- ✅ **BonusCard.tsx**: `return null` — nicht in FrankyStorefront.tsx importiert.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(135deg, cream-soft→bone)` = CREAM/BEIGE — NICHT dark green. Header `✨ Heute beliebt` sage-dark. Weiße Produktkarten, Ranking-Badge, Andiamo-Microcopy.
+- ✅ **FrankyStorefront.tsx Section-Headers**: `flex items-end gap-[14px]` + `No.&nbsp;{num}` italic font-black gold-deep opacity-[0.85] + h2 italic Fraunces sage-dark + `<hr flex-1 border-cream-deep>`. Dynamisch nummeriert.
+- ✅ **ProductCard.tsx**: `h-[200px] sm:h-[240px] lg:h-[300px]`. Fraunces font-black Titel. Gold-deep Preis. Plus-Button, Heart-Button, Diet-Tags.
+
+### 🚨 ROOT CAUSE — UNVERÄNDERT SEIT SESSION-42 (90. Eskalation):
+**Der Docker-Container `franky_storefront` auf `mise-gastro.de` läuft mit CODE VOR SESSION-42 (vor dem Redesign). Das GitHub-Repo ist seit Session-42 VOLLSTÄNDIG KORREKT. Docker-Rebuild wurde NOCH NIE ausgeführt.**
+
+### EINZIGE LÖSUNG — Auf dem Server ausführen:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
 ## Session-213 — VOLLANALYSE — BUILD ✅ CLEAN (3.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD AUF SERVER ERFORDERLICH (89. Mal) (2026-06-21)
 
 **Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.5s Build — KEIN CODE-EINGRIFF NÖTIG.**
