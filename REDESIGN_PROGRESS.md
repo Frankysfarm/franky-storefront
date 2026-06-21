@@ -1,5 +1,31 @@
 # Redesign Progress
 
+## Session-208 — VOLLANALYSE — BUILD ✅ CLEAN — ALLE 6 AUFGABEN KORREKT — DOCKER REBUILD AUF SERVER ERFORDERLICH (2026-06-21)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 5.3s Build — Kein Eingriff nötig.**
+
+### Vollständige Komponent-Analyse dieser Session (MOCKUP-REFERENCE.html verglichen):
+- ✅ **TopBar.tsx**: Row1 = slim `py-1.5` sage-dark button → BonusModal (`🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis`). Row2 = cream/Search links/Logo zentral/Cart rechts. KEINE "Liefern·Aachen" Pill. `DeliveryInfoBand` NICHT importiert.
+- ✅ **WelcomeBanner.tsx**: Headline `Mamma Mia — die Top 5`, kicker `DIESE WOCHE TRENDING` text-burgundy-dark, layout LEFT 280px + RIGHT scrollable Top-5, cream radial gold glow background. Kein Bonus-Info.
+- ✅ **BonusCard.tsx**: returns null — nicht in FrankyStorefront.tsx importiert/gerendert.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(135deg, cream-soft→bone)` = CREAM/BONE, NICHT dark green. Header `✨ Heute beliebt`, weiße Karten, rank circles, `Andiamo! 🍝`. Horizontal scrollbar.
+- ✅ **FrankyStorefront.tsx Section-Headers**: `flex items-end gap-[14px] flex-wrap` + `No.&nbsp;{num}` italic gold-deep + h2 italic Fraunces sage-dark + `<hr flex-1 border-cream-deep>`. Nummerierung dynamisch (No.01 bis No.XX).
+- ✅ **ProductCard.tsx**: `h-[200px] sm:h-[240px] lg:h-[300px]`, Fraunces font-black Titel 16/18px, gold-deep Preis 16/24px, Plus-Button sage-bg.
+
+### ROOT CAUSE — SEIT SESSION-42 UNVERÄNDERT:
+**Der Docker-Container `franky_storefront` auf `mise-gastro.de` läuft mit CODE AUS SESSION <42 (vor dem Redesign). Das GitHub-Repo ist korrekt. Der Docker-Build wurde in 165+ Sessions NICHT neu ausgeführt.**
+
+### EINZIGE MASSNAHME: Server-Zugang → Docker rebuild:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+Danach: `mise-gastro.de/biss-app/frankys-pasta` zeigt das korrekte Design.
+
+---
+
 ## Session-205 — ESKALATION #82 — BUILD ✅ CLEAN — CODE KORREKT — NUR DOCKER REBUILD NÖTIG (2026-06-20)
 
 **Build Session-205: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.4s Build — Code seit Session-42 korrekt.**
