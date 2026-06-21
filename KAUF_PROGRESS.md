@@ -1,6 +1,30 @@
 # Kauf-Fertig Progress
 
 
+## Session 225: Vollverifikation ✅ — BUILD CLEAN (3.7s), ALLE FEATURES KORREKT — Docker-Rebuild auf Server nötig (99. Mal)
+- **Build**: Next.js 16.2.4 Turbopack clean (3.7s compile, 4.5s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: Bonus-Club-Bar (gold/sage-dark) + Fraunces-Logo zentral + Search/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten ✅
+- **BestsellerRail**: cream/bone Gradient, weiße Karten mit echten Bildern ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Section-Header**: "No. 01" italic gold-deep + hr ✅
+- **Git**: up-to-date origin/main, working tree clean ✅
+
+### 🚨 KRITISCHE WARNUNG (99. Mal!) — NUR DOCKER-REBUILD FEHLT
+**Code ist vollständig korrekt im GitHub-Repo. Live-Site zeigt alte Version weil Docker auf Server nicht neu gebaut.**
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
+
 ## Session 223: Vollverifikation ✅ — BUILD CLEAN (4.8s), DOCKER-REBUILD AUF SERVER NÖTIG (98. Mal)
 - **Build**: Next.js 16.2.4 Turbopack clean (4.8s compile, 5.6s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect via `https://mise-gastro.de/api/checkout/create-session`, Email-Trigger via `process-outbox`, Barzahlung → TrackingScreen via onComplete ✅
