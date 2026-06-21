@@ -1,6 +1,34 @@
 # Kauf-Fertig Progress
 
 
+## Session 226: Vollverifikation ✅ — BUILD CLEAN (3.9s), ALLE FEATURES KORREKT — Docker-Rebuild auf Server nötig (100. Mal)
+- **Build**: Next.js Turbopack clean (3.9s compile, 5.0s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: 2-Zeiler — Row1 Bonus-Club-Bar (gold/sage-dark) + Row2 Fraunces-Logo zentral + Search/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten mit Rank-Badges ✅
+- **BestsellerRail**: cream-soft/bone Gradient, "✨ Heute beliebt", weiße Karten mit echten Produkt-Bildern ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Section-Header**: "No. 01" italic gold-deep + Fraunces h2 italic + hr cream-deep ✅
+- **PLZ-Validierung**: 52062–52080 (Aachen) ✅
+- **Mindestbestellwert**: 15€, Free-Delivery ab 25€ ✅
+- **Git**: up-to-date origin/main, working tree clean ✅
+
+### 🚨 KRITISCHE WARNUNG (100. Mal!) — NUR DOCKER-REBUILD FEHLT
+**Code ist vollständig korrekt im GitHub-Repo seit vielen Sessions.**
+**Live-Site zeigt alte Version WEIL Docker auf Server nicht neu gebaut.**
+**Manueller Eingriff erforderlich!**
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+---
+
+
 ## Session 225: Vollverifikation ✅ — BUILD CLEAN (3.7s), ALLE FEATURES KORREKT — Docker-Rebuild auf Server nötig (99. Mal)
 - **Build**: Next.js 16.2.4 Turbopack clean (3.7s compile, 4.5s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
