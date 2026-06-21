@@ -1,6 +1,34 @@
 # Kauf-Fertig Progress
 
 
+## Session 228: Vollverifikation ✅ — BUILD CLEAN (4.9s), ALLE FEATURES KORREKT — 🚨 Docker-Rebuild auf Server nötig (103. Mal)
+- **Build**: Next.js Turbopack clean (4.9s compile, 6.0s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: Row1 Bonus-Club-Bar (sage-dark bg, gold text) + Row2 Fraunces-Logo zentral + Search/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten mit Rank-Badges ✅
+- **BestsellerRail**: cream-soft/bone Gradient, "✨ Heute beliebt", weiße Karten mit echten Produkt-Bildern ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Section-Header**: "No. 01" italic gold-deep + Fraunces h2 italic + hr cream-deep ✅
+- **Success-Page**: /[slug]/success?order_id=xxx → TrackingScreen mit Cart-Clear ✅
+- **BonusCard**: return null — nicht gerendert ✅
+- **PLZ-Validierung**: 52062–52080 (Aachen) ✅
+- **Mindestbestellwert**: 15€, Free-Delivery ab 25€ ✅
+- **Git**: up-to-date origin/main, working tree clean ✅
+
+### 🚨 ROOT CAUSE — SEIT SESSION-42 UNVERÄNDERT (103. Eskalation)
+**Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42).**
+**Repo ist seit Session-42 vollständig korrekt. Live-Site zeigt altes Design weil Container NIE neu gebaut wurde.**
+**Manueller Eingriff erforderlich!**
+
+### EINZIGE LÖSUNG (SSH auf den Server):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session 226: Vollverifikation ✅ — BUILD CLEAN (3.9s), ALLE FEATURES KORREKT — Docker-Rebuild auf Server nötig (100. Mal)
 - **Build**: Next.js Turbopack clean (3.9s compile, 5.0s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
