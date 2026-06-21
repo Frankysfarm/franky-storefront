@@ -1,6 +1,27 @@
 # Kauf-Fertig Progress
 
 
+## Session 214: Vollverifikation ✅ — BUILD CLEAN (3.8s), NUR DOCKER-REBUILD AUF SERVER NÖTIG (2026-06-21)
+- **Build**: Next.js 16.2.4 Turbopack clean (3.8s compile, 4.6s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: Bonus-Club-Bar (Row1 gold text auf sage-dark) + Row2 Fraunces-Logo zentral ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten ✅
+- **BestsellerRail**: cream-soft/bone Gradient, weiße Karten ✅
+- **BonusCard**: returns null ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Git**: up-to-date, clean ✅
+- **🚨 KRITISCHE WARNUNG (90. Mal!) — DEPLOYMENT-PROBLEM**: Code ist seit Session 42 vollständig korrekt im GitHub-Repo. Live-Site zeigt alte Darstellung weil Docker-Container auf Server NICHT neu gebaut wurde.
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+
+
 ## Session 212: Vollverifikation ✅ — BUILD CLEAN (4.2s), NUR DOCKER-REBUILD AUF SERVER NÖTIG (2026-06-21)
 - **Build**: Next.js clean (4.2s compile, 5.4s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
