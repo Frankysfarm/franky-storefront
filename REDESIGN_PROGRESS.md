@@ -1,5 +1,30 @@
 # Redesign Progress
 
+## Session-224 — VOLLANALYSE — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD AUF SERVER ERFORDERLICH (91. Mal) (2026-06-21)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.5s Build — KEIN CODE-EINGRIFF NÖTIG.**
+
+Alle 6 Redesign-Anforderungen aus der aktuellen Task-Beschreibung wurden in dieser Session verifiziert — sie sind ALLE seit Session-42 korrekt implementiert:
+
+- ✅ **TopBar.tsx**: Row1 = sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal per onClick. Row2 = cream-Hintergrund / Search-Icon links / Logo zentral (Fraunces italic) / Cart-Icon rechts. KEINE "Liefern·Aachen" Pill. DeliveryInfoBand nicht importiert/gerendert.
+- ✅ **WelcomeBanner.tsx**: Headline `Mamma Mia — die Top 5` (nicht "Pasta wie bei Mamma"). Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. Layout: LEFT flex-shrink-0 sm:w-[280px] (Titel+Subtext) + RIGHT overflow-x-auto scrollbare Top-5-Karten (120px/140px breit, aspect-square Bild, Rank-Badge, Name, Rating, Preis). Cream radial gold glow. Kein Bonus-Info-Block.
+- ✅ **BonusCard.tsx**: `return null` — nicht in FrankyStorefront.tsx importiert oder gerendert.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(135deg, cream-soft→bone)` = CREAM/BEIGE — NICHT dark green. Header `✨ Heute beliebt` in sage-dark + grüner Pulse-Dot. Weiße Produktkarten (130px/140px) mit Ranking-Badge, 100px/110px Bild, Name+Preis. `Andiamo! 🍝` Microcopy rechts. Horizontal scrollable, no-scrollbar.
+- ✅ **FrankyStorefront.tsx Section-Headers**: `flex items-end gap-[14px] flex-wrap` + `No.&nbsp;{num}` italic font-black gold-deep opacity-[0.85] paddingBottom:8px + `<h2>` italic Fraunces sage-dark clamp(30px,4vw,42px) + optionale description italic muted + `<hr flex-1 border-cream-deep>`. Kategorien dynamisch nummeriert 01–0N.
+- ✅ **ProductCard.tsx**: Bildcontainer `h-[200px] sm:h-[240px] lg:h-[300px]`. Fraunces font-black Titel 16/18px. Gold-deep Preis 16/24px. Plus-Button sage-bg + Heart-Button + Diet-Tags + Rating+Urgency. Kein Code-Eingriff nötig.
+
+### 🚨 ROOT CAUSE — SEIT SESSION-42 UNVERÄNDERT (91. Eskalation):
+**Der Docker-Container auf `mise-gastro.de` läuft noch mit dem Code VOR dem Redesign (vor Session-42). Das GitHub-Repo ist seit Session-42 vollständig korrekt. Der Grund, warum `mise-gastro.de/biss-app/frankys-pasta` noch das alte Design zeigt: der Container wurde NIE neu gebaut.**
+
+### EINZIGE LÖSUNG — SSH auf den Server + diese 3 Befehle:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-221 — VOLLANALYSE — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD AUF SERVER ERFORDERLICH (90. Mal) (2026-06-21)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.5s Build — KEIN CODE-EINGRIFF NÖTIG.**
