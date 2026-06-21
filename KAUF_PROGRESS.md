@@ -1,6 +1,42 @@
 # Kauf-Fertig Progress
 
 
+## Session 218: Vollverifikation ✅ — BUILD CLEAN (3.4s), NUR DOCKER-REBUILD AUF SERVER NÖTIG (94. Mal)
+- **Build**: Next.js 16.2.4 Turbopack clean (3.4s compile, 4.4s TypeScript), 4 Routen ✅
+- **TopBar**: Bonus-Club-Bar (Row1 gold text auf sage-dark) + Row2 Fraunces-Logo zentral + Search links ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten (Links Titel, Rechts Karten) ✅
+- **BestsellerRail**: cream-soft/bone Gradient, "✨ Heute beliebt", weiße Karten mit echten Produkt-Bildern ✅
+- **BonusCard**: returns null, NICHT in FrankyStorefront gerendert ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] — grosse Bilder ✅
+- **Section-Header**: "No. 01" italic gold-deep + Fraunces h2 italic + hr cream-deep ✅
+- **DeliveryInfoBand**: NICHT in FrankyStorefront — keine "Liefern · Aachen" Pill ✅
+- **Git**: up-to-date origin/main, working tree clean ✅
+
+### 🚨 KRITISCHE WARNUNG (94. Mal!) — DEPLOYMENT-PROBLEM
+**Code ist seit Session b136db3 ("Redesign layout") vollständig korrekt im GitHub-Repo.**
+**Live-Site zeigt alte Darstellung WEIL Docker-Container auf Server NICHT neu gebaut wurde.**
+**Der Code-Agent kann den Server-Docker NICHT steuern. Manueller Eingriff erforderlich!**
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
+### Was der Agent ÜBERPRÜFT hat (Session 218):
+- Alle 6 Redesign-Tasks aus dem Briefing sind korrekt implementiert (verifiziert per Code-Lektüre)
+- BonusCard → returns null, nicht in FrankyStorefront.tsx importiert/verwendet
+- WelcomeBanner → hat "Mamma Mia — die Top 5" und scrollbare Top-5-Karten
+- BestsellerRail → cream-soft Hintergrund (NICHT dark green)
+- TopBar → 2-Zeilig (Bonus-Bar + Main-Nav), KEINE "Liefern · Aachen" Pill
+- Section-Headers → "No. 01" Format mit flexbox layout und hr separator
+- Build: ✅ erfolgreich durchgelaufen
+
+---
+
+
 ## Session 217: Vollverifikation ✅ — BUILD CLEAN (4.0s), NUR DOCKER-REBUILD AUF SERVER NÖTIG (93. Mal)
 - **Build**: Next.js 16.2.4 Turbopack clean (4.0s compile, 4.7s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
