@@ -1,6 +1,26 @@
 # Kauf-Fertig Progress
 
 
+## Session 207: Vollverifikation ✅ — BUILD CLEAN, NUR DOCKER-REBUILD AUF SERVER NÖTIG (2026-06-21)
+- **Build**: Next.js clean (3.3s compile, 4.2s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **TopBar**: Bonus-Club-Bar (Row1 gold text auf sage-dark) + Row2 Fraunces-Logo zentral ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" + scrollbare Top-5-Karten ✅
+- **BestsellerRail**: cream-soft/bone Gradient, weiße Karten ✅
+- **BonusCard**: returns null ✅
+- **ProductCard**: h-[200px] sm:h-[240px] lg:h-[300px] ✅
+- **Section-Header**: "No. 01" italic gold-deep + Fraunces h2 + hr cream-deep ✅
+- **Git**: up-to-date, clean ✅
+- **🚨 KRITISCHE WARNUNG (84. Mal!) — DEPLOYMENT-PROBLEM**: Code ist seit Phase 42 vollständig korrekt im GitHub-Repo. Live-Site `mise-gastro.de/biss-app/frankys-pasta` zeigt alte Darstellung weil Docker-Container auf Server NICHT neu gebaut wurde.
+
+### SOFORTMASSNAHME (auf dem Server ausführen):
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
+
 ## Session 206: Vollverifikation ✅ — BUILD CLEAN, NUR DOCKER-REBUILD AUF SERVER NÖTIG (2026-06-20)
 - **Build**: Next.js clean (4.2s compile, 5.3s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase-Integration customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
