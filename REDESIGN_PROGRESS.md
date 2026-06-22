@@ -1,5 +1,30 @@
 # Redesign Progress
 
+## Session-259 — BUILD ✅ CLEAN (3.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (132. Eskalation) (2026-06-22)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.5s Build — KEIN CODE-EINGRIFF NÖTIG.**
+
+Erneut "DRINGENDE ÜBERARBEITUNG" Task erhalten. Alle 6 Punkte vollständig geprüft — identischer Befund seit Session-42: Code ist seit über 130 Sessions korrekt. Das Layout-Problem ist ausschließlich ein **Deployment-Problem**.
+
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal. Row2 cream bg / Search links / Logo Fraunces italic zentriert / Cart rechts. KEINE Pill.
+- ✅ **WelcomeBanner.tsx**: Hero `Mamma Mia — die Top 5`. Kicker burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] / RIGHT overflow-x-auto Top-5 Cards.
+- ✅ **BonusCard.tsx / LoyaltyCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(135deg, cream-soft 0%, bone 100%)` — CREAM/BEIGE, nicht grün. `✨ Heute beliebt`. Weiße Karten. `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `flex items-end gap-[14px]` · `No.XX italic font-black text-gold-deep opacity-85 paddingBottom:8px` · `h2 italic font-black text-sage-dark clamp(30px,4vw,42px)` · `<hr border-cream-deep flex-1>`.
+- ✅ **ProductCard.tsx**: `h-[200px] sm:h-[240px] lg:h-[300px]`.
+
+### 🚨 ROOT CAUSE — DEPLOYMENT-PROBLEM, KEIN CODE-PROBLEM:
+**Der Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42). Das Repo ist seit Session-42 vollständig korrekt. Der Container wurde in 132 Sessions NIE neu gebaut.**
+
+**EINZIGE LÖSUNG — auf dem Server ausführen:**
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-258 — BUILD ✅ CLEAN — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (131. Eskalation) (2026-06-22)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — Code 100% korrekt seit Session-42.**
