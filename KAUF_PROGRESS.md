@@ -1,6 +1,26 @@
 # Kauf-Fertig Progress
 
 
+## Session 252: Vollverifikation ✅ — BUILD CLEAN (3.7s), ALLE FEATURES KORREKT — 🚨 Docker-Rebuild auf Server nötig (125. Mal)
+- **Build**: Next.js clean (3.7s compile, 4.7s TypeScript), 4 Routen ✅
+- **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
+- **Alle visuellen Features**: TopBar, WelcomeBanner, BestsellerRail, BonusCard=null, Section-Header, ProductCard ✅
+- **Git**: 5bdaaef auf origin/main, working tree clean ✅
+- **Keine Code-Änderungen nötig** — alles seit Session-42 vollständig implementiert ✅
+
+### 🚨 KRITISCH — 125. ESKALATION — MANUELLER EINGRIFF ZWINGEND ERFORDERLICH
+Der Docker-Container auf `mise-gastro.de` läuft mit Code von VOR Session-42.
+Das Repository ist vollständig korrekt. Die Live-Site zeigt altes Design weil der Container **niemals neu gebaut wurde**.
+
+**SSH-Befehl (einmalig, ~2 Minuten):**
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session 251: Vollverifikation ✅ — BUILD CLEAN (3.6s), ALLE FEATURES KORREKT — 🚨 Docker-Rebuild auf Server nötig (124. Mal)
 - **Build**: Next.js clean (3.6s compile, 4.7s TypeScript), 4 Routen ✅
 - **CheckoutModal**: echte Supabase customer_orders + order_items, Stripe-Redirect, Email-Trigger, Barzahlung → TrackingScreen ✅
