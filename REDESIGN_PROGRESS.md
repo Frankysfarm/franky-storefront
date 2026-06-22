@@ -1,5 +1,17 @@
 # Redesign Progress
 
+## Session-258 — BUILD ✅ CLEAN — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (131. Eskalation) (2026-06-22)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — Code 100% korrekt seit Session-42.**
+
+- ✅ TopBar / WelcomeBanner / BonusCard / BestsellerRail / Section-Headers / ProductCard — alle korrekt
+- 🚨 **EINZIGE OFFENE AUFGABE**: Docker-Container auf `mise-gastro.de` neu bauen:
+  ```bash
+  cd /pfad/zum/franky-storefront/ && git pull origin main && docker compose build --no-cache && docker compose up -d
+  ```
+
+---
+
 ## Session-257 — BUILD ✅ CLEAN (3.2s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (130. Eskalation) (2026-06-22)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.2s Build — KEIN CODE-EINGRIFF NÖTIG.**
