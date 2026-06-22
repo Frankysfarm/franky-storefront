@@ -36,7 +36,7 @@ export function TopBar({ tenant, onCartOpen, onSearchOpen, onBonusOpen }: Props)
       <button
         onClick={onBonusOpen}
         className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 text-[10px] sm:text-[11px] font-extrabold tracking-[1px] sm:tracking-[2px] text-gold hover:opacity-90 transition-opacity whitespace-nowrap overflow-hidden"
-        style={{ background: "var(--color-sage-dark)" }}
+        style={{ background: "var(--color-sage-dark)", minHeight: 0 }}
       >
         <span>🎁</span>
         <span><span className="hidden sm:inline">FRANKY&apos;S </span>BONUS CLUB</span>

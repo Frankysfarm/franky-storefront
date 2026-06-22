@@ -1,5 +1,29 @@
 # Redesign Progress
 
+## Session-243 — BUILD ✅ CLEAN (4.1s) — BUGFIX: TopBar Bonus-Bar minHeight — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (2026-06-22)
+
+**Echter Code-Fix:** `TopBar.tsx` Bonus-Bar Button erhält `style={{ minHeight: 0 }}`. Ursache: globale CSS-Regel `button { min-height: 44px }` (mobile Touch-Target) ließ die schmale Bonus-Bar auf 44px aufblasen statt ~28px. Das erklärt warum sie "zu prominent" aussah.
+
+**Alle 6 Redesign-Tasks weiterhin korrekt:**
+- ✅ TopBar.tsx: Row1 = sage-dark Bonus-Bar (jetzt korrekt slim, minHeight:0) · Row2 = cream / Search links / Logo zentral / Cart rechts
+- ✅ WelcomeBanner.tsx: "Mamma Mia — die Top 5" · LEFT Titel+Subtext / RIGHT scrollbare Top-5-Karten
+- ✅ BonusCard.tsx: `return null` · nicht in FrankyStorefront gerendert
+- ✅ BestsellerRail.tsx: `linear-gradient(cream-soft→bone)` = CREAM/BEIGE · "✨ Heute beliebt" · "Andiamo! 🍝"
+- ✅ Section-Headers: `No.&nbsp;01` italic gold-deep + h2 Fraunces + `<hr flex-1>`
+- ✅ ProductCard.tsx: `h-[200px] sm:h-[240px] lg:h-[300px]` · Fraunces Titel · Gold-deep Preis
+
+### 🚨 ROOT CAUSE — DOCKER REBUILD NÖTIG (112. Eskalation):
+Der Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42). GitHub-Repo ist seit Session-42 korrekt. Live-Site zeigt altes Design weil Container NIE neu gebaut wurde.
+
+**SSH auf den Server und ausführen:**
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-242 — VOLLANALYSE — BUILD ✅ CLEAN (4.9s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD AUF SERVER ERFORDERLICH (111. Mal) (2026-06-22)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.9s Build — KEIN CODE-EINGRIFF NÖTIG.**
