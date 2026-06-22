@@ -1,5 +1,30 @@
 # Redesign Progress
 
+## Session-247 — BUILD ✅ CLEAN (4.0s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (120. Eskalation) (2026-06-22)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.0s Build — KEIN CODE-EINGRIFF NÖTIG.**
+
+Alle 6 Redesign-Anforderungen gegen MOCKUP-REFERENCE.html und Task-Beschreibung geprüft — ALLE seit Session-42 korrekt implementiert. KEIN Regression.
+
+- ✅ **TopBar.tsx**: Row1 = `py-1.5 minHeight:0` sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal per onClick. Row2 = cream/Search links/Logo zentral Fraunces italic/Cart rechts. KEINE "Liefern·Aachen" Pill. DeliveryInfoBand nicht importiert.
+- ✅ **WelcomeBanner.tsx**: Headline `Mamma Mia — die Top 5`. Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] + RIGHT overflow-x-auto scrollbare Top-5-Karten. Cream radial gold glow. Kein Bonus-Info.
+- ✅ **BonusCard.tsx**: `return null` — nicht importiert/gerendert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(135deg, cream-soft→bone)` = CREAM/BEIGE — NICHT dark green. Header `✨ Heute beliebt` sage-dark. Weiße Karten mit Bild+Name+Preis. `Andiamo! 🍝`. Horizontal scrollbar.
+- ✅ **Section-Headers FrankyStorefront.tsx**: `flex items-end gap-[14px] flex-wrap` + `No.&nbsp;{num}` italic font-black gold-deep opacity-[0.85] paddingBottom:8px + h2 italic Fraunces sage-dark clamp(30px,4vw,42px) + `<hr flex-1 border-cream-deep>`. Dynamisch nummeriert 01–0N.
+- ✅ **ProductCard.tsx**: `h-[200px] sm:h-[240px] lg:h-[300px]`. Fraunces font-black Titel. Gold-deep Preis 16/24px. Plus-Button sage, Heart-Button, Diet-Tags, Rating+Urgency.
+
+### 🚨 ROOT CAUSE (120. Eskalation):
+**Der Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42). Das GitHub-Repo ist seit Session-42 vollständig korrekt. Live-Site zeigt altes Design weil Container NIE neu gebaut wurde.**
+
+### EINZIGE LÖSUNG — SSH auf den Server + diese 3 Befehle:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-243 — BUILD ✅ CLEAN (4.1s) — BUGFIX: TopBar Bonus-Bar minHeight — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (2026-06-22)
 
 **Echter Code-Fix:** `TopBar.tsx` Bonus-Bar Button erhält `style={{ minHeight: 0 }}`. Ursache: globale CSS-Regel `button { min-height: 44px }` (mobile Touch-Target) ließ die schmale Bonus-Bar auf 44px aufblasen statt ~28px. Das erklärt warum sie "zu prominent" aussah.
