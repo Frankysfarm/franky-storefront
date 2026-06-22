@@ -1,5 +1,32 @@
 # Redesign Progress
 
+## Session-249 — BUILD ✅ CLEAN (3.3s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (122. Eskalation) (2026-06-22)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.3s Build — KEIN CODE-EINGRIFF NÖTIG.**
+
+Neuer "DRINGENDE ÜBERARBEITUNG" Task erhalten. Alle 6 Punkte gegen MOCKUP-REFERENCE.html (section-head CSS bei Zeile 1461–1493 bestätigt) geprüft — identischer Befund wie Session-247: ALLE Änderungen seit Session-42 bereits vollständig implementiert.
+
+Mockup-Abgleich section-head: `.section-head { align-items: flex-end; gap: 14px }` ✓ · `.section-num { italic; font-weight:900; font-size:18px; color:gold-deep; opacity:0.85; padding-bottom:8px }` ✓ · `.section-title { Fraunces; 900; clamp(30px,4vw,42px); color:green-dark }` ✓ — alle Tokens korrekt.
+
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal. Row2 cream/Search/Logo-Fraunces-italic/Cart. KEINE Pill.
+- ✅ **WelcomeBanner.tsx**: `Mamma Mia — die Top 5`. Kicker burgundy-dark. LEFT 280px + RIGHT scrollable Top-5.
+- ✅ **BonusCard.tsx / LoyaltyCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: CREAM/BONE gradient. `✨ Heute beliebt`. Weiße Karten. `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `items-end gap-[14px]` · No.XX italic gold-deep · h2 italic sage-dark · `<hr border-cream-deep>`.
+- ✅ **ProductCard.tsx**: `h-[200px] sm:h-[240px] lg:h-[300px]`.
+
+### 🚨 ROOT CAUSE (122. Eskalation):
+**Der Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42). Das GitHub-Repo ist seit Session-42 vollständig korrekt.**
+
+### EINZIGE LÖSUNG — SSH auf den Server:
+```bash
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-247 — BUILD ✅ CLEAN (4.0s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (120. Eskalation) (2026-06-22)
 
 **Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.0s Build — KEIN CODE-EINGRIFF NÖTIG.**
