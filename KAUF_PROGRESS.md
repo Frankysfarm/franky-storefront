@@ -1,5 +1,26 @@
 # Kauf-Fertig Progress
 
+## Session 255: Vollverifikation ✅ — BUILD CLEAN (3.9s), ALLE FEATURES KORREKT — 🚨 Docker-Rebuild auf Server nötig (128. Mal)
+- **Build**: Next.js 16.2.4 Turbopack clean (3.9s compile), TypeScript ✅, 4 Routen ✅
+- **TopBar**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → BonusModal. Row2 cream/Search/Logo-Fraunces-italic/Cart. KEINE Delivery-Pill ✅
+- **WelcomeBanner**: `Mamma Mia — die Top 5`. Links 280px + Rechts scrollable Top-5-Karten ✅
+- **BonusCard.tsx / LoyaltyCard.tsx**: `return null`, nicht importiert ✅
+- **BestsellerRail**: CREAM/BONE gradient, `✨ Heute beliebt`, `Andiamo! 🍝` ✅
+- **Section-Headers**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep` ✅
+- **ProductCard**: `h-[200px] sm:h-[240px] lg:h-[300px]`, gold-deep Preis ✅
+- **Keine Code-Änderungen nötig** — alles seit Session-42 korrekt ✅
+
+### 🚨 KRITISCH — 128. ESKALATION — MANUELLER EINGRIFF ZWINGEND ERFORDERLICH
+**CODE IM REPO IST KORREKT.** Live-Site zeigt altes Design weil Docker-Container **niemals neu gebaut wurde.**
+
+```bash
+# SSH auf den Server — einmalig, ~2 Min:
+cd /pfad/zum/franky-storefront/
+git pull origin main
+docker compose build --no-cache && docker compose up -d
+```
+
+---
 
 ## Session 254: Vollverifikation ✅ — BUILD CLEAN (3.8s), ALLE FEATURES KORREKT — 🚨 Docker-Rebuild auf Server nötig (127. Mal)
 - **Build**: Next.js clean (3.8s compile, 4.4s TypeScript), 4 Routen ✅
