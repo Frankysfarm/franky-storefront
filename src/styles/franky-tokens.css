@@ -210,6 +210,20 @@ body {
 .reveal-stagger > *:nth-child(10) { transition-delay: 540ms; }
 .reveal-stagger > *:nth-child(n+11) { transition-delay: 600ms; }
 
+/* === SECTION TITLE ACCENT — matches mockup .section-title::after === */
+.section-title-accent {
+  position: relative;
+  display: inline-block;
+}
+.section-title-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0;
+  width: 28px; height: 2.5px;
+  background: linear-gradient(90deg, var(--color-burgundy) 0%, var(--color-gold-deep) 100%);
+  border-radius: 2px;
+}
+
 /* === NO-SCROLLBAR UTILITY === */
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
