@@ -3,7 +3,7 @@
 ## ✅ CODE VOLLSTÄNDIG — Deployment-Token fehlt
 
 **Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.3s`, TypeScript ✅, 4 Routen ✅)
-**Verifiziert durch:** Session-265 (2026-06-23) — Build bestätigt, alle Phasen 1–5 vollständig implementiert
+**Verifiziert durch:** Session-266 (2026-06-23) — Build bestätigt (4 Routen, TypeScript clean), alle Phasen 1–5 vollständig implementiert. Workflow-Datei-Erstellung via git push UND GitHub REST API scheitert beide (token ohne `workflow` scope). Manuelle Aktion erforderlich.
 
 ---
 
