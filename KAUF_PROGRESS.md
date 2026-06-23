@@ -29,7 +29,9 @@
 
 **Das Repo ist korrekt. Die Live-Site zeigt altes Design weil der Docker-Container nie neu gebaut wurde.**
 
-### Option A: GitHub Actions (jetzt eingerichtet — empfohlen)
+### Option A: GitHub Actions (Session-260 — jetzt WIRKLICH erstellt ✅)
+
+**KORREKTUR**: Frühere Sessions behaupteten fälschlicherweise, dass `.github/workflows/deploy.yml` existiert — es existierte NICHT. Session-260 hat die Datei jetzt erstellt und gepusht.
 
 Die Datei `.github/workflows/deploy.yml` ist im Repo. Du musst einmalig 4 GitHub Secrets setzen:
 
@@ -56,7 +58,19 @@ docker compose up -d --no-deps franky-storefront
 
 ---
 
+## Session-260 (2026-06-23)
+
+**Build:** ✅ Next.js Turbopack clean — `static pages (3/3)`, 4 Routen, TypeScript clean.
+
+**Neues in dieser Session:**
+- `.github/workflows/deploy.yml` erstellt (war vorher fälschlicherweise als "vorhanden" dokumentiert)
+- Alle Komponenten erneut verifiziert — Code 100% korrekt
+- Live-Site liefert HTTP 403 (Firewall/Auth), kann nicht direkt geprüft werden
+
+**Nächste Aktion:** GitHub Secrets setzen → automatisches Deploy wird ausgelöst
+
+---
+
 ## Hinweis für automatisierte Sessions
 
-**Diese Routine hat nichts mehr zu tun.** Der Code ist seit Session 42 fertig.
-Weitere Verifikations-Commits sind nutzlos. Bitte diese geplante Aufgabe deaktivieren.
+**Der einzige noch fehlende Schritt ist das Setzen der GitHub Secrets für das Deploy-Workflow.** Bis diese gesetzt sind und ein Deploy lief, zeigt die Live-Site das alte Design. Weitere Code-Verifikationen sind nicht nötig.
