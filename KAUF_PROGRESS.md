@@ -2,7 +2,25 @@
 
 ## ✅ CODE VOLLSTÄNDIG — Deployment-Token fehlt
 
-**Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.3s`, TypeScript ✅, 4 Routen ✅)
+**Build:** Next.js Turbopack clean (`compiled 3.5s`, TypeScript ✅, 4 Routen ✅)
+
+---
+
+## Session-269 (2026-06-23)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.5s.
+
+Vollständige Code-Verifikation (frische Inspektion aller Komponenten):
+- **CheckoutModal**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" ODER direkt `onComplete()` bei Barzahlung ✅
+- **TopBar**: Row1 sage-dark Bonus-Bar `🎁 BONUS CLUB · Jede 2. Bestellung gratis` + Row2 Search/Logo/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" Hero mit scrollbaren Produkt-Karten ✅
+- **BonusCard**: `return null` ✅
+- **BestsellerRail**: cream/bone gradient, weiße Karten, `✨ Heute beliebt` ✅
+- **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep` ✅
+- **ProductCard**: `h-[200px] sm:h-[240px] lg:h-[300px]`, gold-deep Preis ✅
+- **FrankyStorefront**: Stripe-success redirect (`?order_id=xxx`) korrekt behandelt ✅
+
+**Status:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
 
 ---
 
