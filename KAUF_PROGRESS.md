@@ -6,6 +6,25 @@
 
 ---
 
+## Session-272 (2026-06-23)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.7s.
+
+Vollständige Code-Verifikation (142. Bestätigung). Alle Phasen 1–5 implementiert und live auf main.
+- **CheckoutModal**: `placeOrder()` → Supabase `customer_orders` + `order_items` → Email outbox fire-and-forget → Stripe-Redirect wenn ≠ "bar" → `onComplete()` bei Barzahlung ✅
+- **TopBar**: Row1 sage-dark `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` + Row2 cream/Search/Wortlogo/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" mit scrollbaren Rang-Karten ✅
+- **BonusCard**: `return null` ✅
+- **BestsellerRail**: bone/cream gradient, weiße Karten, Rang-Badges ✅
+- **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep` ✅
+- **ProductCard**: `h-[220px] sm:h-[260px] lg:h-[300px]`, gold-deep Preis ✅
+- **FrankyStorefront**: Alle Abschnitte korrekt verbunden ✅
+
+**Status:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+**Deployment-Blocker:** GitHub-Token ohne `workflow` scope → kann Workflow-Dateien nicht pushen. SSH-Rebuild auf Server nötig.
+
+---
+
 ## Session-271 (2026-06-23)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen (`/`, `/_not-found`, `/[slug]`, `/[slug]/success`), TypeScript clean.
