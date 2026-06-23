@@ -2,8 +2,8 @@
 
 ## ✅ CODE VOLLSTÄNDIG — Deployment-Token fehlt
 
-**Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.6s`, TypeScript ✅, 4 Routen ✅)
-**Verifiziert durch:** Session-263 (2026-06-23) — vollständige Inspektion aller Komponenten
+**Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.8s`, TypeScript ✅, 4 Routen ✅)
+**Verifiziert durch:** Session-264 (2026-06-23) — Build bestätigt, CheckoutModal/TopBar/WelcomeBanner/BestsellerRail alle korrekt
 
 ---
 
@@ -80,6 +80,21 @@ git pull origin main
 docker compose build --no-cache franky-storefront
 docker compose up -d --no-deps franky-storefront
 ```
+
+---
+
+## Session-264 (2026-06-23)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.8s.
+
+Vollständige Verifikation (Inspektion + build):
+- CheckoutModal: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" ODER direkt `onComplete()` bei Barzahlung ✅
+- TopBar: Row1 sage-dark Bonus-Bar + Row2 Search/Logo/Cart ✅
+- WelcomeBanner: "Mamma Mia — die Top 5" Hero mit horizontalen Top-5-Karten ✅
+- BestsellerRail: cream/bone gradient, weiße Karten ✅
+- git: `nothing to commit, working tree clean` — kein neuer Commit nötig
+
+**Status:** Code-Arbeit abgeschlossen. Nur Deployment fehlt (Option A oder B unten).
 
 ---
 
