@@ -22,9 +22,10 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
         className="rounded-[18px] overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, var(--color-cream-soft) 0%, var(--color-bone) 100%)",
-          border: "1.5px solid var(--color-line-strong)",
+            "linear-gradient(150deg, var(--color-bone) 0%, var(--color-cream-soft) 60%, var(--color-cream) 100%)",
+          border: "1.5px solid var(--color-cream-deep)",
           padding: "18px 24px 14px",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 8px -2px rgba(42,58,44,0.06)",
         }}
       >
         {/* Header */}

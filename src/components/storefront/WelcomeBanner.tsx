@@ -14,10 +14,12 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
   return (
     <section className="max-w-[1240px] mx-auto mt-4 px-6">
       <div
-        className="relative overflow-hidden rounded-[20px] border-[1.5px] border-line-strong p-5 sm:p-8"
+        className="relative overflow-hidden rounded-[20px] p-5 sm:p-8"
         style={{
-          background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.28) 0%, transparent 55%),
+          background: `radial-gradient(ellipse at top right, rgba(228,192,104,0.32) 0%, transparent 55%),
                        linear-gradient(135deg, var(--color-cream-deep) 0%, var(--color-cream-soft) 100%)`,
+          border: "1.5px solid rgba(228,192,104,0.35)",
+          boxShadow: "0 0 0 1px rgba(228,192,104,0.12), 0 4px 24px -8px rgba(42,58,44,0.10)",
         }}
       >
         {/* Decorative pasta swirl — bottom right corner, matches mockup */}
