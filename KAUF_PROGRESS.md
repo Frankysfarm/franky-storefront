@@ -2,8 +2,8 @@
 
 ## ✅ CODE VOLLSTÄNDIG — Deployment-Token fehlt
 
-**Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.2s`, TypeScript ✅, 4 Routen ✅)
-**Verifiziert durch:** Session-261 (2026-06-23) — vollständige Inspektion aller Komponenten
+**Build:** Next.js 16.2.4 Turbopack clean (`compiled 3.6s`, TypeScript ✅, 4 Routen ✅)
+**Verifiziert durch:** Session-263 (2026-06-23) — vollständige Inspektion aller Komponenten
 
 ---
 
@@ -83,11 +83,29 @@ docker compose up -d --no-deps franky-storefront
 
 ---
 
+## Session-263 (2026-06-23)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.6s.
+
+**Vollständig verifiziert (frische Inspektion):**
+- CheckoutModal: Supabase Insert → customer_orders (location_id, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) + order_items → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" ODER direkt zu TrackingScreen bei Barzahlung ✅
+- TopBar: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` + Row2 Search/Logo/Cart ✅
+- WelcomeBanner: "Mamma Mia — die Top 5" Hero mit horizontalen Produkt-Karten ✅
+- BonusCard: `return null` ✅
+- BestsellerRail: cream/bone gradient, weiße Karten ✅
+- Section-Header: `No. XX italic gold-deep + h2 italic sage-dark + hr` ✅
+- ProductCard: `h-[200px] sm:h-[240px] lg:h-[300px]` ✅
+
+**Token-Problem weiterhin aktiv:** `gho_OVX3N75...` hat keinen `workflow` scope → kann keine GitHub Actions Workflow-Dateien pushen.
+
+**Nächste Aktion:** Einmalig Option A oder B ausführen → Site zeigt sofort das korrekte Design.
+
+---
+
 ## Session-261 (2026-06-23)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean.
 
-**Vollständig verifiziert:**
 - CheckoutModal: Supabase Insert → customer_orders + order_items → Stripe redirect ODER bar-Weiterleitung ✅
 - TopBar: 2-Row-Layout, Bonus-Bar, zentriertes Logo ✅
 - WelcomeBanner: Top-5-Karten ✅
@@ -95,10 +113,6 @@ docker compose up -d --no-deps franky-storefront
 - BestsellerRail: cream/bone ✅
 - Section-Header: No. XX italic ✅
 - ProductCard: 200/240/300px Bildgröße ✅
-
-**Token-Problem identifiziert:** `gho_OVX3N75...` hat keinen `workflow` scope → kann keine GitHub Actions Workflow-Dateien pushen. Manuelle Erstellung via GitHub UI nötig (Option A oben).
-
-**Nächste Aktion:** Einmalig Option A oder B ausführen → Site zeigt sofort das korrekte Design.
 
 ---
 
