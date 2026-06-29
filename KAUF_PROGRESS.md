@@ -6,6 +6,24 @@
 
 ---
 
+## Session-276 (2026-06-29)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.5s.
+
+Vollständige Verifikation (146. Bestätigung). Code unverändert seit Session-264. Alle Phasen 1–5 implementiert.
+- **CheckoutModal**: `placeOrder()` → Supabase `customer_orders` + `order_items` → Email outbox fire-and-forget → Stripe-Redirect wenn ≠ "bar" → `onComplete()` bei Barzahlung ✅
+- **TopBar**: Row1 sage-dark `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` + Row2 cream/Search/Wortlogo/Cart ✅
+- **WelcomeBanner**: "Mamma Mia — die Top 5" mit scrollbaren Rang-Karten ✅
+- **BonusCard**: `return null` ✅
+- **BestsellerRail**: bone/cream gradient, weiße Karten ✅
+- **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep` ✅
+- **ProductCard**: `h-[220px] sm:h-[260px] lg:h-[300px]`, gold-deep Preis ✅
+
+**Status:** `nothing to commit` — kein neuer Commit nötig.
+**AKTION ERFORDERLICH:** Manueller Deploy auf Server (SSH oder GitHub Actions Workflow). Automatisierte Sessions können dies nicht ausführen.
+
+---
+
 ## Session-272 (2026-06-23)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.7s.
