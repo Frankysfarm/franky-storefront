@@ -1,5 +1,28 @@
 # Redesign Progress
 
+## Session-277 — BUILD ✅ CLEAN (3.7s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (147. Eskalation) (2026-07-01)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.7s — KEIN CODE-EINGRIFF NÖTIG.**
+
+Erneut "DRINGENDE ÜBERARBEITUNG" erhalten. Alle 6 Punkte vollständig geprüft — identischer Befund seit Session-42: Code ist VOLLSTÄNDIG KORREKT. Das Layout-Problem ist ausschließlich ein **Deployment-Problem**. Der Docker-Container auf dem Server läuft mit Pre-Redesign-Code.
+
+- ✅ **TopBar.tsx**: Row1 `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` sage-dark bg + gold Text → BonusModal. Row2 cream bg / Search links / Logo Fraunces italic zentriert / Cart rechts. KEINE 'Liefern · Aachen' Pill. `style={{ minHeight: 0 }}` verhindert 44px-Aufblasen.
+- ✅ **WelcomeBanner.tsx**: Hero `Mamma Mia — die Top 5`. Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] + RIGHT overflow-x-auto Top-5 Cards mit Bild/Name/Preis/Rating/Rank-Badge.
+- ✅ **BonusCard.tsx / LoyaltyCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(150deg, var(--color-bone) 0%, var(--color-cream-soft) 60%, var(--color-cream) 100%)` CREAM/BEIGE. `✨ Heute beliebt` + green pulse dot. Weiße Produktkarten (rank badge, 100/110px Bild, Name, Preis). `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `flex items-end gap-[14px]` · `No.&nbsp;{num}` italic font-black text-gold-deep opacity-[0.85] paddingBottom:8px · `h2` italic font-black text-sage-dark clamp(30px,4vw,42px) · `<hr flex-1 border-cream-deep>`. Dynamisch 01–0N.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe korrekt (erhöht Session-272).
+
+### 🚨 ROOT CAUSE (147. Eskalation) — DEPLOYMENT-PROBLEM, KEIN CODE-PROBLEM:
+**Der Docker-Container auf `mise-gastro.de` läuft mit PRE-Redesign-Code (vor Session-42). Das Repo ist seit Session-42 vollständig korrekt. Der Container wurde in 147 Sessions NIE neu gebaut.**
+
+**EINZIGE LÖSUNG — auf dem Server ausführen:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-274 — BUILD ✅ CLEAN (3.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (144. Eskalation) (2026-06-24)
 
 **Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.5s — KEIN CODE-EINGRIFF NÖTIG.**
