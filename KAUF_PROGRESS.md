@@ -6,6 +6,34 @@
 
 ---
 
+## Session-279 (2026-07-03)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.3s. (149. Bestätigung)
+
+Vollständige Verifikation aller Komponenten — Code unverändert seit Session-42, alles korrekt:
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" → `onComplete()` bei Barzahlung
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` + Row2 cream/Search/Wortlogo-Fraunces-italic/Cart
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5", scrollbare Rang-Karten, DIESE WOCHE TRENDING kicker
+- ✅ **BestsellerRail.tsx**: bone/cream gradient, weiße Karten, `✨ Heute beliebt`
+- ✅ **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep`
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]`, gold-deep Preis
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker unverändert:** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → kann GitHub Actions nicht pushen. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell:**
+```bash
+ssh user@server
+cd /opt/franky-storefront
+git pull origin main
+docker compose build --no-cache franky-storefront
+docker compose up -d --no-deps franky-storefront
+```
+ODER GitHub Actions Workflow manuell über die GitHub UI erstellen (siehe Session-278 für vollständige Anleitung).
+
+---
+
 ## Session-278 (2026-07-03)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.3s.
