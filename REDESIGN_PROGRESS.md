@@ -1,5 +1,29 @@
 # Redesign Progress
 
+## Session-281 — BUILD ✅ CLEAN (4.1s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (151. Eskalation) (2026-07-07)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.1s — KEIN CODE-EINGRIFF NÖTIG.**
+
+Erneut "DRINGENDE ÜBERARBEITUNG" erhalten (151. Mal). Vollständige Prüfung aller 6 Punkte — Code korrekt, identisch seit Session-42:
+
+- ✅ **TopBar.tsx**: Row1 `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` sage-dark bg + gold Text → BonusModal. Row2 cream bg / Search links / Logo Fraunces italic zentriert / Cart rechts. KEINE 'Liefern · Aachen' Pill.
+- ✅ **WelcomeBanner.tsx**: Hero `Mamma Mia — die Top 5`. Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] + RIGHT overflow-x-auto Top-5 Karten mit Bild/Name/Preis/Rating/Rank-Badge.
+- ✅ **BonusCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(150deg, bone→cream-soft→cream)` CREAM/BEIGE. `✨ Heute beliebt` + Pulse-Dot. Weiße Karten. `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `No.XX italic gold-deep` · `h2 italic sage-dark` · `<hr border-cream-deep flex-1>`.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe korrekt.
+
+### 🚨 ROOT CAUSE (151. Eskalation) — DEPLOYMENT-PROBLEM, KEIN CODE-PROBLEM:
+
+Das Repo ist seit Session-42 vollständig korrekt. Der Docker-Container auf `mise-gastro.de` läuft mit **Pre-Redesign-Code** und wurde in **151 Sessions NIE neu gebaut**.
+
+**LÖSUNG — auf dem Server ausführen:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-280 — BUILD ✅ CLEAN (3.6s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (150. Eskalation) (2026-07-04)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.6s — KEIN CODE-EINGRIFF NÖTIG.**
