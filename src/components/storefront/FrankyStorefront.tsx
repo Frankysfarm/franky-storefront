@@ -131,7 +131,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
           const num = String(catIndex + 1).padStart(2, "0");
           return (
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-baseline gap-4 mb-[18px] flex-wrap">
+              <div className="flex items-baseline gap-[14px] mb-[18px] flex-wrap">
                 <span
                   className="font-display italic font-black text-gold-deep text-lg flex-shrink-0 opacity-[0.85]"
                 >

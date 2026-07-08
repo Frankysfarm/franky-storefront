@@ -49,7 +49,7 @@ export function BestsellerRail({ products, bestsellers, onAdd }: Props) {
                   key={product.id}
                   type="button"
                   onClick={() => onAdd(product)}
-                  className="relative flex-shrink-0 w-[130px] sm:w-[140px] bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-line shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-left"
+                  className="relative flex-shrink-0 w-[140px] bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all border border-line shadow-[0_2px_8px_rgba(0,0,0,0.06)] text-left"
                 >
                   {/* Rank badge */}
                   <div
