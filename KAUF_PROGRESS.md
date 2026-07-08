@@ -4,6 +4,28 @@
 
 ---
 
+## Session-306 (2026-07-08)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (176. Bestätigung) — 4.0s
+
+Frische Verifikation (fresh clone, npm install, build in 4.0s):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → email fire-and-forget → Stripe redirect wenn zahlungsart ≠ "bar" → clearCart bei Barzahlung. PLZ 52062–52080, Mindestbestellwert, Fehlerbehandlung, Loading-States: alle korrekt.
+- ✅ **TopBar**: Bonus-Club-Bar (dunkelgrün, gold text) + zentrales Wort-Logo korrekt.
+- ✅ **WelcomeBanner**: "Mamma Mia — die Top 5" hero mit horizontalen Top-5-Karten korrekt.
+- ✅ **BestsellerRail**: cream/beige Hintergrund, weiße Karten, echte Produktbilder korrekt.
+- ✅ **ProductCard**: 220px/260px/300px responsive Bilder korrekt.
+
+Deployment-Analyse: GitHub API "not enabled for this session" (add_repo required). Git push funktioniert (token hat push-Scope). Kein SSH-Zugang aus dieser Session. Kein GitHub Actions workflow existiert im Repo.
+
+**🚨 Deployment-Blocker (176. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code. origin/main ist aktuell mit vollständigem Code.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-305 (2026-07-08)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (175. Bestätigung) — 4.1s
