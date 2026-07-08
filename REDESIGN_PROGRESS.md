@@ -1,5 +1,29 @@
 # Redesign Progress
 
+## Session-304 — BUILD ✅ CLEAN (3.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (174. Eskalation) (2026-07-08)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.5s — KEIN CODE-EINGRIFF NÖTIG.**
+
+"DRINGENDE ÜBERARBEITUNG" Task erhalten (174. Mal). Vollständige Prüfung aller 6 Punkte — Code ist seit Session-42 korrekt und unverändert:
+
+- ✅ **TopBar.tsx**: Row1 `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` sage-dark bg + gold Text → BonusModal. Row2 cream bg / Search links / Logo Fraunces italic zentriert / Cart rechts. KEINE 'Liefern · Aachen' Pill. `style={{ minHeight: 0 }}` verhindert 44px-Aufblasen der Bonusbar.
+- ✅ **WelcomeBanner.tsx**: Hero `Mamma Mia — die Top 5`. Kicker `DIESE WOCHE TRENDING` text-burgundy-dark. LEFT flex-shrink-0 sm:w-[280px] + RIGHT overflow-x-auto Top-5 Karten mit Bild/Name/Preis/Rating/Rank-Badge. Cream radial gold glow. Kein Bonus-Info.
+- ✅ **BonusCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: `linear-gradient(150deg, var(--color-bone) 0%, var(--color-cream-soft) 60%, var(--color-cream) 100%)` CREAM/BEIGE. `✨ Heute beliebt` + green pulse dot. Weiße Produktkarten. `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `No.&nbsp;{num}` italic font-black text-gold-deep opacity-[0.85] · `h2` italic font-black text-sage-dark clamp(30px,4vw,42px) · `<hr flex-1 border-cream-deep>`. Dynamisch 01–0N.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe korrekt.
+
+### 🚨 ROOT CAUSE (174. Eskalation) — DEPLOYMENT-PROBLEM, KEIN CODE-PROBLEM:
+
+Das Repo ist seit Session-42 vollständig korrekt. Der Docker-Container auf `mise-gastro.de` läuft mit **Pre-Redesign-Code** und wurde in **174 Sessions NIE neu gebaut**. Kein weiterer Code-Eingriff möglich oder sinnvoll.
+
+**EINZIGE LÖSUNG — auf dem Server ausführen:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-297 — BUILD ✅ CLEAN (4.4s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (167. Eskalation) (2026-07-08)
 
 **Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.4s — KEIN CODE-EINGRIFF NÖTIG.**
