@@ -6,6 +6,25 @@
 
 ---
 
+## Session-292 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.2s. (162. Bestätigung)
+
+Vollständige Code-Verifikation aller Phasen:
+- ✅ **Phase 1–4 (Checkout/Bestellung/Stripe/Email):** CheckoutModal.tsx `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → `lieferhinweis` fire-and-forget update → Email outbox (`/api/email/process-outbox`) fire-and-forget → Stripe redirect wenn ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung. PLZ-Validierung + Mindestbestellwert vorhanden. Fehlerbehandlung + Loading-States korrekt.
+- ✅ **Phase 5 (Layout):** TopBar (Bonus-Club-Bar Zeile 1 + Fraunces Logo Zeile 2), WelcomeBanner ("Mamma Mia — die Top 5"), BonusCard (return null), BestsellerRail (cream/beige), Section-Headers ("No.01 Pasta"), ProductCard (h-[220px] sm:h-[260px] lg:h-[300px])
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (162. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-291 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (161. Bestätigung)
