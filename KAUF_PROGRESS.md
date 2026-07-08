@@ -4,6 +4,26 @@
 
 ---
 
+## Session-302 (2026-07-08)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (172. Bestätigung)
+
+Frische Verifikation (fresh clone, npm install, build):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → `lieferhinweis` fire-and-forget update → Email `/api/email/process-outbox` fire-and-forget → Stripe `mise-gastro.de/api/checkout/create-session` redirect wenn zahlungsart ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung
+- ✅ **TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Header, ProductCard**: Alle korrekt (unverändert seit Session-42)
+
+**git:** `nothing to commit` (nur package-lock.json lokal geändert durch npm install)
+
+**🚨 Deployment-Blocker (172. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang aus dieser Session.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
+
 ## Session-301 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (171. Bestätigung)
