@@ -4,6 +4,27 @@
 
 ---
 
+## Session-307 (2026-07-08)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (177. Bestätigung) — 4.5s
+
+Frische Verifikation (fresh clone, npm install, build in 4.5s):
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Club-Bar + gold Text → BonusModal. Row2 cream/blur, Search links, Logo zentral, Cart rechts. KEINE Delivery-Pill.
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" hero, LEFT 280px title+subtext, RIGHT overflow-x-auto Top-5-Karten (Bild/Name/Preis/Rank). Kein Bonus-Info.
+- ✅ **BonusCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: CREAM/BEIGE gradient (bone→cream-soft→cream). Weiße Karten, `✨ Heute beliebt`, `Andiamo! 🍝`.
+- ✅ **Section-Headers**: `No.&nbsp;{num}` italic gold-deep · h2 italic sage-dark · `<hr flex-1 border-cream-deep>`. Dynamisch 01–0N.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe korrekt.
+
+**🚨 Deployment-Blocker (177. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code. origin/main ist aktuell und vollständig korrekt seit Session-42.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-306 (2026-07-08)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (176. Bestätigung) — 4.0s
