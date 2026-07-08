@@ -6,6 +6,27 @@
 
 ---
 
+## Session-291 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (161. Bestätigung)
+
+Frische Code-Inspektion aller kritischen Stellen:
+- ✅ **CheckoutModal.tsx** `placeOrder()`: Supabase `customer_orders` + `order_items` Insert → `lieferhinweis` fire-and-forget update → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung
+- ✅ Fehlerbehandlung + Loading-States vorhanden
+- ✅ PLZ-Validierung 52062–52080
+- ✅ Mindestbestellwert-Prüfung
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (161. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-290 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (160. Bestätigung)
