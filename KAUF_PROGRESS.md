@@ -6,6 +6,31 @@
 
 ---
 
+## Session-284 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.4s. (154. Bestätigung)
+
+Vollständige Verifikation: Code unverändert korrekt seit Session-42.
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" → `onComplete()` bei Barzahlung
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar + Row2 cream/Search/Wortlogo-Fraunces-italic/Cart
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5", scrollbare Rang-Karten
+- ✅ **BonusCard.tsx**: `return null` — nicht in FrankyStorefront.tsx importiert
+- ✅ **BestsellerRail.tsx**: bone/cream gradient, weiße Karten, `✨ Heute beliebt`
+- ✅ **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep`
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]`, gold-deep Preis
+- ✅ **VALID_PLZ**: 52062–52080 (Aachen) korrekt
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (154. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. GitHub API vom Proxy blockiert. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-283 (2026-07-07)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean.
