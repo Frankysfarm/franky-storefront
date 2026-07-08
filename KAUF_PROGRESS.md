@@ -2,6 +2,32 @@
 
 ## ✅ CODE VOLLSTÄNDIG — Manuelles Deployment auf Server erforderlich
 
+---
+
+## Session-301 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (171. Bestätigung)
+
+Frische Verifikation aller Komponenten (fresh clone, npm install, build):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` (location_id, kunde_*, zwischensumme, liefergebuehr, gesamtbetrag, zahlungsart) + `order_items` Insert → `lieferhinweis` fire-and-forget update → Email `/api/email/process-outbox` fire-and-forget → Stripe `mise-gastro.de/api/checkout/create-session` redirect wenn zahlungsart ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung. PLZ 52062–52080 + Mindestbestellwert geprüft. Fehlerbehandlung + Loading-States vorhanden.
+- ✅ **TopBar.tsx**: Row1 = sage-dark Bonus-Club-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis`. Row2 = cream/blur, Search links, Fraunces-italic Logo zentriert, Cart rechts.
+- ✅ **WelcomeBanner.tsx**: Headline "Mamma Mia — die Top 5", DIESE WOCHE TRENDING kicker, scrollbare Top-5-Rang-Karten (quadratisch, Bild, Name, Preis)
+- ✅ **BonusCard.tsx**: `return null` — nicht in FrankyStorefront.tsx importiert
+- ✅ **BestsellerRail.tsx**: bone→cream-soft→cream gradient, weiße Karten, `✨ Heute beliebt`, `Andiamo! 🍝`
+- ✅ **FrankyStorefront.tsx** Section-Header: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep`
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]`, Fraunces font-black Titel, gold-deep Preis
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (171. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang aus dieser Session.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 **Build:** Next.js clean (TypeScript ✅, 4 Routen ✅)
 
 **🚨 AKTION ERFORDERLICH:** Auf dem Server bitte ausführen:
