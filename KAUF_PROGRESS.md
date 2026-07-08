@@ -4,6 +4,25 @@
 
 ---
 
+## Session-308 (2026-07-08)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (178. Bestätigung)
+
+Frische Verifikation (fresh clone, npm install, build):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email fire-and-forget → Stripe redirect wenn zahlungsart ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung. PLZ 52062–52080 + Mindestbestellwert + Fehlerbehandlung + Loading-States: korrekt.
+- ✅ **TopBar, WelcomeBanner, BonusCard, BestsellerRail, Section-Header, ProductCard**: Alle korrekt (unverändert seit Session-42).
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (178. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code. origin/main ist aktuell und vollständig korrekt seit Session-42.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-307 (2026-07-08)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (177. Bestätigung) — 4.5s
