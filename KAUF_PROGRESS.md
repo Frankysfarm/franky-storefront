@@ -6,6 +6,27 @@
 
 ---
 
+## Session-285 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.2s. (155. Bestätigung)
+
+Vollständige Verifikation: Code unverändert korrekt seit Session-42.
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` + Row2 cream/Search/Wortlogo-Fraunces-italic/Cart — KEINE Liefern·Aachen Pill
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5", cream bg + gold glow, LEFT text + RIGHT scrollbare Top-5-Rang-Karten mit Bild/Name/Preis
+- ✅ **BonusCard.tsx**: `return null` — nicht in FrankyStorefront.tsx importiert
+- ✅ **BestsellerRail.tsx**: bone→cream-soft→cream gradient, weiße Karten, `✨ Heute beliebt`, Andiamo 🍝
+- ✅ **Section-Header**: `No. XX italic gold-deep + h2 italic sage-dark + hr cream-deep` dynamisch 01–0N
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]`, Fraunces font-black Titel, gold-deep Preis
+
+**🚨 Deployment-Blocker (155. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Der Code ist korrekt — NUR Docker-Rebuild auf dem Server nötig.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-284 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.4s. (154. Bestätigung)
