@@ -6,6 +6,32 @@
 
 ---
 
+## Session-288 (2026-07-08)
+
+**Aufgabe:** "DRINGENDE ÜBERARBEITUNG" — Layout-Vergleich Mockup vs. Live.
+
+**Ergebnis:** Alle 6 geforderten Layout-Änderungen sind seit Session-42 korrekt implementiert. Der aktuelle Code entspricht VOLLSTÄNDIG dem Mockup-Target:
+
+- ✅ **TopBar.tsx**: Row1 = schmale sage-dark Bonus-Club-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` (KLICK → BonusModal). Row2 = cream-Hintergrund, Fraunces-italic Wortlogo zentriert, Search links, Cart rechts. **KEIN** "Liefern · Aachen" Pill.
+- ✅ **WelcomeBanner.tsx**: Headline "Mamma Mia — die Top 5" (nicht "Pasta wie bei Mamma"). Layout: Links DIESE-WOCHE-TRENDING-Kicker + Titel + Subtext, Rechts scrollbare Top-5-Karten (quadratisch, Rang-Badge, Name + Preis). Cream-Hintergrund + subtiler Gold-Glow. Keine Bonus-Info.
+- ✅ **BonusCard.tsx**: `return null` — nirgends in FrankyStorefront.tsx gerendert. KEINE doppelten BonusCards.
+- ✅ **BestsellerRail.tsx**: Hintergrund = `bone→cream-soft→cream` Gradient (NICHT dark-green!). Header "✨ Heute beliebt" in sage-dark. Weiße Karten mit echten Produkt-Bildern, Name + Preis. Horizontal scrollbar + "Andiamo!" Microcopy.
+- ✅ **Section-Headers (FrankyStorefront.tsx)**: `No. 01 / Pasta` Format mit `font-display italic gold-deep` + `h2 italic sage-dark` + `hr cream-deep`. Kategorien nummeriert No.01–No.0X.
+- ✅ **ProductCard.tsx**: Bild-Höhe `h-[220px] sm:h-[260px] lg:h-[300px]`. Fraunces-fett Titel. Preis in gold-deep.
+
+**Build:** ✅ Next.js Turbopack clean — 3.1s, 4 Routen, TypeScript clean. (158. Bestätigung)
+
+**git:** `nothing to commit, working tree clean` — Layout-Code war bereits korrekt.
+
+**🚨 Deployment-Blocker (158. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Das erklärt die Diskrepanz zwischen Live-Site und Code-Repository. Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-287 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (157. Bestätigung)
