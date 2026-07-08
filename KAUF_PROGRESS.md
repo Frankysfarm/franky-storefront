@@ -1,12 +1,33 @@
 # Kauf-Fertig Progress
 
-## ✅ CODE VOLLSTÄNDIG — Deployment-Token fehlt
+## ✅ CODE VOLLSTÄNDIG — Manuelles Deployment auf Server erforderlich
 
-**Build:** Next.js Turbopack clean (TypeScript ✅, 4 Routen ✅)
+**Build:** Next.js clean (TypeScript ✅, 4 Routen ✅)
+
+**🚨 AKTION ERFORDERLICH:** Auf dem Server bitte ausführen:
+```bash
+cd /pfad/zu/franky-storefront
+git pull origin main
+docker compose build --no-cache
+docker compose up -d
+```
 
 ---
 
-## Session-299 (2026-07-08)
+## Session-300 (2026-07-08)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (170. Verifikation)
+
+Alle Phasen vollständig implementiert:
+- ✅ **Phase 1–4 (Checkout):** `CheckoutModal.tsx` → echte Supabase-Orders + `order_items` + Stripe-Redirect + Email-Outbox + Fehlerbehandlung + Loading-States
+- ✅ **Phase 5 (Layout):** TopBar Bonus-Bar + Logo-Mitte, WelcomeBanner "Mamma Mia — die Top 5", BestsellerRail cream/beige, Section-Headers "No.XX", ProductCard h-[220px..300px]
+- ✅ **BonusCard standalone:** nicht im Main-Flow (nur TopBar-Bar und Bonus-Modal)
+
+**git:** `nothing to commit, working tree clean`
+
+**🚨 Deployment-Blocker (170. Eskalation):** Manuelles `git pull + docker compose build --no-cache + docker compose up -d` auf Server nötig.
+
+---
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (169. Bestätigung)
 
