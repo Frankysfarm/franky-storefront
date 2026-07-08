@@ -131,10 +131,9 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
           const num = String(catIndex + 1).padStart(2, "0");
           return (
             <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-end gap-[14px] mb-[18px] flex-wrap">
+              <div className="flex items-baseline gap-4 mb-[18px] flex-wrap">
                 <span
                   className="font-display italic font-black text-gold-deep text-lg flex-shrink-0 opacity-[0.85]"
-                  style={{ paddingBottom: "8px" }}
                 >
                   No.&nbsp;{num}
                 </span>
@@ -146,11 +145,11 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                   {cat.name}
                 </h2>
                 {cat.description && (
-                  <span className="text-muted italic font-medium flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]" style={{ paddingBottom: "8px" }}>
+                  <span className="text-muted italic font-medium flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]">
                     {cat.description}
                   </span>
                 )}
-                <hr className="flex-1 border-0 border-t-[1.5px] border-cream-deep min-w-[20px]" />
+                <hr className="flex-1 border-t-[1.5px] border-cream-deep min-w-[20px]" />
               </div>
 
               <RevealSection>
