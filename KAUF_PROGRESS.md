@@ -6,6 +6,26 @@
 
 ---
 
+## Session-294 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.2s. (164. Bestätigung)
+
+Frische Code-Inspektion aller Phasen:
+- ✅ **Phase 1–4 (Checkout/Bestellung/Stripe/Email):** `CheckoutModal.tsx` `placeOrder()` → Supabase `customer_orders` (location_id=tenant.location_id, alle Felder) + `order_items` Insert → `lieferhinweis` fire-and-forget → Email `/api/email/process-outbox` fire-and-forget → Stripe `mise-gastro.de/api/checkout/create-session` redirect wenn zahlungsart≠"bar" → `clearCart()` + `onComplete()` bei Barzahlung. PLZ 52062–52080 + Mindestbestellwert korrekt. Fehlerbehandlung + Loading-States vorhanden.
+- ✅ **Phase 5 (Layout):** TopBar (Bonus-Club-Bar + Fraunces Logo), WelcomeBanner ("Mamma Mia — die Top 5"), BonusCard (return null), BestsellerRail (cream/beige bone-gradient), Section-Headers ("No.XX Pasta" + Trennlinie), ProductCard (h-[220px] sm:h-[260px] lg:h-[300px])
+- ✅ **Typen:** `CheckoutForm.zahlungsart` korrekt; `tenant.location_id` korrekt verwendet.
+
+**git:** `nothing to commit, working tree clean` — kein neuer Commit nötig.
+
+**🚨 Deployment-Blocker (164. Eskalation):** Docker-Container auf `mise-gastro.de` läuft mit Pre-Redesign-Code (vor Session-42). Token fehlt `workflow` scope → GitHub Actions nicht möglich. Kein SSH-Zugang.
+
+**EINZIGE LÖSUNG — manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-292 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 4.2s. (162. Bestätigung)
