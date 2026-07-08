@@ -6,6 +6,29 @@
 
 ---
 
+## Session-289 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.4s. (159. Bestätigung)
+
+**Frische Analyse aller Komponenten:**
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email outbox fire-and-forget → Stripe redirect wenn ≠ "bar" → `onComplete()` bei Barzahlung
+- ✅ **TrackingScreen.tsx**: Zeigt Bestellnummer + Fortschritts-Schritte + ETA korrekt
+- ✅ **SuccessClient.tsx** (`/[slug]/success`): Stripe-Rückkehr → clearCart → TrackingScreen
+- ✅ **load-tenant.ts**: Supabase-Load mit Fallback auf Mock-Daten falls kein SUPABASE_URL env
+- ✅ **TopBar, WelcomeBanner, BestsellerRail, ProductCard, Section-Header**: Alle korrekt
+
+**Workflow-Datei push versucht:** Scheitert mit "refusing to allow an OAuth App to create or update workflow without `workflow` scope". GitHub API ebenfalls 403 durch Proxy.
+
+**Produktions-Server:** `mise-gastro.de` über Proxy nicht erreichbar (403). Container nie seit Session-42 neu gebaut.
+
+**🚨 Deployment-Blocker (159. Eskalation):** Kein Code-Problem. Nur Docker-Rebuild auf Server nötig.
+
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-288 (2026-07-08)
 
 **Aufgabe:** "DRINGENDE ÜBERARBEITUNG" — Layout-Vergleich Mockup vs. Live.
