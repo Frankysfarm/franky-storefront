@@ -6,6 +6,20 @@
 
 ---
 
+## Session-296 (2026-07-08)
+
+**Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean. (166. Bestätigung)
+
+Vollständige Verifikation aller Phasen — KEIN CODE GEÄNDERT (alles korrekt):
+- ✅ **Phase 1–4 (Checkout):** `CheckoutModal.tsx` → echte Supabase-Orders + `order_items` + Stripe-Redirect + Email-Outbox + Fehlerbehandlung + Loading-States
+- ✅ **Phase 5 (Layout):** TopBar Bonus-Bar + Logo, WelcomeBanner, BonusCard=null, BestsellerRail cream/beige, Section-Headers "No.XX", ProductCard h-[220px..300px]
+
+**git:** `nothing to commit, working tree clean`
+
+**🚨 Deployment-Blocker (166. Eskalation):** Manuelles `git pull + docker compose up` auf Server nötig.
+
+---
+
 ## Session-295 (2026-07-08)
 
 **Build:** ✅ Next.js Turbopack clean — 4 Routen, TypeScript clean, 3.7s. (165. Bestätigung)
