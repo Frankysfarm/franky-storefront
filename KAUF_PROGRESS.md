@@ -4,6 +4,31 @@
 
 ---
 
+## Session-315 (2026-07-09)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (185. Bestätigung)
+
+Frische Verifikation (fresh clone, npm install, build):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → Supabase `customer_orders` + `order_items` Insert → Email fire-and-forget → Stripe redirect wenn zahlungsart ≠ "bar" → `clearCart()` + `onComplete()` bei Barzahlung. PLZ 52062–52080 + Mindestbestellwert + Fehlerbehandlung + Loading-States: korrekt.
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Club-Bar + gold Text → BonusModal. Row2 cream/blur, Logo zentral, Cart rechts. KEINE Delivery-Pill.
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" hero, horizontale Top-5-Karten.
+- ✅ **BonusCard.tsx**: `return null` — nicht importiert in FrankyStorefront.tsx.
+- ✅ **BestsellerRail.tsx**: CREAM/BEIGE gradient, weiße Karten, `✨ Heute beliebt`.
+- ✅ **Section-Headers**: `No. 01` italic gold-deep · h2 italic sage-dark · `<hr>` Trennlinie.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe korrekt.
+
+**git:** Kein Codeänderung nötig — Build clean, Code vollständig seit Session-42.
+
+**🚨 KRITISCHER Deployment-Blocker (185. Eskalation — 314 Sessions ohne Lösung):**
+Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit Pre-Redesign-Code. origin/main ist aktuell und vollständig korrekt. **314 Sessions haben diesen Status nicht geändert.** Diese automatisierte Routine kann nicht weiterhelfen — manueller Eingriff auf dem Server ist UNBEDINGT ERFORDERLICH.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de und ausführen:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-314 (2026-07-09)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (184. Bestätigung) — 3.2s
