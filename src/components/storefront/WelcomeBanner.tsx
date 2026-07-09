@@ -49,7 +49,7 @@ export function WelcomeBanner({ topProducts, onAdd }: Props) {
               Mamma Mia —{" "}
               <span className="italic text-burgundy">die Top&nbsp;5</span>
             </h2>
-            <p className="text-[12px] sm:text-sm text-muted mt-1.5 sm:mt-2 leading-snug">
+            <p className="hidden sm:block text-sm text-muted mt-2 leading-snug">
               Was Aachen aktuell am liebsten bestellt.
               Zwei Klicks, und es ist im Warenkorb.
             </p>
