@@ -125,48 +125,52 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
 
       {/* Product Sections */}
       <main className="max-w-[1240px] mx-auto px-6">
-        {categories.map((cat, catIndex) => {
-          const catProducts = productsByCategory.get(cat.id) ?? [];
-          if (catProducts.length === 0) return null;
-          const num = String(catIndex + 1).padStart(2, "0");
-          return (
-            <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
-              <div className="flex items-baseline gap-[14px] mb-[18px] flex-wrap">
-                <span
-                  className="font-display italic font-black text-gold-deep text-lg flex-shrink-0 opacity-[0.85]"
-                >
-                  No.&nbsp;{num}
-                </span>
-                <h2
-                  className="font-display italic font-black text-sage-dark flex-shrink-0 section-title-accent"
-                  style={{ fontSize: "clamp(30px, 4vw, 42px)", letterSpacing: "-0.025em", lineHeight: 1 }}
-                >
-                  {cat.icon && <span>{cat.icon} </span>}
-                  {cat.name}
-                </h2>
-                {cat.description && (
-                  <span className="text-muted italic font-medium flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]">
-                    {cat.description}
+        {(() => {
+          let visNum = 0;
+          return categories.map((cat) => {
+            const catProducts = productsByCategory.get(cat.id) ?? [];
+            if (catProducts.length === 0) return null;
+            visNum += 1;
+            const num = String(visNum).padStart(2, "0");
+            return (
+              <section key={cat.id} id={`section-${cat.id}`} className="mt-10">
+                <div className="flex items-baseline gap-[14px] mb-[18px] flex-wrap">
+                  <span
+                    className="font-display italic font-black text-gold-deep text-lg flex-shrink-0 opacity-[0.85]"
+                  >
+                    No.&nbsp;{num}
                   </span>
-                )}
-                <hr className="flex-1 border-t-[1.5px] border-cream-deep min-w-[20px]" />
-              </div>
-
-              <RevealSection>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
-                  {catProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onAdd={handleAddDirect}
-                      onOpen={setSheetProduct}
-                    />
-                  ))}
+                  <h2
+                    className="font-display italic font-black text-sage-dark flex-shrink-0 section-title-accent"
+                    style={{ fontSize: "clamp(30px, 4vw, 42px)", letterSpacing: "-0.025em", lineHeight: 1 }}
+                  >
+                    {cat.icon && <span>{cat.icon} </span>}
+                    {cat.name}
+                  </h2>
+                  {cat.description && (
+                    <span className="text-muted italic font-medium flex-shrink-0 basis-full sm:basis-auto text-[11px] sm:text-[13px]">
+                      {cat.description}
+                    </span>
+                  )}
+                  <hr className="flex-1 border-t-[1.5px] border-cream-deep min-w-[20px]" />
                 </div>
-              </RevealSection>
-            </section>
-          );
-        })}
+
+                <RevealSection>
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
+                    {catProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onAdd={handleAddDirect}
+                        onOpen={setSheetProduct}
+                      />
+                    ))}
+                  </div>
+                </RevealSection>
+              </section>
+            );
+          });
+        })()}
       </main>
 
       {/* Footer */}
