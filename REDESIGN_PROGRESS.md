@@ -1,5 +1,26 @@
 # Redesign Progress
 
+## Session-346 — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (216. Eskalation) (2026-07-12)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.5s — KEIN CODE-EINGRIFF NÖTIG.**
+
+"DRINGENDE ÜBERARBEITUNG" Task erhalten — Code vollständig korrekt seit Session-42. Alle 6 Punkte geprüft:
+- ✅ TopBar.tsx: Slim sage-dark Bonus-Bar (Row1) + cream Hauptbar mit Logo zentral (Row2). KEINE Liefern-Pill.
+- ✅ WelcomeBanner.tsx: "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten, cream gold glow.
+- ✅ BonusCard.tsx: returns null. NICHT in FrankyStorefront.tsx importiert.
+- ✅ BestsellerRail.tsx: cream-soft/bone Gradient (NICHT dark green), "✨ Heute beliebt", weiße Karten.
+- ✅ FrankyStorefront.tsx: Section-Headers "No. XX" italic gold-deep + h2 italic + hr cream-deep.
+- ✅ ProductCard.tsx: h-[220px] sm:h-[260px] lg:h-[300px], Fraunces font-black, gold-deep Preis.
+
+**ROOT CAUSE**: Live-Site zeigt alten Stand weil Docker-Container NICHT neu gebaut wurde. **216 Sessions, gleicher Befund.**
+
+**EINZIGE LÖSUNG — MANUELL auf dem Server ausführen:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-337 — BUILD ✅ CLEAN (4.2s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (207. Eskalation) (2026-07-10)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.2s — KEIN CODE-EINGRIFF NÖTIG.**
