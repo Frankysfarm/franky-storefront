@@ -4,6 +4,29 @@
 
 ---
 
+## Session-360 (2026-07-13)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (230. Bestätigung — fresh clone, npm install, npm run build in 3.2s)
+
+Frische Verifikation aller Task-Anforderungen:
+- ✅ **TopBar.tsx**: Row1 sage-dark Bonus-Bar `🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis` → klickt BonusModal. Row2 cream-bg, Logo zentral, Search links, Cart rechts. **KEINE Delivery-Pill.**
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" Hero-Headline links, scrollbare Top-5-Karten rechts, cream bg, gold glow.
+- ✅ **BonusCard.tsx**: `return null` (nicht in FrankyStorefront gerendered).
+- ✅ **BestsellerRail.tsx**: `linear-gradient(150deg, bone 0%, cream-soft 60%, cream 100%)` — CREAM/BEIGE. Weiße Karten mit Bildern.
+- ✅ **FrankyStorefront.tsx**: Section-Headers `No. 01 … No. XX` (italic gold-deep + italic sage-dark h2 + hr divider). BonusCard nicht importiert.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bildgröße. Fraunces bold Name, gold-deep Preis.
+
+**Fazit:** Alle 6 Redesign-Anforderungen erfüllt. Code unverändert korrekt seit Session-42. Keine Code-Änderungen nötig.
+
+**🚨 DEPLOYMENT-BLOCKER (230. Eskalation):** Server-Docker läuft weiterhin mit altem Code. `origin/main` ist korrekt. Manuelle Intervention ZWINGEND nötig.
+
+**FIX — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-359 (2026-07-13)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (229. Bestätigung)
