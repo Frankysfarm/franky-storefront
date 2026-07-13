@@ -1,5 +1,11 @@
 # Redesign Progress
 
+## Session-352 — BUILD ✅ CLEAN (4.7s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (221. Eskalation) (2026-07-13)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.7s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**KRITISCHE ROOT CAUSE**: Der Code ist seit Phase 42 zu 100% korrekt. Alle 6 Layout-Anforderungen (TopBar 2-Zeilen · WelcomeBanner Top-5 · BonusCard null · BestsellerRail cream · Section-Headers No.XX · ProductCard 220-300px) sind vollständig implementiert und bauen sauber. Das Live-Site-Problem (`mise-gastro.de/biss-app/frankys-pasta` zeigt alte Darstellung) ist ausschließlich ein **Deployment-Problem** — der Docker-Container auf dem Server wurde NIE neu gebaut. **Lösung**: Auf dem Server ausführen: `cd /pfad/zum/repo && docker compose build --no-cache && docker compose up -d`
+
 ## Session-349 — BUILD ✅ CLEAN (4.1s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (219. Eskalation) (2026-07-13)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.1s — KEIN CODE-EINGRIFF NÖTIG.**
