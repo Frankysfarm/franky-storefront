@@ -4,6 +4,28 @@
 
 ---
 
+## Session-370 (2026-07-13)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (240. Bestätigung — fresh clone, npm ci, npm run build)
+
+Verifizierte Code-Status (Phase 1–5 alle ✅):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` → `customer_orders` Insert → `order_items` Insert → Email fire-and-forget → Stripe redirect (zahlungsart ≠ "bar") → `clearCart()` + `onComplete()` bei Barzahlung. VOLLSTÄNDIG.
+- ✅ **TopBar.tsx**: Bonus-Club-Bar (Row 1) + Logo zentral + Cart rechts (Row 2). Keine Delivery-Pill.
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" hero mit horizontalen Top-5-Karten.
+- ✅ **BestsellerRail.tsx**: CREAM/BEIGE gradient, weiße Karten.
+- ✅ **ProductCard.tsx**: `h-[220px] sm:h-[260px] lg:h-[300px]` Bild-Höhe.
+- ✅ **FrankyStorefront.tsx**: `No. 01 Pasta` Nummerierung + Trennlinie.
+
+**🚨 DEPLOYMENT-BLOCKER (240. Eskalation):**
+Code auf origin/main ist vollständig und buildbereit. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code. Ohne SSH-Zugang zum Server kann dieser Agent nicht deployen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-369 (2026-07-13)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (239. Bestätigung — fresh clone, npm ci, npm run build)
