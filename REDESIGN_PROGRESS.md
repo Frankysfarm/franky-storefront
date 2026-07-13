@@ -1,5 +1,24 @@
 # Redesign Progress
 
+## Session-349 — BUILD ✅ CLEAN (4.1s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (219. Eskalation) (2026-07-13)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.1s — KEIN CODE-EINGRIFF NÖTIG.**
+
+### Vollverifikation (Session-349)
+- ✅ `TopBar.tsx`: Row1 slim sage-dark Bonus-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal) + Row2 cream Hauptbar (Search links · Logo zentral Fraunces italic · Cart rechts) — KEINE Liefern-Pill
+- ✅ `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" Headline, LEFT flex-shrink-0 sm:w-[280px] + RIGHT flex-1 scrollable Top-5-Karten, cream radial gold glow, kein Bonus-Info
+- ✅ `BonusCard.tsx`: returns null — nicht importiert in FrankyStorefront.tsx
+- ✅ `BestsellerRail.tsx`: linear-gradient(150deg, bone→cream-soft→cream) — NICHT dark green, "✨ Heute beliebt" sage-dark, weiße Karten mit Produktbildern, "Andiamo! 🍝"
+- ✅ `FrankyStorefront.tsx`: Section-Header No.XX italic gold-deep + h2 italic sage-dark + hr cream-deep
+- ✅ `ProductCard.tsx`: h-[220px] sm:h-[260px] lg:h-[300px], Fraunces font-black title, gold-deep price
+
+### 🚨 ROOT CAUSE (seit Phase 42 unverändert)
+Der Code ist korrekt. Das Live-Problem (`mise-gastro.de/biss-app/frankys-pasta`) ist ein **Deployment-Problem**.
+**Lösung: Auf dem Server ausführen:** `cd /pfad/zum/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d`
+
+### ⚠️ EMPFEHLUNG
+Diese automatische Routine findet seit Phase 42 (~219 Runs) keine Code-Probleme mehr. **Bitte deaktivieren** und stattdessen manuell den Docker-Container auf dem Server neu bauen.
+
 ## Session-346 — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (216. Eskalation) (2026-07-12)
 
 **Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.5s — KEIN CODE-EINGRIFF NÖTIG.**
