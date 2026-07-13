@@ -4,6 +4,20 @@
 
 ---
 
+## Session-363 (2026-07-13)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (233. Bestätigung — fresh clone, npm ci, npm run build)
+
+**Status:** Code seit Session-42 vollständig. KEIN weiterer Code-Eingriff möglich oder nötig.
+Der Docker-Container auf `mise-gastro.de` muss manuell neu gestartet werden.
+
+**🚨 MANUELLE AKTION ERFORDERLICH — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-362 (2026-07-13)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean. (232. Bestätigung — fresh clone, npm ci, npm run build)
