@@ -4,6 +4,30 @@
 
 ---
 
+## Session-383 (2026-07-14)
+
+**Build:** ✅ Next.js clean — 4 Routen, 0 Fehler. (254. Bestätigung — fresh clone, npm ci, npm run build)
+
+Kein Code-Eingriff notwendig. Alle Phasen vollständig seit Session-42.
+
+**Code-Verifikation (CheckoutModal.tsx Z.110-194):**
+- `placeOrder()` vollständig implementiert
+- `customer_orders` Insert (Z.121-137), `order_items` Insert (Z.143-153)
+- Email fire-and-forget (Z.167), Stripe redirect für online Zahlung (Z.169-184)
+- `clearCart` + `onComplete` bei Barzahlung (Z.187-188)
+- Kein Mock-Code — echter `bestellnummer` aus Supabase
+
+**🚨 DEPLOYMENT-BLOCKER (254. Eskalation):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Die automatisierte Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-382 (2026-07-14)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (253. Bestätigung — fresh clone, git pull, Code-Analyse)
