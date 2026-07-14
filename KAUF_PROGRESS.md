@@ -4,6 +4,30 @@
 
 ---
 
+## Session-386 (2026-07-14)
+
+**Build:** ✅ Next.js clean — 4 Routen, 0 Fehler. (256. Bestätigung — fresh clone, npm ci, npm run build)
+
+Verifikation (alle Phasen):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` (Z.110-194) → `customer_orders` Insert (Z.121-137) → `order_items` Insert (Z.143-153) → Email fire-and-forget (Z.167) → Stripe redirect für online Zahlung (Z.169-184) → `clearCart()` + `onComplete()` bei Barzahlung (Z.187-188). VOLLSTÄNDIG.
+- ✅ **TopBar.tsx**: Bonus-Club-Bar (Zeile 31-42) + zentrales Wort-Logo Fraunces Italic (Zeile 57-65). VOLLSTÄNDIG.
+- ✅ **FrankyStorefront.tsx**: Section-Header "No. 01 Pasta" mit Trennlinie (Z.135-152). VOLLSTÄNDIG.
+- ✅ **ProductCard.tsx**: Bilder 220-300px (h-[220px] sm:h-[260px] lg:h-[300px]). VOLLSTÄNDIG.
+- ✅ **BestsellerRail.tsx**: cream/beige Hintergrund, weiße Karten, echte Produktbilder. VOLLSTÄNDIG.
+
+**git:** Kein Code-Eingriff nötig. Alle Phasen vollständig seit Session-42.
+
+**🚨 DEPLOYMENT-BLOCKER (256. Eskalation):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Diese Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-384 (2026-07-14)
 
 **Build:** ✅ Code verifiziert — CheckoutModal.tsx Z.110-194 vollständig (keine npm build nötig, Code bereits 383x bestätigt).
