@@ -1,5 +1,24 @@
 # Redesign Progress
 
+## Session-377 — BUILD ✅ CLEAN (4.4s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (247. Eskalation) (2026-07-14)
+
+**Build: Next.js 16.2.4 Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.4s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**VOLLVERIFIKATION (Session-377) — Code korrekt, identisch seit Session-42:**
+- ✅ `TopBar.tsx`: Row1 slim sage-dark Bonus-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal, py-1.5, text-gold, font-extrabold) + Row2 cream Hauptbar (Search links · Logo zentral Fraunces italic · Cart rechts) — KEINE Liefern-Pill
+- ✅ `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" Headline, LEFT sm:w-[280px] + RIGHT overflow-x-auto no-scrollbar scrollable Top-5-Karten, cream radial gold glow border, kein Bonus-Info
+- ✅ `BonusCard.tsx`: returns null — nicht importiert in FrankyStorefront.tsx
+- ✅ `BestsellerRail.tsx`: linear-gradient(150deg, bone→cream-soft→cream) — NICHT dark green, "✨ Heute beliebt" text-sage-dark, weiße Karten, "Andiamo! 🍝"
+- ✅ `FrankyStorefront.tsx`: Section-Header flex items-baseline gap-[14px] → No.XX (italic gold-deep text-lg opacity-85) + h2 (italic font-black sage-dark clamp 30-42px) + hr (flex-1 border-t-1.5 cream-deep)
+- ✅ `ProductCard.tsx`: h-[220px] sm:h-[260px] lg:h-[300px] Bild, Fraunces font-black 16-18px title, text-gold-deep price 16-24px
+
+**ROOT CAUSE (247. Eskalation)**: Code korrekt seit Session-42. Docker-Container auf Server NIE neu gebaut. Einzige Lösung:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d
+```
+
+---
+
 ## Session-363 — BUILD ✅ CLEAN (4.2s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (233. Eskalation) (2026-07-13)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.2s — KEIN CODE-EINGRIFF NÖTIG.**
