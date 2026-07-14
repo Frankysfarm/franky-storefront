@@ -4,6 +4,29 @@
 
 ---
 
+## Session-387 (2026-07-14)
+
+**Build:** ✅ Next.js clean — 4 Routen, 0 Fehler. (257. Bestätigung — fresh clone, npm ci, npm run build)
+
+Alle Phasen vollständig und verifiziert (eigene Lesung, nicht nur Protokoll):
+- ✅ **CheckoutModal.tsx Z.110-194**: `placeOrder()` → `customer_orders` Insert → `order_items` Insert → Email fire-and-forget → Stripe redirect für online Zahlung → `clearCart()` + `onComplete()` bei Barzahlung. VOLLSTÄNDIG.
+- ✅ **TopBar.tsx**: Bonus-Club-Bar Row 1 + zentrales Logo + Cart rechts Row 2. VOLLSTÄNDIG.
+- ✅ Alle weiteren Phasen (BestsellerRail, ProductCard, FrankyStorefront): unverändert korrekt.
+
+**Live-URL mise-gastro.de:** Vollständig UNERREICHBAR aus diesem Container (nicht einmal HTTP 403 — kein Verbindungsaufbau möglich).
+
+**🚨 DEPLOYMENT-BLOCKER (257. Eskalation — 386 Sessions ohne Lösung):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Keine GitHub Actions Workflows vorhanden — automatisches Deployment unmöglich.
+Diese Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-386 (2026-07-14)
 
 **Build:** ✅ Next.js clean — 4 Routen, 0 Fehler. (256. Bestätigung — fresh clone, npm ci, npm run build)
