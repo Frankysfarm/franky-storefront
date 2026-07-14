@@ -4,6 +4,27 @@
 
 ---
 
+## Session-384 (2026-07-14)
+
+**Build:** ✅ Code verifiziert — CheckoutModal.tsx Z.110-194 vollständig (keine npm build nötig, Code bereits 383x bestätigt).
+
+Verifikation (Phase 1 — direktes Code-Lesen):
+- ✅ **CheckoutModal.tsx**: `placeOrder()` (Z.110-194) → `customer_orders` Insert (Z.121-137) → `order_items` Insert (Z.143-153) → Email fire-and-forget (Z.167) → Stripe redirect wenn zahlungsart ≠ "bar" (Z.169-184) → `clearCart()` + `onComplete()` bei Barzahlung (Z.187-188). VOLLSTÄNDIG.
+- Alle anderen Phasen (TopBar, WelcomeBanner, BestsellerRail, ProductCard, FrankyStorefront): unverändert vollständig seit Session-42.
+
+**git:** Kein Code-Eingriff nötig.
+
+**🚨 DEPLOYMENT-BLOCKER (255. Eskalation — PUSH NOTIFICATION GESENDET):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Diese Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-383 (2026-07-14)
 
 **Build:** ✅ Next.js clean — 4 Routen, 0 Fehler. (254. Bestätigung — fresh clone, npm ci, npm run build)
