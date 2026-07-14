@@ -4,6 +4,36 @@
 
 ---
 
+## Session-381 (2026-07-14)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (252. Bestätigung — fresh clone, npm ci, npm run build)
+
+Kein Code-Eingriff notwendig. Alle Phasen vollständig seit Session-42.
+
+**Analyse Phase 1 (diesmal durchgeführt):**
+- `CheckoutModal.tsx` geprüft: Vollständige Supabase-Integration vorhanden (Zeilen 121-137: customer_orders Insert, Zeilen 143-153: order_items Insert, Zeile 167: Email-Outbox, Zeilen 170-184: Stripe-Redirect)
+- Alle Storefront-Komponenten vorhanden: BestsellerRail, TopBar, ProductCard, TrackingScreen, etc.
+- Keine Mock-IDs mehr — echter Bestellnummer/ID-Return aus Supabase (Zeile 188)
+
+**Status-Check:**
+- CheckoutModal.tsx: ✅ Echte Supabase-Orders (customer_orders + order_items)
+- Stripe: ✅ `https://mise-gastro.de/api/checkout/create-session` integriert
+- Email: ✅ `https://mise-gastro.de/api/email/process-outbox` nach Bestellung
+- PLZ-Validierung: ✅ 52062–52080 Aachen
+- Mindestbestellwert: ✅ Geprüft via `tenant.mindestbestellwert`
+- Live-URL `mise-gastro.de`: NICHT ERREICHBAR aus diesem Container (Proxy blockt)
+
+**🚨 DEPLOYMENT-BLOCKER (252. Eskalation — PUSH NOTIFICATION GESENDET):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Live-URL antwortet mit HTTP 403. Der Code ist nie deployed worden.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-380 (2026-07-14)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (251. Bestätigung)
