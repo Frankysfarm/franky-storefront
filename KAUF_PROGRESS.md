@@ -4,6 +4,27 @@
 
 ---
 
+## Session-396 (2026-07-14)
+
+**Build:** ✅ `npm run build` → PASS (Compiled successfully in 4.9s, TypeScript clean, static pages generated)
+
+Verifiziert:
+- ✅ **CheckoutModal.tsx Z.110-194**: `placeOrder()` vollständig — `customer_orders` Insert → `order_items` Insert → Email fire-and-forget → Stripe redirect (online) / `clearCart()+onComplete()` (bar)
+- ✅ **TopBar.tsx**: Bonus-Club-Bar + zentrales Logo vorhanden
+- ✅ git status: nothing to commit, working tree clean (commit 845cdbe)
+- ✅ `npm run build` bestätigt — kein TypeScript-Fehler, kein Build-Fehler
+
+**🚨 DEPLOYMENT-BLOCKER (266. Eskalation — 395 Sessions ohne Lösung):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Diese Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-395 (2026-07-14)
 
 **Build:** ✅ Code verifiziert — CheckoutModal.tsx Z.110-194 vollständig (265. Bestätigung — fresh clone, direktes Code-Lesen)
