@@ -4,6 +4,22 @@
 
 ---
 
+## Session-375 (2026-07-14)
+
+**Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (245. Bestätigung — fresh clone, npm ci, npm run build)
+
+Kein Code-Eingriff notwendig. Alle Phasen vollständig seit Session-42.
+
+**🚨 DEPLOYMENT-BLOCKER (245. Eskalation):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-374 (2026-07-14)
 
 **Build:** ✅ Next.js clean — 4 Routen, TypeScript clean, 0 Fehler/Warnungen. (244. Bestätigung — fresh clone, npm ci, npm run build)
