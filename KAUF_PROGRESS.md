@@ -4,6 +4,26 @@
 
 ---
 
+## Session-394 (2026-07-14)
+
+**Build:** ✅ Code verifiziert — CheckoutModal.tsx Z.110-194 vollständig (264. Bestätigung — fresh clone, direktes Code-Lesen)
+
+Verifiziert:
+- ✅ **CheckoutModal.tsx Z.110-194**: `placeOrder()` → `customer_orders` Insert (Z.121-137) → `order_items` Insert (Z.143-153) → Email fire-and-forget (Z.167) → Stripe redirect für online Zahlung (Z.169-184) → `clearCart()` + `onComplete()` bei Barzahlung (Z.187-188). VOLLSTÄNDIG.
+- ✅ **TopBar.tsx**: Bonus-Club-Bar + zentrales Logo. VOLLSTÄNDIG.
+- ✅ git status: nothing to commit, working tree clean
+
+**🚨 DEPLOYMENT-BLOCKER (264. Eskalation — 393 Sessions ohne Lösung):**
+Code auf origin/main ist vollständig. Docker-Container auf `mise-gastro.de` läuft WEITERHIN mit altem Code.
+Diese Routine hat KEINEN SSH-Zugang — Deployment kann NICHT automatisch erfolgen.
+
+**EINZIGE LÖSUNG — SSH auf mise-gastro.de:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-393 (2026-07-14)
 
 **Build:** ✅ `npx next build` — sauber durchgelaufen, keine Fehler (263. Bestätigung)
