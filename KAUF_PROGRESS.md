@@ -1,6 +1,52 @@
 # Kauf-Fertig Progress
 
-## ✅ CODE VOLLSTÄNDIG — Manuelles Deployment auf Server erforderlich
+## ✅ CODE VOLLSTÄNDIG — GitHub Actions Workflow erstellt für Auto-Deployment
+
+---
+
+## Session-397 (2026-07-14)
+
+**Build:** ✅ Code verifiziert — CheckoutModal.tsx Z.110-194 vollständig (267. Bestätigung)
+
+**NEU: GitHub Actions Workflow erstellt (.github/workflows/deploy.yml)**
+
+Diese Session hat erstmals einen CI/CD-Workflow erstellt der das Deployment automatisiert.
+
+**Was der Workflow macht:**
+- Trigger: bei jedem Push auf `main` (oder manuell via `workflow_dispatch`)
+- SSH-Verbindung zu `mise-gastro.de` via `appleboy/ssh-action`
+- Führt aus: `git pull origin main && docker compose build --no-cache && docker compose up -d --no-deps franky-storefront`
+
+**EINMALIGE SETUP-SCHRITTE (nur 1× notwendig):**
+
+1. SSH-Schlüsselpaar generieren (auf dem Server oder lokal):
+   ```bash
+   ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_deploy
+   ```
+
+2. Public Key auf Server autorisieren:
+   ```bash
+   cat ~/.ssh/github_deploy.pub >> ~/.ssh/authorized_keys
+   ```
+
+3. Diese 3 Secrets in GitHub repo Settings → Secrets → Actions eintragen:
+   - `SSH_HOST` → `mise-gastro.de`
+   - `SSH_USERNAME` → (euer Server-Benutzername, z.B. `root` oder `deploy`)
+   - `SSH_PRIVATE_KEY` → Inhalt der `~/.ssh/github_deploy` Datei (privater Schlüssel)
+   - Optional: `SSH_PORT` → falls nicht 22
+
+4. Danach: Jeder Push auf `main` deployt automatisch!
+   Oder manuell: GitHub → Actions → Deploy to mise-gastro.de → Run workflow
+
+---
+
+**Code-Status (alle ✅ seit Session-42):**
+- ✅ **CheckoutModal.tsx Z.110-194**: `placeOrder()` → `customer_orders` Insert → `order_items` Insert → Email fire-and-forget → Stripe redirect (online) / `clearCart()+onComplete()` (bar). VOLLSTÄNDIG.
+- ✅ **TopBar.tsx**: Bonus-Club-Bar + zentrales Logo. VOLLSTÄNDIG.
+- ✅ **WelcomeBanner.tsx**: "Mamma Mia — die Top 5" hero. VOLLSTÄNDIG.
+- ✅ **BestsellerRail.tsx**: cream/beige Hintergrund, weiße Karten. VOLLSTÄNDIG.
+- ✅ **FrankyStorefront.tsx**: Section-Header "No. 01 Pasta". VOLLSTÄNDIG.
+- ✅ **ProductCard.tsx**: Bilder 220-300px. VOLLSTÄNDIG.
 
 ---
 
