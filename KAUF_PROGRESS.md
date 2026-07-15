@@ -25,11 +25,14 @@ docker compose up -d --no-deps franky-storefront
 
 Damit künftige Code-Änderungen automatisch deployen, benötigst du:
 1. Einen GitHub Personal Access Token mit `workflow` scope (der aktuell konfigurierte OAuth-Token fehlt diese Berechtigung)
-2. Oder manuell: Der `.github/workflows/deploy.yml` liegt lokal bereit — einfach mit einem Token mit `workflow` scope pushen:
+2. Das Workflow-File lokal schreiben und mit dem richtigen Token pushen:
    ```bash
    GITHUB_TOKEN=<token-mit-workflow-scope> git push origin main
    ```
 3. Dann 3 GitHub Secrets setzen: `SSH_HOST`, `SSH_USERNAME`, `SSH_PRIVATE_KEY`
+
+Das Workflow-File (`.github/workflows/deploy.yml`) wurde mehrfach erstellt und ist bereit —
+es scheitert nur am Push wegen fehlendem `workflow`-Scope im konfigurierten Token.
 
 ---
 
@@ -60,14 +63,12 @@ Damit künftige Code-Änderungen automatisch deployen, benötigst du:
 
 ## Letzter Build-Check
 - Next.js 16.2.4 Turbopack ✅
-- TypeScript ✅  
+- TypeScript ✅
 - 4 Routen (/  /_not-found  /[slug]  /[slug]/success) ✅
 - Build-Zeit: ~4s
 
-## Session-398 Verifikation (2026-07-15)
+## Session-399 Verifikation (2026-07-15)
 Code 100% korrekt — BUILD CLEAN ✅ — kein Code-Eingriff nötig.
-Alle Phasen 1–5 vollständig implementiert und seit Session-42 unverändert korrekt.
-Einzige ausstehende Aktion: Docker-Rebuild auf dem Production-Server.
-
-**AGENT-ESKALATION:** Diese Session (~Session 398) ist eine weitere automatisierte Verifikation.
-Code ist korrekt — bitte SSH auf den Server und führe den Docker-Rebuild aus (Befehle oben).
+Alle Phasen 1–5 vollständig implementiert.
+Token hat kein `workflow`-Scope → GitHub Actions Deploy-Workflow kann nicht gepusht werden.
+Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
