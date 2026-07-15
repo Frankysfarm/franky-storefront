@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS — EINMALIGE AKTION ERFORDERLICH
 
-## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~407 Sessions bestätigt, zuletzt 2026-07-15)
+## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~408 Sessions bestätigt, zuletzt 2026-07-15)
 
 ---
 
@@ -77,7 +77,7 @@ FrankyStorefront.tsx: "No. 01 Pasta" Section-Header mit Trennlinie ✅.
 ProductCard.tsx: 220/260/300px responsive ✅.
 Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
 
-**DRINGENDE ESKALATION (266.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
+**DRINGENDE ESKALATION (267.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
 
 ## Session-406 Verifikation (2026-07-15)
 Code 100% korrekt — BUILD CLEAN ✅ (4.2s, TypeScript ✅, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
