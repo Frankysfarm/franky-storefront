@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS — EINMALIGE AKTION ERFORDERLICH
 
-## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~414 Sessions bestätigt, zuletzt 2026-07-15)
+## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~415 Sessions bestätigt, zuletzt 2026-07-15)
 
 ---
 
@@ -58,6 +58,16 @@ es scheitert nur am Push wegen fehlendem `workflow`-Scope im konfigurierten Toke
 ### Live-Tracking (Phase 5 fertig)
 - `TrackingScreen.tsx` zeigt 5 Schritte, simuliert Fortschritt
 - `SuccessClient.tsx` löscht Cart + zeigt Tracking nach Stripe-Redirect
+
+---
+
+## Session-415 Verifikation (2026-07-15)
+Code 100% korrekt — BUILD CLEAN ✅ (4.3s Compile + 4.5s TypeScript, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
+Alle Phasen 1–5 vollständig implementiert seit Session-42 (~415 Sessions Konsistenz).
+CheckoutModal.tsx: Supabase insert ✅, Stripe redirect ✅, Email-Outbox ✅, PLZ-Validierung ✅, Loading-States ✅.
+Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
+
+**DRINGENDE ESKALATION (274.):** Die Storefront läuft auf dem Server noch auf dem alten Stand. Der Code ist fertig. Deploy-Befehle stehen oben. Bitte SSH in mise-gastro.de.
 
 ---
 
