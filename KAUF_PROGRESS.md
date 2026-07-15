@@ -67,7 +67,7 @@ es scheitert nur am Push wegen fehlendem `workflow`-Scope im konfigurierten Toke
 - 4 Routen (/  /_not-found  /[slug]  /[slug]/success) ✅
 - Build-Zeit: ~4s
 
-## Session-405 Verifikation (2026-07-15)
+## Session-406 Verifikation (2026-07-15)
 Code 100% korrekt — BUILD CLEAN ✅ (4.2s, TypeScript ✅, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
 Alle Phasen 1–5 vollständig implementiert seit Session-42 (~405 Sessions Konsistenz).
 CheckoutModal.tsx: Supabase insert ✅, Stripe redirect ✅, Email-Outbox ✅, PLZ-Validierung ✅, Loading-States ✅.
