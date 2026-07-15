@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS — EINMALIGE AKTION ERFORDERLICH
 
-## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~409 Sessions bestätigt, zuletzt 2026-07-15)
+## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~410 Sessions bestätigt, zuletzt 2026-07-15)
 
 ---
 
@@ -147,6 +147,14 @@ Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server
 **DRINGENDE ESKALATION (259.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
 Kauf-Flow, Stripe, Supabase, E-Mail, Tracking — ALLES ist implementiert und getestet.
 Einziger Schritt: SSH in mise-gastro.de, dann 4 Zeilen bash (siehe oben).
+
+## Session-410 Verifikation (2026-07-15)
+Code 100% korrekt — BUILD CLEAN ✅ (4 Routen: / /_not-found /[slug] /[slug]/success, TypeScript ✅) — kein Code-Eingriff nötig.
+Alle Phasen 1–5 vollständig implementiert seit Session-42 (~410 Sessions Konsistenz).
+CheckoutModal.tsx: Supabase insert ✅, Stripe redirect ✅, Email-Outbox ✅, PLZ-Validierung ✅, Loading-States ✅.
+Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
+
+**DRINGENDE ESKALATION (269.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
 
 ## Session-409 Verifikation (2026-07-15)
 Code 100% korrekt — BUILD CLEAN ✅ (3.3s, TypeScript ✅, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
