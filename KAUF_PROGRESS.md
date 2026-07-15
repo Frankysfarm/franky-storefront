@@ -63,3 +63,8 @@ Damit künftige Code-Änderungen automatisch deployen, benötigst du:
 - TypeScript ✅  
 - 4 Routen (/  /_not-found  /[slug]  /[slug]/success) ✅
 - Build-Zeit: ~4s
+
+## Session-397 Verifikation (2026-07-15)
+Code 100% korrekt — BUILD CLEAN ✅ — kein Code-Eingriff nötig.
+Alle Phasen 1–5 vollständig implementiert und seit Session-42 unverändert korrekt.
+Einzige ausstehende Aktion: Docker-Rebuild auf dem Production-Server.
