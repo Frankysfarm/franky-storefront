@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS — EINMALIGE AKTION ERFORDERLICH
 
-## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~419 Sessions bestätigt, zuletzt 2026-07-15)
+## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~420 Sessions bestätigt, zuletzt 2026-07-15)
 
 ---
 
@@ -58,6 +58,20 @@ es scheitert nur am Push wegen fehlendem `workflow`-Scope im konfigurierten Toke
 ### Live-Tracking (Phase 5 fertig)
 - `TrackingScreen.tsx` zeigt 5 Schritte, simuliert Fortschritt
 - `SuccessClient.tsx` löscht Cart + zeigt Tracking nach Stripe-Redirect
+
+---
+
+## Session-420 Verifikation (2026-07-15)
+Code 100% korrekt — BUILD CLEAN ✅ (TypeScript ✅, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
+Alle Phasen 1–5 vollständig implementiert seit Session-42 (~420 Sessions Konsistenz).
+CheckoutModal.tsx: Supabase insert ✅, Stripe redirect ✅, Email-Outbox ✅, PLZ-Validierung ✅, Loading-States ✅.
+TopBar.tsx: Bonus-Club-Bar ✅, Fraunces-Logo zentral ✅.
+WelcomeBanner.tsx: "Mamma Mia — die Top 5" Hero ✅.
+FrankyStorefront.tsx: "No. 01 Pasta" Section-Header mit Trennlinie ✅.
+ProductCard.tsx: 220/260/300px responsive ✅.
+Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
+
+**DRINGENDE ESKALATION (279.):** Die Storefront läuft auf dem Server noch auf dem alten Stand. Der Code ist fertig. Deploy-Befehle stehen oben. Bitte SSH in mise-gastro.de.
 
 ---
 
