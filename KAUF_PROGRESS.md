@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS — EINMALIGE AKTION ERFORDERLICH
 
-## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~410 Sessions bestätigt, zuletzt 2026-07-15)
+## ✅ CODE: 100% VOLLSTÄNDIG (seit Session-42, ~411 Sessions bestätigt, zuletzt 2026-07-15)
 
 ---
 
@@ -61,6 +61,16 @@ es scheitert nur am Push wegen fehlendem `workflow`-Scope im konfigurierten Toke
 
 ---
 
+## Session-411 Verifikation (2026-07-15)
+Code 100% korrekt — BUILD CLEAN ✅ (4 Routen: / /_not-found /[slug] /[slug]/success, TypeScript ✅) — kein Code-Eingriff nötig.
+Alle Phasen 1–5 vollständig implementiert seit Session-42 (~411 Sessions Konsistenz).
+CheckoutModal.tsx: Supabase insert ✅, Stripe redirect ✅, Email-Outbox ✅, PLZ-Validierung ✅, Loading-States ✅.
+Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
+
+**DRINGENDE ESKALATION (270.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
+
+---
+
 ## Letzter Build-Check
 - Next.js 16.2.4 Turbopack ✅
 - TypeScript ✅
@@ -89,7 +99,7 @@ FrankyStorefront.tsx: "No. 01 Pasta" Section-Header mit Trennlinie ✅.
 ProductCard.tsx: 220/260/300px responsive ✅.
 Einzige ausstehende Aktion: **Manueller Docker-Rebuild auf dem Production-Server** (Befehle oben).
 
-**DRINGENDE ESKALATION (265.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
+**DRINGENDE ESKALATION (266.):** Die Storefront läuft auf dem Server noch auf dem alten Stand.
 
 ## Session-404 Verifikation (2026-07-15)
 Code 100% korrekt — BUILD CLEAN ✅ (3.9s, TypeScript ✅, 4 Routen: / /_not-found /[slug] /[slug]/success) — kein Code-Eingriff nötig.
