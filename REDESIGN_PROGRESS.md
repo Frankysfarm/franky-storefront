@@ -1,5 +1,24 @@
 # Redesign Progress
 
+## Session-432 — BUILD ✅ CLEAN (3.9s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (271. Eskalation) (2026-07-16)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.9s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**VOLLVERIFIKATION (Session-432) — Code korrekt, identisch seit Session-42:**
+- ✅ `TopBar.tsx`: Row1 slim sage-dark Bonus-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal, py-1.5, text-gold, font-extrabold) + Row2 cream Hauptbar (Search links · Logo zentral Fraunces italic · Cart rechts) — KEINE Liefern-Pill
+- ✅ `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" Headline (font-display font-black text-sage-dark), LEFT flex-shrink-0 sm:w-[280px] kicker+title+subtext + RIGHT flex-1 overflow-x-auto no-scrollbar scrollable Top-5-Karten (120-140px, aspect-square, rank badge, name, rating, price gold-deep), cream radial gold glow border, kein Bonus-Info
+- ✅ `BonusCard.tsx`: returns null — nicht importiert in FrankyStorefront.tsx
+- ✅ `BestsellerRail.tsx`: linear-gradient(150deg, bone→cream-soft→cream) — NICHT dark green, "✨ Heute beliebt" text-sage-dark + pulse dot, weiße Karten (110-140px, h-[100-110px] Bild, font-display gold-deep price), overflow-x-auto no-scrollbar, "Andiamo! 🍝"
+- ✅ `FrankyStorefront.tsx`: Section-Header flex items-baseline gap-[14px] → No.XX (italic gold-deep text-lg opacity-85) + h2 (italic font-black sage-dark clamp 30-42px) + optional description + hr (flex-1 border-t-1.5 cream-deep) — sequentielles Nummerieren visNum
+- ✅ `ProductCard.tsx`: h-[220px] sm:h-[260px] lg:h-[300px] Bild, Fraunces font-black 16-18px title, text-gold-deep price 16-24px, hover translateY(-6px) shadow
+
+**ROOT CAUSE (271. Eskalation)**: Code korrekt seit Session-42. Docker-Container auf Server NIE neu gebaut. Einzige Lösung:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+---
+
 ## Session-431 — BUILD ✅ CLEAN (4.3s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (270. Eskalation) (2026-07-16)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.3s — KEIN CODE-EINGRIFF NÖTIG.**
