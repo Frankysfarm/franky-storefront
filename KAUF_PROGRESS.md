@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS
 
-## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-16, Session-430)
+## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-16)
 
 Alle Phasen 1–5 implementiert. Build sauber: Next.js 16.2.4, TypeScript ✓, 4 Routen (/ /_not-found /[slug] /[slug]/success).
 
@@ -26,11 +26,41 @@ docker compose build --no-cache franky-storefront
 docker compose up -d --no-deps franky-storefront
 ```
 
-### Option B — Auto-Deploy einrichten (einmalig, dann permanent):
-1. Neuen GitHub PAT mit `repo` + `workflow` scope erstellen
-2. GitHub Secrets setzen: `SSH_HOST`, `SSH_USERNAME`, `SSH_PRIVATE_KEY`
-3. Workflow-Datei pushen (der Agent kann das mit dem neuen Token)
+### Option B — GitHub Actions Workflow via Web UI (einmalig einrichten):
+Der Agent kann `.github/workflows/deploy.yml` nicht pushen (OAuth-Token fehlt `workflow`-Scope).
+**Du kannst es direkt im GitHub-Browser-UI anlegen:**
+1. Gehe zu: https://github.com/Frankysfarm/franky-storefront/new/main?filename=.github%2Fworkflows%2Fdeploy.yml
+2. Füge folgenden Inhalt ein:
 
-**Warum der Agent das nicht selbst lösen kann**: Der konfigurierte OAuth-Token hat keinen `workflow`-Scope (GitHub verweigert Push von Workflow-Dateien). Der Agent hat keinen SSH-Zugang zu mise-gastro.de. Code-Änderungen können gepusht werden.
+```yaml
+name: Deploy to Production
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            cd /opt/franky-storefront
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose build --no-cache franky-storefront
+            docker compose up -d --no-deps franky-storefront
+```
+
+3. Secrets setzen unter: https://github.com/Frankysfarm/franky-storefront/settings/secrets/actions
+   - `SSH_HOST` = IP/Hostname von mise-gastro.de
+   - `SSH_USERNAME` = dein SSH-User
+   - `SSH_PRIVATE_KEY` = privater SSH-Key (alles aus `~/.ssh/id_rsa`)
+
+**Warum der Agent das nicht selbst lösen kann**: OAuth-Token ohne `workflow`-Scope — GitHub blockiert Push von Workflow-Dateien. Kein SSH-Zugang zu mise-gastro.de.
 
 **Testen nach Deploy**: https://mise-gastro.de/biss-app/frankys-pasta
