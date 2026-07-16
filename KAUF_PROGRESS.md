@@ -1,6 +1,6 @@
 # KAUF-FERTIG STATUS
 
-## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-16, Session-427)
+## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-16, Session-428)
 
 Alle Phasen 1–5 implementiert. Build sauber: Next.js 16.2.4, TypeScript ✓, 4 Routen (/ /_not-found /[slug] /[slug]/success).
 
