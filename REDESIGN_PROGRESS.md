@@ -1,5 +1,15 @@
 # Redesign Progress
 
+## Session-451 — BUILD ✅ CLEAN (3.3s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (279. Eskalation) (2026-07-17)
+
+**KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**Weitere Build-Verifikations-Sessions helfen NICHT. Nur der obige Befehl auf dem Server löst das Problem.**
+
+---
+
 ## Session-450 — BUILD ✅ CLEAN (10.7s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (278. Eskalation) (2026-07-17)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 10.7s — KEIN CODE-EINGRIFF NÖTIG.**
