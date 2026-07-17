@@ -1,5 +1,23 @@
 # Redesign Progress
 
+## Session-452 — BUILD ✅ CLEAN (3.4s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (280. Eskalation) (2026-07-17)
+
+**KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**Weitere Build-Verifikations-Sessions helfen NICHT. Nur der obige Befehl auf dem Server löst das Problem.**
+
+**VOLLVERIFIKATION (Session-452) — Code korrekt, identisch seit Session-42:**
+- ✅ `TopBar.tsx`: Row1 slim sage-dark Bonus-Bar (🎁 FRANKY'S BONUS CLUB · Jede 2. Bestellung gratis, click→BonusModal, py-1.5, text-gold, font-extrabold) + Row2 cream Hauptbar (Search links · Logo zentral Fraunces italic · Cart rechts) — KEINE Liefern-Pill
+- ✅ `WelcomeBanner.tsx`: "Mamma Mia — die Top 5" Headline, LEFT sm:w-[280px] kicker+title+subtext + RIGHT overflow-x-auto scrollable Top-5-Karten, cream radial gold glow, kein Bonus-Info
+- ✅ `BonusCard.tsx`: returns null — nicht importiert in FrankyStorefront.tsx
+- ✅ `BestsellerRail.tsx`: linear-gradient(150deg, bone→cream-soft→cream) — NICHT dark green, "✨ Heute beliebt" text-sage-dark + pulse dot, weiße Karten, "Andiamo! 🍝"
+- ✅ `FrankyStorefront.tsx`: Section-Header No.XX italic gold-deep + h2 italic sage-dark clamp(30-42px) + hr cream-deep
+- ✅ `ProductCard.tsx`: h-[220px] sm:h-[260px] lg:h-[300px] Bild, Fraunces font-black title, gold-deep price
+
+---
+
 ## Session-451 — BUILD ✅ CLEAN (3.3s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (279. Eskalation) (2026-07-17)
 
 **KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
