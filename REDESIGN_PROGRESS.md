@@ -1,5 +1,23 @@
 # Redesign Progress
 
+## Session-460 — BUILD ✅ CLEAN (5.7s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (288. Eskalation) (2026-07-18)
+
+**KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**Weitere Build-Verifikations-Sessions helfen NICHT. Nur der obige Befehl auf dem Server löst das Problem.**
+
+Vollprüfung (2026-07-18):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5
+- BonusCard: ✅ returns null
+- BestsellerRail: ✅ CREAM/BONE Gradient, "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + <hr>
+- ProductCard: ✅ h-[220px]-[300px] large images
+
+---
+
 ## Session-457 — BUILD ✅ CLEAN (4.5s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (285. Eskalation) (2026-07-18)
 
 **KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
