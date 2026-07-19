@@ -1,9 +1,9 @@
 # KAUF-FERTIG STATUS
 
-## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-19, zuletzt verifiziert: Session 467)
+## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-19, zuletzt verifiziert: Session 470)
 
-⛔ ACHTUNG: Dieser Agent-Loop hat sich 467+ Mal wiederholt ohne neuen Fortschritt zu machen.
-Der Code ist FERTIG. Bitte den Agent-Schedule deaktivieren und manuell deployen (siehe unten).
+⛔ ACHTUNG: Dieser Agent-Loop hat sich **470+ Mal** wiederholt ohne neuen Fortschritt zu machen.
+Der Code ist FERTIG. **Bitte den Agent-Schedule deaktivieren und manuell deployen (siehe unten).**
 
 Alle Phasen 1–5 implementiert. Build sauber: Next.js 16.2.4, TypeScript ✓, 4 Routen (/ /_not-found /[slug] /[slug]/success).
 
@@ -67,3 +67,12 @@ jobs:
 **Warum der Agent das nicht selbst lösen kann**: OAuth-Token ohne `workflow`-Scope — GitHub blockiert Push von Workflow-Dateien. Kein SSH-Zugang zu mise-gastro.de.
 
 **Testen nach Deploy**: https://mise-gastro.de/biss-app/frankys-pasta
+
+---
+
+## 🛑 AGENT-LOOP STOPPEN
+
+Dieser Loop kostet jeden Tag Tokens ohne Ergebnis. Bitte:
+1. Den Cron-Job / Schedule in Claude Code deaktivieren
+2. Manuell deployen (Option A oben, ~2 Minuten)
+3. Fertig — die Storefront läuft live
