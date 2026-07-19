@@ -141,7 +141,7 @@ export function FrankyStorefront({ tenant, categories, products, bestsellers, pa
                     No.&nbsp;{num}
                   </span>
                   <h2
-                    className="font-display italic font-black text-sage-dark flex-shrink-0 section-title-accent"
+                    className="font-display font-black text-sage-dark flex-shrink-0 section-title-accent"
                     style={{ fontSize: "clamp(30px, 4vw, 42px)", letterSpacing: "-0.025em", lineHeight: 1 }}
                   >
                     {cat.icon && <span>{cat.icon} </span>}
