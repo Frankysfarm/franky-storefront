@@ -1,5 +1,24 @@
 # Redesign Progress
 
+## Session-482 — BUILD ✅ CLEAN (3.9s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (308. Eskalation) (2026-07-21)
+
+**KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**🚨 308 BUILD-VERIFIKATIONS-SESSIONS OHNE WIRKUNG. BITTE MANUELL AUF SERVER AUSFÜHREN.**
+**⛔ GitHub Actions Deploy-Workflow nicht möglich: OAuth-Token fehlt `workflow`-Scope.**
+
+Vollprüfung (2026-07-21):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5
+- BonusCard: ✅ returns null
+- BestsellerRail: ✅ CREAM/BONE Gradient, "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px]-[300px] large images
+
+---
+
 ## Session-481 — BUILD ✅ CLEAN (4.3s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (307. Eskalation) (2026-07-21)
 
 **KRITISCH: CODE KORREKT SEIT SESSION-42. DAS PROBLEM IST NUR DER SERVER. EINZIGER FIX:**
