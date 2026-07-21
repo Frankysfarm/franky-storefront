@@ -22,7 +22,34 @@ Damit jeder Push zu `main` automatisch deployed, folgende Secrets im GitHub Repo
 
 → Settings → Secrets and variables → Actions → New repository secret
 
-Nach dem Einrichten läuft jeder Push zu `main` automatisch durch den Deploy-Workflow (`.github/workflows/deploy.yml`).
+Danach diese Datei anlegen: `.github/workflows/deploy.yml`
+
+```yaml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin main
+            docker compose build --no-cache franky-storefront
+            docker compose up -d --no-deps franky-storefront
+            echo "Deploy abgeschlossen: $(date)"
+```
+
+**WICHTIG:** Workflow-Datei muss mit einem PAT (Personal Access Token) mit `workflow`-Scope gepusht werden, oder direkt über das GitHub Web-UI erstellt werden (github.com → Repository → .github/workflows → neue Datei anlegen).
 
 ## Warum der Live-Server noch die alte Version zeigt
 
