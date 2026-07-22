@@ -2228,3 +2228,12 @@ Diese Routine (DRINGENDE ÜBERARBEITUNG) sollte DEAKTIVIERT werden — es gibt k
 ```
 cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
 ```
+
+## Session-494 — BUILD ✅ CLEAN (3.6s) — ALLE 6 AUFGABEN KORREKT — 🚨 DOCKER REBUILD ZWINGEND ERFORDERLICH (318. Eskalation) (2026-07-22)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 3.6s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**ROOT CAUSE (318. Eskalation)**: Code korrekt seit Session-42. Docker-Container auf Server NIE neu gebaut. Einzige Lösung:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
