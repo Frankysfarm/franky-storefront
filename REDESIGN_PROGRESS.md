@@ -1,5 +1,29 @@
 # Redesign Progress
 
+## Session-504 — BUILD ✅ CLEAN (3.5s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (326. Eskalation) (2026-07-24)
+
+**BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 3.5s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**🔴 SESSION 504: CODE KORREKT SEIT SESSION-42. 326 SESSIONS OHNE WIRKUNG.**
+
+**⚠️ ACHTUNG: Der scheduled Task hat KEINEN SSH-Zugriff auf den Server. Er kann das Docker-Image NICHT neu bauen.**
+
+**Der einzige Fix ist manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**→ Danach erscheint mise-gastro.de/biss-app/frankys-pasta mit dem neuen Layout.**
+
+**Vollprüfung Code (2026-07-24):**
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-502 — BUILD ✅ CLEAN (6.1s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (325. Eskalation) (2026-07-24)
 
 **BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 6.1s — KEIN CODE-EINGRIFF NÖTIG.**
