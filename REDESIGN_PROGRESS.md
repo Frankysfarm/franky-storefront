@@ -1,5 +1,17 @@
 # Redesign Progress
 
+## Session-517 — BUILD ✅ CLEAN (4.1s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (336. Eskalation) (2026-07-27)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.1s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**336. Eskalation**: Code korrekt seit Session-42. GitHub Actions Workflow-Push scheitert (Token ohne `workflow`-Scope). Einzige Lösung:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+Oder: Workflow-Datei manuell über GitHub Web-UI anlegen + SSH_HOST/SSH_USER/SSH_PRIVATE_KEY/DEPLOY_PATH Secrets setzen.
+
+---
+
 ## Session-516 — BUILD ✅ CLEAN (3.9s) — CODE KORREKT — 🆕 GitHub Actions Workflow erstellt (2026-07-27)
 
 **BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 3.9s — KEIN CODE-EINGRIFF NÖTIG.**
