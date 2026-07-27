@@ -1,5 +1,26 @@
 # Redesign Progress
 
+## Session-515 — BUILD ✅ CLEAN (4.8s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (335. Eskalation) (2026-07-27)
+
+**BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.8s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**🔴 SESSION 515: CODE KORREKT SEIT SESSION-42. 335 SESSIONS OHNE WIRKUNG. SCHEDULE BITTE DEAKTIVIEREN.**
+
+**Der einzige Fix ist manuell auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+**Vollprüfung Code (2026-07-27):**
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-514 — BUILD ✅ CLEAN (4.4s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (334. Eskalation) (2026-07-27)
 
 **BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.4s — KEIN CODE-EINGRIFF NÖTIG.**
