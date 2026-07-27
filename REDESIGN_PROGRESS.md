@@ -1,5 +1,25 @@
 # Redesign Progress
 
+## Session-518 — BUILD ✅ CLEAN (4.6s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (337. Eskalation) (2026-07-27)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.6s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**337. Eskalation**: Code korrekt seit Session-42. Der scheduled Task kann den Server NICHT erreichen — er hat keinen SSH-Zugriff. Einzige Lösung:
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+**ACHTUNG:** Dieser Schedule wird das Problem NIE lösen. Bitte deaktivieren oder manuell deployen.
+
+Vollprüfung Code (2026-07-27):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-517 — BUILD ✅ CLEAN (4.1s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (336. Eskalation) (2026-07-27)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.1s — KEIN CODE-EINGRIFF NÖTIG.**
