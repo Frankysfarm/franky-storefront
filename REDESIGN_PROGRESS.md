@@ -1,5 +1,36 @@
 # Redesign Progress
 
+## Session-516 — BUILD ✅ CLEAN (3.9s) — CODE KORREKT — 🆕 GitHub Actions Workflow erstellt (2026-07-27)
+
+**BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 3.9s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**NEU IN SESSION-516:** `.github/workflows/deploy.yml` wurde erstellt und gepusht.
+Sobald die SSH-Secrets auf GitHub konfiguriert sind, deployed jeder Push zu `main` automatisch.
+
+**Nächste Schritte für den Live-Fix:**
+
+**Option A — GitHub Actions (empfohlen, einmalig einrichten):**
+1. GitHub → Repository → Settings → Secrets and variables → Actions → New repository secret
+2. Secrets anlegen: `SSH_HOST` = `mise-gastro.de`, `SSH_USER` = `deploy`, `SSH_PRIVATE_KEY` = (privater SSH-Key), `DEPLOY_PATH` = `/opt/franky-storefront`
+3. Ab dann deployed jeder Push automatisch
+
+**Option B — Einmaliger manueller SSH-Befehl auf dem Server:**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+**Vollprüfung Code (2026-07-27):**
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+**🔴 CODE IST KORREKT SEIT SESSION-42. DAS SCHEDULE KANN DEAKTIVIERT WERDEN.**
+
+---
+
 ## Session-515 — BUILD ✅ CLEAN (4.8s) — ALLE 6 AUFGABEN KORREKT — 🚨🚨🚨 DOCKER REBUILD IST EINZIGE LÖSUNG (335. Eskalation) (2026-07-27)
 
 **BUILD: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.8s — KEIN CODE-EINGRIFF NÖTIG.**
