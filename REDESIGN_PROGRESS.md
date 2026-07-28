@@ -1,5 +1,32 @@
 # Redesign Progress
 
+## Session-533 — BUILD ✅ CLEAN (5.7s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (351. Eskalation) (2026-07-28)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 5.7s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**351. Eskalation**: Code korrekt seit Session-42. Der scheduled Task kann den Server NICHT erreichen — er hat keinen SSH-Zugriff. Diese Schedule-Aufgabe ist **nicht in der Lage**, das Deployment-Problem zu lösen. Bitte manuell deployen oder GitHub Actions Secrets konfigurieren.
+
+Manuelle Lösung (sofort):
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+GitHub Actions (dauerhaft): Repository → Settings → Secrets and variables → Actions:
+- `SSH_HOST` = mise-gastro.de
+- `SSH_USER` = deploy
+- `SSH_PRIVATE_KEY` = (privater SSH-Schlüssel)
+- `DEPLOY_PATH` = /opt/franky-storefront
+
+Vollprüfung Code (2026-07-28):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-532 — BUILD ✅ CLEAN (5.3s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (350. Eskalation) (2026-07-28)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 5.3s — KEIN CODE-EINGRIFF NÖTIG.**
