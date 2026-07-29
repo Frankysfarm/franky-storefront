@@ -1,8 +1,8 @@
 # KAUF-FERTIG STATUS
 
-## ✅ CODE VOLLSTÄNDIG — Build clean (2026-07-28, erneut verifiziert: Next.js build ✓, TypeScript ✓)
+## ✅ CODE VOLLSTÄNDIG — Build clean (zuletzt verifiziert: 2026-07-29, Next.js build ✓, TypeScript ✓)
 
-⛔ ACHTUNG: Dieser Agent-Loop läuft täglich ohne neuen Fortschritt zu machen. (Session 529, build 4.4s clean)
+⛔ ACHTUNG: Dieser Agent-Loop läuft täglich ohne neuen Fortschritt zu machen. (Build 4.4s clean, alle Phasen 1–5 fertig)
 Der Code ist FERTIG. **Bitte den Agent-Schedule deaktivieren und manuell deployen (siehe unten).**
 
 Alle Phasen 1–5 implementiert. Build sauber: Next.js 16.2.4, TypeScript ✓, 4 Routen (/ /_not-found /[slug] /[slug]/success).
