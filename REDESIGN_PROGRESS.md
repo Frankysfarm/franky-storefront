@@ -1,5 +1,15 @@
 # Redesign Progress
 
+## Session-550 — BUILD ✅ CLEAN (8.1s) — GitHub Actions Deploy hinzugefügt — 367. Eskalation (2026-07-30)
+
+**Build: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 8.1s — CODE SEIT SESSION-42 KORREKT.**
+
+**NEU: `.github/workflows/deploy.yml` hinzugefügt.** Sobald 4 GitHub Secrets eingerichtet sind (`SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY`, `DEPLOY_PATH`), deployt jeder Push automatisch. **Scheduled Task danach bitte deaktivieren.**
+
+Vollprüfung (2026-07-30): TopBar ✅ · WelcomeBanner ✅ · BonusCard=null ✅ · BestsellerRail=cream ✅ · Section-Headers No.XX ✅ · ProductCard große Bilder ✅
+
+---
+
 ## Session-549b — BUILD ✅ CLEAN (7.1s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (366. Eskalation) (2026-07-30)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 7.1s — KEIN CODE-EINGRIFF NÖTIG.**
