@@ -1,5 +1,34 @@
 # Redesign Progress
 
+## Session-549b — BUILD ✅ CLEAN (7.1s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (366. Eskalation) (2026-07-30)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 7.1s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**366. Eskalation**: Code korrekt seit Session-42. Der scheduled Task hat KEINEN SSH-Zugriff auf den Server und kann das Docker-Image NICHT neu bauen. Der Agent-Loop wurde aktiviert obwohl der letzte Commit "agent-loop should be deactivated" empfahl.
+
+**⚠️ BITTE DEN SCHEDULED TASK DEAKTIVIEREN.** Das Problem ist KEIN Code-Problem. Der Code ist seit Monaten korrekt. Das ist ein Deployment-Problem das nur manuell (oder via GitHub Actions) gelöst werden kann.
+
+**Einzige Lösung (manuell auf dem Server):**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+**GitHub Actions (dauerhaft, einmalig einrichten):** Repository → Settings → Secrets and variables → Actions:
+- `SSH_HOST` = mise-gastro.de
+- `SSH_USER` = deploy
+- `SSH_PRIVATE_KEY` = (privater SSH-Schlüssel)
+- `DEPLOY_PATH` = /opt/franky-storefront
+
+Vollprüfung Code (2026-07-30):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (kein dark green), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Category name + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-548 — BUILD ✅ CLEAN (6.3s) — CODE KORREKT — 🚨 DOCKER REBUILD ZWINGEND (364. Eskalation) (2026-07-30)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 6.3s — KEIN CODE-EINGRIFF NÖTIG.**
