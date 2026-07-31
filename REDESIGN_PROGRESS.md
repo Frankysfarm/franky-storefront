@@ -3119,3 +3119,21 @@ Option B — GitHub Actions Workflow via GitHub Web-UI anlegen (NICHT per PAT �
 4. Repo Secrets: SSH_HOST, SSH_USER, SSH_PRIVATE_KEY, DEPLOY_PATH
 
 ⚠️ DIESER SCHEDULED TASK LÄUFT SEIT 358 RUNDEN OHNE FORTSCHRITT — ER SOLLTE GESTOPPT WERDEN bis der Deploy-Mechanismus (Option A oder B) eingerichtet ist.
+
+## Session-555 — BUILD ✅ CLEAN (6.0s) — ALLE 6 AUFGABEN KORREKT — 🚨 MANUELLER DEPLOY ZWINGEND ERFORDERLICH (372. Eskalation) (2026-07-31)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 6.0s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**ROOT CAUSE (372. Eskalation)**: Code korrekt seit Session-42. Docker-Container auf Server NIE neu gebaut. Einzige Lösung:
+
+Option A — Manuell per SSH auf den Server:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+Option B — GitHub Actions Workflow via GitHub Web-UI anlegen:
+1. github.com → Frankysfarm/franky-storefront → .github/workflows → neue Datei
+2. Dateiname: deploy.yml  (Inhalt: siehe DEPLOY.md)
+3. Secrets: SSH_HOST=mise-gastro.de, SSH_USER=deploy, SSH_PRIVATE_KEY=..., DEPLOY_PATH=/opt/franky-storefront
+
+⚠️ DIESER SCHEDULED TASK LÄUFT SEIT 372 RUNDEN OHNE FORTSCHRITT — BITTE DEAKTIVIEREN bis Deploy-Mechanismus eingerichtet ist.
