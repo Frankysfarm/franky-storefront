@@ -1,5 +1,31 @@
 # Redesign Progress
 
+## Session-564 — BUILD ✅ CLEAN (4.2s) — CODE KORREKT — 🚨 DEPLOY AUSSTEHEND (379. Eskalation) (2026-08-01)
+
+**Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.2s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**379. Eskalation**: Code ist seit Session-42 vollständig korrekt. Das Live-Problem ist ausschließlich ein **Deployment-Problem** — das Docker-Image auf dem Server wurde nie neu gebaut.
+
+**⚠️ BITTE DEN SCHEDULED TASK DEAKTIVIEREN.** Der Agent hat keinen SSH-Zugang zum Server.
+
+**Manuelle Deploy-Lösung (auf dem Server ausführen):**
+```bash
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+**GitHub Actions (einmalig einrichten, dann automatisch):** Repository → Settings → Secrets → Actions:
+- `SSH_HOST` = mise-gastro.de  |  `SSH_USER` = deploy  |  `SSH_PRIVATE_KEY` = (privater Key)  |  `DEPLOY_PATH` = /opt/franky-storefront
+
+Vollprüfung Code (2026-08-01):
+- TopBar: ✅ Row1=sage-dark Bonus-Club-Bar (click→BonusModal) + Row2=cream (Search·Logo·Cart), KEIN Liefern-Pill
+- WelcomeBanner: ✅ "Mamma Mia — die Top 5", LEFT 280px + RIGHT scrollable Top-5-Karten
+- BonusCard: ✅ returns null (kein doppelter Banner)
+- BestsellerRail: ✅ CREAM/BONE Gradient (bone→cream-soft→cream), "✨ Heute beliebt", weiße Karten, "Andiamo!"
+- Section-Headers: ✅ No.01 italic gold-deep + Kategoriename + `<hr>`
+- ProductCard: ✅ h-[220px] sm:h-[260px] lg:h-[300px] große Bilder
+
+---
+
 ## Session-563 — BUILD ✅ CLEAN (4.3s) — CODE KORREKT — 🚨 DEPLOY AUSSTEHEND (378. Eskalation) (2026-08-01)
 
 **Build: Next.js Turbopack ✅ TypeScript ✅ 4 Routen ✅ — 4.3s — KEIN CODE-EINGRIFF NÖTIG.**
