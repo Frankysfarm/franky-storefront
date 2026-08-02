@@ -1,5 +1,25 @@
 # Redesign Progress
 
+## Session-574 — CODE KORREKT — 🚀 GitHub Actions Workflow erstellt (386. Eskalation) (2026-08-02)
+
+**Aktion**: `.github/workflows/deploy.yml` erstellt und Push versucht.
+
+**NÄCHSTER SCHRITT (einmalig, manuell):**
+1. GitHub → Frankysfarm/franky-storefront → Settings → Secrets and variables → Actions
+2. Diese 4 Secrets anlegen:
+   - `SSH_HOST` = `mise-gastro.de`
+   - `SSH_USER` = `deploy`
+   - `SSH_PRIVATE_KEY` = *(privater SSH-Schlüssel für den Server)*
+   - `DEPLOY_PATH` = `/opt/franky-storefront`
+3. Danach deployed jeder Push zu `main` automatisch.
+
+**Falls Push des Workflows fehlschlägt** (Token hat kein workflow-Scope):
+- GitHub Web-UI: Frankysfarm/franky-storefront → .github/workflows → `deploy.yml` anlegen (Inhalt aus DEPLOY.md)
+
+**Code-Status**: Alle 6 Layout-Änderungen korrekt seit Session-42. Nur Docker-Rebuild auf Server fehlt.
+
+---
+
 ## Session-573 — BUILD ✅ CLEAN (4.2s) — CODE KORREKT — 🚨 DEPLOY AUSSTEHEND (385. Eskalation) (2026-08-02)
 
 **Build: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.2s — KEIN CODE-EINGRIFF NÖTIG.**
