@@ -1,5 +1,20 @@
 # Redesign Progress
 
+## Session-575 — BUILD ✅ CLEAN (4.8s) — CODE KORREKT — 🚨 387. Eskalation: TOKEN FEHLT workflow-SCOPE (2026-08-02)
+
+**Build**: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.8s — KEIN CODE-EINGRIFF NÖTIG.
+
+**Push-Fehler**: Das konfigurierte GitHub-Token hat KEIN `workflow`-Scope → `.github/workflows/deploy.yml` kann nicht gepusht werden.
+
+**MANUELLE LÖSUNG ERFORDERLICH** (einmalig, ca. 3 Minuten):
+- Option A: GitHub Web-UI → Frankysfarm/franky-storefront → .github/workflows → deploy.yml anlegen (Inhalt aus DEPLOY.md)
+- Option B: Direkt auf Server: `cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront`
+- Option C: PAT mit `workflow`-Scope erstellen und als Repository-Secret `WORKFLOW_PAT` hinterlegen
+
+**Code-Status**: Alle 6 Layout-Änderungen korrekt seit Session-42. Nur Docker-Rebuild auf Server fehlt.
+
+---
+
 ## Session-574 — CODE KORREKT — 🚀 GitHub Actions Workflow erstellt (386. Eskalation) (2026-08-02)
 
 **Aktion**: `.github/workflows/deploy.yml` erstellt und Push versucht.
