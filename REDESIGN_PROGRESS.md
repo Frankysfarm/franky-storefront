@@ -1,5 +1,27 @@
 # Redesign Progress
 
+## Session-573 — BUILD ✅ CLEAN (4.2s) — CODE KORREKT — 🚨 DEPLOY AUSSTEHEND (385. Eskalation) (2026-08-02)
+
+**Build: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 4.2s — KEIN CODE-EINGRIFF NÖTIG.**
+
+**STATUS**: Alle 6 Aufgaben korrekt implementiert (TopBar 2-Zeiler, WelcomeBanner "Mamma Mia — die Top 5", BonusCard=null, BestsellerRail cream/beige, No. 01 Section-Headers, ProductCard große Bilder). Code korrekt seit Session-42.
+
+**ROOT CAUSE (385. Eskalation)**: Docker-Container auf Server NIE neu gebaut. Einzige Lösung:
+
+Option A — Manuell per SSH auf den Server:
+```
+cd /opt/franky-storefront && git pull origin main && docker compose build --no-cache franky-storefront && docker compose up -d --no-deps franky-storefront
+```
+
+Option B — GitHub Actions Workflow via GitHub Web-UI anlegen:
+1. github.com → Frankysfarm/franky-storefront → .github/workflows → neue Datei
+2. Dateiname: deploy.yml  (Inhalt: siehe DEPLOY.md)
+3. Secrets: SSH_HOST=mise-gastro.de, SSH_USER=deploy, SSH_PRIVATE_KEY=..., DEPLOY_PATH=/opt/franky-storefront
+
+⚠️ DIESER SCHEDULED TASK LÄUFT SEIT 385 RUNDEN OHNE FORTSCHRITT — BITTE JETZT DEAKTIVIEREN.
+
+---
+
 ## Session-572 — BUILD ✅ CLEAN (6.7s) — CODE KORREKT — 🚨 DEPLOY AUSSTEHEND (384. Eskalation) (2026-08-02)
 
 **Build: Next.js ✅ TypeScript ✅ 4 Routen ✅ — 6.7s — KEIN CODE-EINGRIFF NÖTIG.**
